@@ -4,18 +4,18 @@
   <meta charset="utf-8">
   
   
-  <title>时间盲注 | Hexo</title>
+  <title>每周报告 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="在通关sqllabs第9关与第10关时我们知道了时间盲注这一概念，用时间盲注来判断注入点是否正确，使用sleep延迟函数。if()函数				条件判断函数if(a,b,c)	   if判断句，a为条件，b、c为执行语句；如果a为真就执行b，a为假就执行c;sleep()函数			网页延迟n秒后，输出结果left（）函数             从左边数，取几个数例如：left（abcdef，3）">
+  <meta name="description" content="时间盲注在通关sqllabs第9关与第10关时我们知道了时间盲注这一概念，用时间盲注来判断注入点是否正确，使用sleep延迟函数。if()函数				条件判断函数if(a,b,c)	   if判断句，a为条件，b、c为执行语句；如果a为真就执行b，a为假就执行c;sleep()函数			网页延迟n秒后，输出结果left（）函数             从左边数，取几个数例如：left（abcdef">
 <meta property="og:type" content="article">
-<meta property="og:title" content="时间盲注">
+<meta property="og:title" content="每周报告">
 <meta property="og:url" content="http://example.com/2023/04/15/my-blogneirong/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="在通关sqllabs第9关与第10关时我们知道了时间盲注这一概念，用时间盲注来判断注入点是否正确，使用sleep延迟函数。if()函数				条件判断函数if(a,b,c)	   if判断句，a为条件，b、c为执行语句；如果a为真就执行b，a为假就执行c;sleep()函数			网页延迟n秒后，输出结果left（）函数             从左边数，取几个数例如：left（abcdef，3）">
+<meta property="og:description" content="时间盲注在通关sqllabs第9关与第10关时我们知道了时间盲注这一概念，用时间盲注来判断注入点是否正确，使用sleep延迟函数。if()函数				条件判断函数if(a,b,c)	   if判断句，a为条件，b、c为执行语句；如果a为真就执行b，a为假就执行c;sleep()函数			网页延迟n秒后，输出结果left（）函数             从左边数，取几个数例如：left（abcdef">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://cn.bing.com/images/search?view=detailV2&ccid=0DK4xQCF&id=67A3DE5A7E4AEB1FDE8070D3DB63570294A4734F&thid=OIP.0DK4xQCF3tLufA_lKBa3vAAAAA&mediaurl=https://img-blog.csdnimg.cn/20210217134727994.jpg?x-oss-process=image/resize,m_fixed,h_224,w_224&exph=224&expw=224&q=Linux%E7%AE%A1%E9%81%93%E7%AC%A6&simid=608006458651795705&FORM=IRPRST&ck=742AC5AEEF3F4235C1242B9333A26A4B&selectedIndex=112">
 <meta property="article:published_time" content="2023-04-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-16T11:51:12.235Z">
+<meta property="article:modified_time" content="2023-04-16T11:53:59.697Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cn.bing.com/images/search?view=detailV2&ccid=0DK4xQCF&id=67A3DE5A7E4AEB1FDE8070D3DB63570294A4734F&thid=OIP.0DK4xQCF3tLufA_lKBa3vAAAAA&mediaurl=https://img-blog.csdnimg.cn/20210217134727994.jpg?x-oss-process=image/resize,m_fixed,h_224,w_224&exph=224&expw=224&q=Linux%E7%AE%A1%E9%81%93%E7%AC%A6&simid=608006458651795705&FORM=IRPRST&ck=742AC5AEEF3F4235C1242B9333A26A4B&selectedIndex=112">
@@ -89,7 +89,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      时间盲注
+      每周报告
     </h1>
   
 
@@ -97,7 +97,7 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>在通关sqllabs第9关与第10关时我们知道了时间盲注这一概念，<br>用时间盲注来判断注入点是否正确，使用sleep延迟函数。<br>if()函数				条件判断函数<br>if(a,b,c)	   if判断句，a为条件，b、c为执行语句；如果a为真就执行b，a为假就执行c;<br>sleep()函数			网页延迟n秒后，输出结果<br>left（）函数             从左边数，取几个数<br>例如：left（abcdef，3）  取3位左边的数，就是abc  </p>
+        <h2 id="时间盲注"><a href="#时间盲注" class="headerlink" title="时间盲注"></a>时间盲注</h2><p>在通关sqllabs第9关与第10关时我们知道了时间盲注这一概念，<br>用时间盲注来判断注入点是否正确，使用sleep延迟函数。<br>if()函数				条件判断函数<br>if(a,b,c)	   if判断句，a为条件，b、c为执行语句；如果a为真就执行b，a为假就执行c;<br>sleep()函数			网页延迟n秒后，输出结果<br>left（）函数             从左边数，取几个数<br>例如：left（abcdef，3）  取3位左边的数，就是abc  </p>
 <ol>
 <li>判断注入点：?id&#x3D;1 and sleep(10)–+ 如若页面加载则判断正确，否则尝试其他</li>
 <li>爆库：?id&#x3D;1’ and if (length(database()) &#x3D; 8 ,sleep(4),1)–+ 如若延时则正确，?id&#x3D;1’ and If((substr(database(),1,1)&#x3D;’s’),sleep(5),1)–+ 挨个尝试找出八个字符库名security</li>
@@ -121,7 +121,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/04/15/my-blogneirong/" data-id="clgjcfvma0001t4v56qco1bf4" data-title="时间盲注" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/04/15/my-blogneirong/" data-id="clgjcfvma0001t4v56qco1bf4" data-title="每周报告" class="article-share-link">Share</a>
       
       
       
@@ -162,7 +162,7 @@
       <ul>
         
           <li>
-            <a href="/2023/04/15/my-blogneirong/">时间盲注</a>
+            <a href="/2023/04/15/my-blogneirong/">每周报告</a>
           </li>
         
       </ul>

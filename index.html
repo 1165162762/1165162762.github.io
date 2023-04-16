@@ -85,7 +85,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/04/15/my-blogneirong/">时间盲注</a>
+      <a class="p-name article-title" href="/2023/04/15/my-blogneirong/">每周报告</a>
     </h1>
   
 
@@ -93,7 +93,7 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>在通关sqllabs第9关与第10关时我们知道了时间盲注这一概念，<br>用时间盲注来判断注入点是否正确，使用sleep延迟函数。<br>if()函数				条件判断函数<br>if(a,b,c)	   if判断句，a为条件，b、c为执行语句；如果a为真就执行b，a为假就执行c;<br>sleep()函数			网页延迟n秒后，输出结果<br>left（）函数             从左边数，取几个数<br>例如：left（abcdef，3）  取3位左边的数，就是abc  </p>
+        <h2 id="时间盲注"><a href="#时间盲注" class="headerlink" title="时间盲注"></a>时间盲注</h2><p>在通关sqllabs第9关与第10关时我们知道了时间盲注这一概念，<br>用时间盲注来判断注入点是否正确，使用sleep延迟函数。<br>if()函数				条件判断函数<br>if(a,b,c)	   if判断句，a为条件，b、c为执行语句；如果a为真就执行b，a为假就执行c;<br>sleep()函数			网页延迟n秒后，输出结果<br>left（）函数             从左边数，取几个数<br>例如：left（abcdef，3）  取3位左边的数，就是abc  </p>
 <ol>
 <li>判断注入点：?id&#x3D;1 and sleep(10)–+ 如若页面加载则判断正确，否则尝试其他</li>
 <li>爆库：?id&#x3D;1’ and if (length(database()) &#x3D; 8 ,sleep(4),1)–+ 如若延时则正确，?id&#x3D;1’ and If((substr(database(),1,1)&#x3D;’s’),sleep(5),1)–+ 挨个尝试找出八个字符库名security</li>
@@ -117,7 +117,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/04/15/my-blogneirong/" data-id="clgjcfvma0001t4v56qco1bf4" data-title="时间盲注" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/04/15/my-blogneirong/" data-id="clgjcfvma0001t4v56qco1bf4" data-title="每周报告" class="article-share-link">Share</a>
       
       
       
@@ -160,7 +160,7 @@
       <ul>
         
           <li>
-            <a href="/2023/04/15/my-blogneirong/">时间盲注</a>
+            <a href="/2023/04/15/my-blogneirong/">每周报告</a>
           </li>
         
       </ul>
