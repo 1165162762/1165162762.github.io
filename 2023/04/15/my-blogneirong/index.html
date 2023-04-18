@@ -23,12 +23,12 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="时间盲注在通关sqllabs第9关与第10关时我们知道了时间盲注这一概念，用时间盲注来判断注入点是否正确，使用sleep延迟函数。if()函数				条件判断函数if(a,b,c)	   if判断句，a为条件，b、c为执行语句；如果a为真就执行b，a为假就执行c;sleep()函数			网页延迟n秒后，输出结果left（）函数             从左边数，取几个数例如：left（abcdef">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/heiheihei.png">
+<meta property="og:image" content="http://example.com/picture/heiheihei.png">
 <meta property="article:published_time" content="2023-04-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-18T13:56:23.880Z">
+<meta property="article:modified_time" content="2023-04-18T14:01:09.772Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/heiheihei.png">
+<meta name="twitter:image" content="http://example.com/picture/heiheihei.png">
   
   
   
@@ -285,7 +285,7 @@
 </ol>
 <h2 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h2><p>在sqllabs 第13关中，可以测试出闭合点，但没有回显位，无法重复11，12题中的操作，所以这里我们尝试使用报错注入<br>1’)  and updatexml(1,concat(0x7e,(database()),0x7e),1) #<br><strong>虽然报错，但我们知道了库名为security</strong><br>1’)  and updatexml(1,concat(0x7e,(select group_concat(column_name)from information_schema.columns where table_schema&#x3D;’security’ and table_name&#x3D;’users’),0x7e),1) #<br><strong>再求得表名</strong><br>1’)  and updatexml(1,concat(0x7e,(select group_concat(username)from users),0x7e),1) #<br><strong>再求得字段</strong><br>可求得username 和 password</p>
 <h2 id="二次注入"><a href="#二次注入" class="headerlink" title="二次注入"></a>二次注入</h2><p>在24关中需要用到二次注入的原理，二次注入可以理解为，攻击者构造的恶意数据存储在数据库后，恶意数据被读取并进入到SQL查询语句所导致的注入。防御者可能在用户 输入恶意数据时对其中的特殊字符进行了转义处理，但在恶意数据插入到数据库时被处理的数据又被还原并存储在数据库中，当web程序调用存储在数据库中的恶意数据并执行SQL查询时，就发生了SQL二次注入。<br><strong>第一步：插入恶意数据</strong><br>进行数据库插入数据时，对其中的特殊字符进行了转义处理，在写入数据库的时候又保留了原来的数据。<br><strong>第二步：引用恶意数据</strong><br>开发者默认存入数据库的数据都是安全的，在进行查询的时候，直接从数据库中取出恶意数据，没有进行进一步的检验的处理。</p>
-<h2 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h2><p>在25，26关都过滤了or和and 所以遇到有or或and的地方需要双写，<br>例：information-&gt;information&amp;&amp;password-&gt;passwoorrd<br>但26关也过滤掉了空格和注释符，这时可以采用报错法求得，空格可用“%a0” 或 “%0b” 替代空格，同时可以使用）来代替空格的划分作用，使用 “||” 替代 “or”，使用 “%26%26” 替代 “and”。<br><strong>管道符（Linux管道命令操作符）：</strong><br><img src="/heiheihei.png" srcset="/img/loading.gif" lazyload alt="picture"><br>Linux-&gt;ls-&gt;list-&gt;列表-&gt;显示指定工作目录下的内容<br>Linux-&gt;cat-&gt;用于连接文件并打印到标准输出设备上</p>
+<h2 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h2><p>在25，26关都过滤了or和and 所以遇到有or或and的地方需要双写，<br>例：information-&gt;information&amp;&amp;password-&gt;passwoorrd<br>但26关也过滤掉了空格和注释符，这时可以采用报错法求得，空格可用“%a0” 或 “%0b” 替代空格，同时可以使用）来代替空格的划分作用，使用 “||” 替代 “or”，使用 “%26%26” 替代 “and”。<br><strong>管道符（Linux管道命令操作符）：</strong><br><img src="/picture/heiheihei.png" srcset="/img/loading.gif" lazyload alt="picture"><br>Linux-&gt;ls-&gt;list-&gt;列表-&gt;显示指定工作目录下的内容<br>Linux-&gt;cat-&gt;用于连接文件并打印到标准输出设备上</p>
 <h2 id="filter伪协议"><a href="#filter伪协议" class="headerlink" title="filter伪协议"></a>filter伪协议</h2><p>php:&#x2F;&#x2F;filter是php中独有的一种协议，它是一种过滤器，可以作为一个中间流来过滤其他的数据流。通常使用该协议来读取或者写入部分数据，且在读取和写入之前对数据进行一些过滤，例如base64编码处理，rot13处理等。官方解释为：php:&#x2F;&#x2F;filter 是一种元封装器，设计用于数据流打开时的筛选过滤应用。这对于一体式（all-in-one）的文件函数非常有用，类似 readfile()、 file() 和 file_get_contents()，在数据流内容读取之前没有机会应用其他过滤器。<br>Filter协议的一般语法为：php:&#x2F;&#x2F;filter&#x2F;过滤器|过滤器&#x2F;resource&#x3D;待过滤的数据流<br><strong>通过php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D; 利用LFI来查看源码</strong><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_29419013/article/details/81201494">filter详细信息</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/50445145">filter详细信息</a></p>
 <h2 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h2><p>如果服务器传入数据库的数据是gbk等宽字节编码，可以在特殊字符之前增加一个十六进制字节，和转义符构成一个汉字字符，从而把转义符吃掉。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42040292/article/details/90719507">宽字节注入</a><br><strong>Referer: 服务器伪造</strong><br><strong>X-Forwarded-For:用于修改ip</strong></p>
 <p><strong>常见的网站源码备份文件后缀:</strong></p>
