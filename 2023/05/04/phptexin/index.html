@@ -1,0 +1,737 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="奇怪的奇怪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="web89123456789101112include(&quot;flag.php&quot;);highlight_file(__FILE__);if(isset($_GET[&amp;#x27;num&amp;#x27;]))&amp;#123;    $num &#x3D; $_GET[&amp;#x27;num&amp;#x27;];    if(preg_match(&quot;&#x2F;[0-9]&#x2F;&quot;, $num))&amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php特性">
+<meta property="og:url" content="http://example.com/2023/05/04/phptexin/index.html">
+<meta property="og:site_name" content="奇怪的亚索">
+<meta property="og:description" content="web89123456789101112include(&quot;flag.php&quot;);highlight_file(__FILE__);if(isset($_GET[&amp;#x27;num&amp;#x27;]))&amp;#123;    $num &#x3D; $_GET[&amp;#x27;num&amp;#x27;];    if(preg_match(&quot;&#x2F;[0-9]&#x2F;&quot;, $num))&amp;#123;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/00.png">
+<meta property="og:image" content="http://example.com/images/232.png">
+<meta property="article:published_time" content="2023-05-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-07T14:13:29.234Z">
+<meta property="article:author" content="奇怪的奇怪">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/00.png">
+  
+  
+  
+  <title>php特性 - 奇怪的亚索</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","app_key":"2jVxSBuNhzKC1JEOZN2aZTgr","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>奇怪的亚索</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="php特性"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-04 00:00" pubdate>
+          2023年5月4日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          43 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">php特性</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="web89"><a href="#web89" class="headerlink" title="web89"></a>web89</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">include</span>(<span class="hljs-string">&quot;flag.php&quot;</span>);<br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;num&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$num</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;num&#x27;</span>];<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&quot;/[0-9]/&quot;</span>, <span class="hljs-variable">$num</span>))&#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;no no no!&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">intval</span>(<span class="hljs-variable">$num</span>))&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-variable">$flag</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>查看代码发现<br>preg_match过滤0-9，即发现有0-9，就输出no no no，然而intval函数的作用是返回变量的整数值，两者相互矛盾</p>
+<p>这里可以通过数组绕过，构造payload：?num[]&#x3D;<br><img src="/images/00.png" srcset="/img/loading.gif" lazyload></p>
+<p>获得flag</p>
+<h2 id="web90"><a href="#web90" class="headerlink" title="web90"></a>web90</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">include</span>(<span class="hljs-string">&quot;flag.php&quot;</span>);<br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;num&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$num</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;num&#x27;</span>];<br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable">$num</span>===<span class="hljs-string">&quot;4476&quot;</span>)&#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;no no no!&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">intval</span>(<span class="hljs-variable">$num</span>,<span class="hljs-number">0</span>)===<span class="hljs-number">4476</span>)&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-variable">$flag</span>;<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">intval</span>(<span class="hljs-variable">$num</span>,<span class="hljs-number">0</span>);<br>    &#125;<br>&#125; <br></code></pre></td></tr></table></figure>
+
+<p>查看源码发现，第一个if是验证num是否存在，第二个if验证num是否为4476，如果是就出输出nonono，但第三个if是验证num<strong>取整</strong>后是否为4476，所以我们可以随便取一个4476.0-9，经过intval取整后即为4476符合条件，输出flag</p>
+<h2 id="web91"><a href="#web91" class="headerlink" title="web91"></a>web91</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-title function_ invoke__">show_source</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-keyword">include</span>(<span class="hljs-string">&#x27;flag.php&#x27;</span>);<br><span class="hljs-variable">$a</span>=<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;cmd&#x27;</span>];<br><span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&#x27;/^php$/im&#x27;</span>, <span class="hljs-variable">$a</span>))&#123;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&#x27;/^php$/i&#x27;</span>, <span class="hljs-variable">$a</span>))&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;hacker&#x27;</span>;<br>    &#125;<br>    <span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-variable">$flag</span>;<br>    &#125;<br>&#125;<br><span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;nonononono&#x27;</span>;<br>&#125; <br></code></pre></td></tr></table></figure>
+
+<p>查看源码<br>先看第一个if<br>preg_match()函数是用于一个正则表达式匹配<br>第一个if的意思是如果a的开头和结尾都是php，则进入下一个if<br>&#x2F;^php$&#x2F;im中 <strong>^</strong>表示开头 **$**表示结尾 &#x2F;i表示对大小写不敏感 &#x2F;m表示多行匹配</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">if</span><span class="hljs-params">(preg_match(<span class="hljs-string">&#x27;/^php$/i&#x27;</span>, <span class="hljs-variable">$a</span>)</span></span>)<br></code></pre></td></tr></table></figure>
+<p>这个if的意思是匹配a开头和结尾是php，不区分大小写，如果开头结尾为php，则输出hacker</p>
+<p>仔细对比发现，第二个if的过滤对比第一个少了一个多行匹配&#x2F;m，这可以用到Apache HTTPD换行解析漏洞<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_46091464/article/details/108278486">传送门</a><br>大概意思是：以前的1.php可以用1%0aphp访问，%0a表示换行符，那么综上所述，就可以绕过函数的过滤<br>构造payload：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">?<span class="hljs-attribute">cmd</span>=a%0aphp<br></code></pre></td></tr></table></figure>
+
+<p>a%0aphp,首先是preg_match中的$(匹配结尾)匹配a%0aphp中的换行符，这个时候会匹配到%0a(将%0a当作换行)，那么a%0aphp后面的php因为preg_match函数有个&#x2F;m(匹配多行)就是单独的一行了，满足第一个if，要求行开始和结尾都是php</p>
+<p>其次是第二个if，第二个if要求$a中开头和结尾没有php，而这个preg_match函数中没有&#x2F;m匹配多行，所以就直接匹配abc，abc不满足第二个if，所以输出flag<br><img src="/images/232.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="web92"><a href="#web92" class="headerlink" title="web92"></a>web92</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">include</span>(<span class="hljs-string">&quot;flag.php&quot;</span>);<br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;num&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$num</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;num&#x27;</span>];<br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable">$num</span>==<span class="hljs-number">4476</span>)&#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;no no no!&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">intval</span>(<span class="hljs-variable">$num</span>,<span class="hljs-number">0</span>)==<span class="hljs-number">4476</span>)&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-variable">$flag</span>;<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">intval</span>(<span class="hljs-variable">$num</span>,<span class="hljs-number">0</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>解题方式与90题一样，第一个if验证num是否合格，第三个if则是如果num取整后等于4476则输出flag,这里可以?num&#x3D;4476.(1-9都可以)</p>
+<h2 id="web93"><a href="#web93" class="headerlink" title="web93"></a>web93</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">include</span>(<span class="hljs-string">&quot;flag.php&quot;</span>);<br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;num&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$num</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;num&#x27;</span>];<br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable">$num</span>==<span class="hljs-number">4476</span>)&#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;no no no!&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&quot;/[a-z]/i&quot;</span>, <span class="hljs-variable">$num</span>))&#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;no no no!&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">intval</span>(<span class="hljs-variable">$num</span>,<span class="hljs-number">0</span>)==<span class="hljs-number">4476</span>)&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-variable">$flag</span>;<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">intval</span>(<span class="hljs-variable">$num</span>,<span class="hljs-number">0</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>与92题解题方法一样，不同点在于93题加入了一个if函数来筛选，其实也不影响原本做题思路，加入了preg_match函数，作用是如果出现了a-z|A-Z的字符，就会输出nonono<br>下面还有一个函数intval，若num取整后等于4476，则输出flag，输入?num&#x3D;4476.2获取flag</p>
+<h2 id="web94"><a href="#web94" class="headerlink" title="web94"></a>web94</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">include</span>(<span class="hljs-string">&quot;flag.php&quot;</span>);<br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;num&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$num</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;num&#x27;</span>];<br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable">$num</span>===<span class="hljs-string">&quot;4476&quot;</span>)&#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;no no no!&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&quot;/[a-z]/i&quot;</span>, <span class="hljs-variable">$num</span>))&#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;no no no!&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">if</span>(!<span class="hljs-title function_ invoke__">strpos</span>(<span class="hljs-variable">$num</span>, <span class="hljs-string">&quot;0&quot;</span>))&#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;no no no!&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">intval</span>(<span class="hljs-variable">$num</span>,<span class="hljs-number">0</span>)===<span class="hljs-number">4476</span>)&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-variable">$flag</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>本题与前几题并无太大区别，我们注意到本题添加了一个if语句，strops(string，find，start)用于检测字符串在另一字符串出现的位置，满足strpos($num, “0”)语句的条件是num里的数有0返回true，没0返回flase，需要注意以下这个函数前面有一个！号，如果我们要绕过这个if语句，就需要使我们的num里含有0，这样就会绕过这个if，同时下一个取整函数也不会耽搁?num&#x3D;4476.01 or ?num&#x3D;4476.0皆可</p>
+<h2 id="web95"><a href="#web95" class="headerlink" title="web95"></a>web95</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">include</span>(<span class="hljs-string">&quot;flag.php&quot;</span>);<br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;num&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$num</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;num&#x27;</span>];<br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable">$num</span>==<span class="hljs-number">4476</span>)&#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;no no no!&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&quot;/[a-z]|\./i&quot;</span>, <span class="hljs-variable">$num</span>))&#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;no no no!!&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">if</span>(!<span class="hljs-title function_ invoke__">strpos</span>(<span class="hljs-variable">$num</span>, <span class="hljs-string">&quot;0&quot;</span>))&#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;no no no!!!&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">intval</span>(<span class="hljs-variable">$num</span>,<span class="hljs-number">0</span>)===<span class="hljs-number">4476</span>)&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-variable">$flag</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这次的preg_match函数不仅把字母过滤了还把.给过滤了，这样我们就不能进行上一题的操作了，我们可以利用进制转换的便利，这里我们可以用010574(4476的八进制)绕过，去看了看intval函数的发现最开头可以如果是+还是可以识别为原数，so，payload&#x3D;?num&#x3D;+010574</p>
+<h2 id="web96"><a href="#web96" class="headerlink" title="web96"></a>web96</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs php"><br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;u&#x27;</span>]))&#123;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;u&#x27;</span>]==<span class="hljs-string">&#x27;flag.php&#x27;</span>)&#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;no no no&quot;</span>);<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;u&#x27;</span>]);<br>    &#125;<br><br><br>&#125; <br></code></pre></td></tr></table></figure>
+<p>第二个if表明了不能直接以相对路径读取，那么我们可以用绝对路径读<br>payload:?u&#x3D;&#x2F;var&#x2F;www&#x2F;html&#x2F;flag.php<br>或者也可以返回上一级然后再回来读取<br>payload:?u&#x3D;..&#x2F;html&#x2F;flag.php<br>或者<br>payload:?u&#x3D;.&#x2F;flag.php</p>
+<h2 id="web97"><a href="#web97" class="headerlink" title="web97"></a>web97</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">include</span>(<span class="hljs-string">&quot;flag.php&quot;</span>);<br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;a&#x27;</span>]) <span class="hljs-keyword">and</span> <span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;b&#x27;</span>])) &#123;<br><span class="hljs-keyword">if</span> (<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;a&#x27;</span>] != <span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;b&#x27;</span>])<br><span class="hljs-keyword">if</span> (<span class="hljs-title function_ invoke__">md5</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;a&#x27;</span>]) === <span class="hljs-title function_ invoke__">md5</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;b&#x27;</span>]))<br><span class="hljs-keyword">echo</span> <span class="hljs-variable">$flag</span>;<br><span class="hljs-keyword">else</span><br><span class="hljs-keyword">print</span> <span class="hljs-string">&#x27;Wrong.&#x27;</span>;<br>&#125; <br></code></pre></td></tr></table></figure>
+<p>这一关使用MD5碰撞<br>而且使post方式所以要在hackbar里的post data里输入<br>我们这里使用数组的方式绕过，payload：a[]&#x3D;1 &amp; b[]&#x3D;2<br>可以看到页面上出现了warning，但也显示了flag，这是因为PHP对无法md5加密的东西不加密，结果为NULL，虽然会报错，但是null&#x3D;null，逻辑关系为True。所以可以输出flag。</p>
+<h2 id="web98"><a href="#web98" class="headerlink" title="web98"></a>web98</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">include</span>(<span class="hljs-string">&quot;flag.php&quot;</span>);<br><span class="hljs-variable">$_GET</span>?<span class="hljs-variable">$_GET</span>=&amp;<span class="hljs-variable">$_POST</span>:<span class="hljs-string">&#x27;flag&#x27;</span>;<br><span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;flag&#x27;</span>]==<span class="hljs-string">&#x27;flag&#x27;</span>?<span class="hljs-variable">$_GET</span>=&amp;<span class="hljs-variable">$_COOKIE</span>:<span class="hljs-string">&#x27;flag&#x27;</span>;<br><span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;flag&#x27;</span>]==<span class="hljs-string">&#x27;flag&#x27;</span>?<span class="hljs-variable">$_GET</span>=&amp;<span class="hljs-variable">$_SERVER</span>:<span class="hljs-string">&#x27;flag&#x27;</span>;<br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;HTTP_FLAG&#x27;</span>]==<span class="hljs-string">&#x27;flag&#x27;</span>?<span class="hljs-variable">$flag</span>:<span class="hljs-keyword">__FILE__</span>); <br></code></pre></td></tr></table></figure>
+
+<p>考点：变量覆盖、三元运算符、&amp;在php中的应用作用<br>第一句的意思是如果存在GET请求则引用POST请求的内容<br>所以我们url栏中随便填一填<br>然后再在hackbar上的post data输入关键句HTTP_FLAG&#x3D;flag<br>这样就成功回显了flag<br>所以第一句存在变量覆盖的效果，所以GET请求不管给什么东西都会被post请求覆盖掉</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>php特性</div>
+      <div>http://example.com/2023/05/04/phptexin/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>奇怪的奇怪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月4日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/05/07/php/" title="常见PHP语法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">常见PHP语法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/25/ctfweb/" title="ctf_web">
+                        <span class="hidden-mobile">ctf_web</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","appKey":"2jVxSBuNhzKC1JEOZN2aZTgr","path":"window.location.pathname","placeholder":"说点什么","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客量 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
