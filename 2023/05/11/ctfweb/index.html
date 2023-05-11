@@ -42,7 +42,7 @@
 <meta property="og:image" content="http://example.com/images/23333.png">
 <meta property="og:image" content="http://example.com/images/258.png">
 <meta property="article:published_time" content="2023-05-10T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-11T12:03:25.950Z">
+<meta property="article:modified_time" content="2023-05-11T12:14:01.050Z">
 <meta property="article:author" content="奇怪的奇怪">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/images/fuck.png">
@@ -255,7 +255,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.3k 字
+          7.2k 字
         
       </span>
     
@@ -266,7 +266,7 @@
         
         
         
-          61 分钟
+          60 分钟
         
       </span>
     
@@ -429,12 +429,10 @@
 <p>点击取消，自动下载源码文件index.phps</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>		<span class="hljs-variable">$flag</span>=<span class="hljs-string">&quot;&quot;</span>;<br>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">replaceSpecialChar</span>(<span class="hljs-params"><span class="hljs-variable">$strParam</span></span>)</span>&#123;<br>             <span class="hljs-variable">$regex</span> = <span class="hljs-string">&quot;/(select|from|where|join|sleep|and|\s|union|,)/i&quot;</span>;<br>             <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">preg_replace</span>(<span class="hljs-variable">$regex</span>,<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-variable">$strParam</span>);<br>        &#125;<br>        <span class="hljs-keyword">if</span> (!<span class="hljs-variable">$con</span>)<br>        &#123;<br>            <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;Could not connect: &#x27;</span> . <span class="hljs-title function_ invoke__">mysqli_error</span>());<br>        &#125;<br>		<span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">strlen</span>(<span class="hljs-variable">$username</span>)!=<span class="hljs-title function_ invoke__">strlen</span>(<span class="hljs-title function_ invoke__">replaceSpecialChar</span>(<span class="hljs-variable">$username</span>)))&#123;<br>			<span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;sql inject error&quot;</span>);<br>		&#125;<br>		<span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">strlen</span>(<span class="hljs-variable">$password</span>)!=<span class="hljs-title function_ invoke__">strlen</span>(<span class="hljs-title function_ invoke__">replaceSpecialChar</span>(<span class="hljs-variable">$password</span>)))&#123;<br>			<span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;sql inject error&quot;</span>);<br>		&#125;<br>		<span class="hljs-variable">$sql</span>=<span class="hljs-string">&quot;select * from user where username = &#x27;<span class="hljs-subst">$username</span>&#x27;&quot;</span>;<br>		<span class="hljs-variable">$result</span>=<span class="hljs-title function_ invoke__">mysqli_query</span>(<span class="hljs-variable">$con</span>,<span class="hljs-variable">$sql</span>);<br>			<span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">mysqli_num_rows</span>(<span class="hljs-variable">$result</span>)&gt;<span class="hljs-number">0</span>)&#123;<br>					<span class="hljs-keyword">while</span>(<span class="hljs-variable">$row</span>=<span class="hljs-title function_ invoke__">mysqli_fetch_assoc</span>(<span class="hljs-variable">$result</span>))&#123;<br>						<span class="hljs-keyword">if</span>(<span class="hljs-variable">$password</span>==<span class="hljs-variable">$row</span>[<span class="hljs-string">&#x27;password&#x27;</span>])&#123;<br>							<span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;登陆成功&lt;br&gt;&quot;</span>;<br>							<span class="hljs-keyword">echo</span> <span class="hljs-variable">$flag</span>;<br>						&#125;<br><br>					 &#125;<br>			&#125;<br>    <span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
 
-<pre><code class="hljs">若要单纯绕过$regex = &quot;/(select|from|where|join|sleep|and|\s|union|,)/i&quot;;这个过来替换，用双写绕过即可，但下面还有限制，查询出来的值要和我们post的值相等：
-</code></pre>
   <figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs nsis">if(<span class="hljs-keyword">strlen</span>(<span class="hljs-variable">$username</span>)!=<span class="hljs-keyword">strlen</span>(replaceSpecialChar(<span class="hljs-variable">$username</span>)))&#123;<br>	die(<span class="hljs-string">&quot;sql inject error&quot;</span>)<span class="hljs-comment">;</span><br>&#125;<br>if(<span class="hljs-keyword">strlen</span>(<span class="hljs-variable">$password</span>)!=<span class="hljs-keyword">strlen</span>(replaceSpecialChar(<span class="hljs-variable">$password</span>)))&#123;<br>	die(<span class="hljs-string">&quot;sql inject error&quot;</span>)<span class="hljs-comment">;</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
+<p>   若要单纯绕过$regex &#x3D; “&#x2F;(select|from|where|join|sleep|and|\s|union|,)&#x2F;i”;这个过来替换，用双写绕过即可，<br>    但下面还有限制，查询出来的值要和我们post的值相等：</p>
 <p>  这就使得双写不能用，此处只能用 <strong>WITH ROLLUP</strong> 进行绕过<br>   <strong>with rollup</strong> 可以对 group by 分组结果再次进行分组，并在最后添加一行数据用于展示结果(对group by 未指定的字段进行求和汇总，而group by指定的分组字段则用null占位)</p>
-<p>   我们使用万能钥匙a’&#x2F;<strong>&#x2F;or&#x2F;</strong>&#x2F;ture&#x2F;<strong>&#x2F;#使SQL成立绕过用户名之后，后台的SQL会查询出所有的用户信息，然后依次判断查询处的用户名对应的密码和我们输入的密码是否相同，这时候我们使用with rollup 对group by 分组的结果再次进行求和统计，由于with rollup 不会对group by 分组的字段(password)进行统计，所以会在返回结果的最后一行用null来填充password，这样一来我们的返回结果中就有了一个值为null的password，只要我们登录的时候password输入框什么都不输，那么我输入的password的值就是null，跟查询出的用户密码相同(null&#x3D;&#x3D;null)，从而登录成功。<br>   payload：<br>   a’&#x2F;</strong>&#x2F;or&#x2F;<strong>&#x2F;true&#x2F;</strong>&#x2F;group&#x2F;<strong>&#x2F;by&#x2F;</strong>&#x2F;password&#x2F;<strong>&#x2F;with&#x2F;</strong>&#x2F;rollup&#x2F;**&#x2F;#<br>   得到flag</p>
+<p>   我们使用万能钥匙<code>(a&#39;/**/or/**/ture/**/#)</code>使SQL成立绕过用户名之后，后台的SQL会查询出所有的用户信息，然后依次判断查询处的用户名对应的密码和我们输入的密码是否相同，这时候我们使用with rollup 对group by 分组的结果再次进行求和统计，由于with rollup 不会对group by 分组的字段(password)进行统计，所以会在返回结果的最后一行用null来填充password，这样一来我们的返回结果中就有了一个值为null的password，只要我们登录的时候password输入框什么都不输，那么我输入的password的值就是null，跟查询出的用户密码相同(null&#x3D;&#x3D;null)，从而登录成功。<br>   payload：<br>   <code>a&#39;/**/or/**/true/**/group/**/by/**/password/**/with/**/rollup/**/#</code><br>   得到flag</p>
 
                 
               </div>
