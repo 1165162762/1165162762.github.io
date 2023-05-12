@@ -19,7 +19,7 @@
     <meta name="description" content="web1ctrl+u查看源代码即可找到base64编码形式的flag web2：sql注入输入万能钥匙使用burp suite抓包在burp suite里右键选择send to repeater使用联合查询来查询回显位置 11&amp;#x27; or 1&#x3D;1 union select 1,2,3# 接着就是爆库 11&amp;#x27; or 1&#x3D;1 union select 1,database(),3# 爆">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ctf_web">
-<meta property="og:url" content="http://example.com/2023/05/11/ctfweb/index.html">
+<meta property="og:url" content="http://example.com/2023/05/12/ctfweb/index.html">
 <meta property="og:site_name" content="奇怪的亚索">
 <meta property="og:description" content="web1ctrl+u查看源代码即可找到base64编码形式的flag web2：sql注入输入万能钥匙使用burp suite抓包在burp suite里右键选择send to repeater使用联合查询来查询回显位置 11&amp;#x27; or 1&#x3D;1 union select 1,2,3# 接着就是爆库 11&amp;#x27; or 1&#x3D;1 union select 1,database(),3# 爆">
 <meta property="og:locale" content="zh_CN">
@@ -41,8 +41,15 @@
 <meta property="og:image" content="http://example.com/images/2333.png">
 <meta property="og:image" content="http://example.com/images/23333.png">
 <meta property="og:image" content="http://example.com/images/258.png">
-<meta property="article:published_time" content="2023-05-10T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-11T12:14:01.050Z">
+<meta property="og:image" content="http://example.com/images/259.png">
+<meta property="og:image" content="http://example.com/images/K.png">
+<meta property="og:image" content="http://example.com/images/xx.png">
+<meta property="og:image" content="http://example.com/images/0102.png">
+<meta property="og:image" content="http://example.com/images/nt.png">
+<meta property="og:image" content="http://example.com/images/MC.png">
+<meta property="og:image" content="http://example.com/images/BM.png">
+<meta property="article:published_time" content="2023-05-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-12T12:23:19.898Z">
 <meta property="article:author" content="奇怪的奇怪">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/images/fuck.png">
@@ -243,8 +250,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-11 00:00" pubdate>
-          2023年5月11日 凌晨
+        <time datetime="2023-05-12 00:00" pubdate>
+          2023年5月12日 凌晨
         </time>
       </span>
     
@@ -255,7 +262,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.2k 字
+          8.3k 字
         
       </span>
     
@@ -266,7 +273,7 @@
         
         
         
-          60 分钟
+          70 分钟
         
       </span>
     
@@ -432,7 +439,19 @@
   <figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs nsis">if(<span class="hljs-keyword">strlen</span>(<span class="hljs-variable">$username</span>)!=<span class="hljs-keyword">strlen</span>(replaceSpecialChar(<span class="hljs-variable">$username</span>)))&#123;<br>	die(<span class="hljs-string">&quot;sql inject error&quot;</span>)<span class="hljs-comment">;</span><br>&#125;<br>if(<span class="hljs-keyword">strlen</span>(<span class="hljs-variable">$password</span>)!=<span class="hljs-keyword">strlen</span>(replaceSpecialChar(<span class="hljs-variable">$password</span>)))&#123;<br>	die(<span class="hljs-string">&quot;sql inject error&quot;</span>)<span class="hljs-comment">;</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <p>   若要单纯绕过$regex &#x3D; “&#x2F;(select|from|where|join|sleep|and|\s|union|,)&#x2F;i”;这个过来替换，用双写绕过即可，<br>    但下面还有限制，查询出来的值要和我们post的值相等：</p>
 <p>  这就使得双写不能用，此处只能用 <strong>WITH ROLLUP</strong> 进行绕过<br>   <strong>with rollup</strong> 可以对 group by 分组结果再次进行分组，并在最后添加一行数据用于展示结果(对group by 未指定的字段进行求和汇总，而group by指定的分组字段则用null占位)</p>
-<p>   我们使用万能钥匙<code>(a&#39;/**/or/**/ture/**/#)</code>使SQL成立绕过用户名之后，后台的SQL会查询出所有的用户信息，然后依次判断查询处的用户名对应的密码和我们输入的密码是否相同，这时候我们使用with rollup 对group by 分组的结果再次进行求和统计，由于with rollup 不会对group by 分组的字段(password)进行统计，所以会在返回结果的最后一行用null来填充password，这样一来我们的返回结果中就有了一个值为null的password，只要我们登录的时候password输入框什么都不输，那么我输入的password的值就是null，跟查询出的用户密码相同(null&#x3D;&#x3D;null)，从而登录成功。<br>   payload：<br>   <code>a&#39;/**/or/**/true/**/group/**/by/**/password/**/with/**/rollup/**/#</code><br>   得到flag</p>
+<p>   我们使用万能钥匙<code>(a&#39;/**/or/**/ture/**/#)</code>使SQL成立绕过用户名之后，后台的SQL会查询出所有的用户信息，然后依次判断查询处的用户名对应的密码和我们输入的密码是否相同，这时候我们使用with rollup 对group by 分组的结果再次进行求和统计，由于with rollup 不会对group by 分组的字段(password)进行统计，所以会在返回结果的最后一行用null来填充password，这样一来我们的返回结果中就有了一个值为null的password，只要我们登录的时候password输入框什么都不输，那么我输入的password的值就是null，跟查询出的用户密码相同(null&#x3D;&#x3D;null)，从而登录成功。<br>   payload：<br>   <figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nix">a&#x27;<span class="hljs-comment">/**/</span><span class="hljs-literal">or</span><span class="hljs-comment">/**/</span><span class="hljs-literal">true</span><span class="hljs-comment">/**/</span>group<span class="hljs-comment">/**/</span>by<span class="hljs-comment">/**/</span>password<span class="hljs-comment">/**/</span><span class="hljs-keyword">with</span><span class="hljs-comment">/**/</span>rollup<span class="hljs-comment">/**/</span><span class="hljs-comment">#</span><br></code></pre></td></tr></table></figure></p>
+<p>   得到flag</p>
+<h2 id="web11"><a href="#web11" class="headerlink" title="web11"></a>web11</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">replaceSpecialChar</span>(<span class="hljs-params"><span class="hljs-variable">$strParam</span></span>)</span>&#123;<br>             <span class="hljs-variable">$regex</span> = <span class="hljs-string">&quot;/(select|from|where|join|sleep|and|\s|union|,)/i&quot;</span>;<br>             <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">preg_replace</span>(<span class="hljs-variable">$regex</span>,<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-variable">$strParam</span>);<br>        &#125;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">strlen</span>(<span class="hljs-variable">$password</span>)!=<span class="hljs-title function_ invoke__">strlen</span>(<span class="hljs-title function_ invoke__">replaceSpecialChar</span>(<span class="hljs-variable">$password</span>)))&#123;<br>            <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;sql inject error&quot;</span>);<br>        &#125;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-variable">$password</span>==<span class="hljs-variable">$_SESSION</span>[<span class="hljs-string">&#x27;password&#x27;</span>])&#123;<br>            <span class="hljs-keyword">echo</span> <span class="hljs-variable">$flag</span>;<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;error&quot;</span>;<br>        &#125;<br></code></pre></td></tr></table></figure>
+
+
+<p>本题和web10有很多相同的地方，但是这一题出flag的条件是<code>$password==$_SESSION[&#39;password&#39;]</code> password是我们自己输入的，session中的password存储在本地，所以我们只要输入空密码，并且将本地的session删除即可成功绕过,获得flag<br><img src="/images/259.png" srcset="/img/loading.gif" lazyload></p>
+<p>Session是另一种记录客户状态的机制，它是在服务器上面，客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上。这就是Session。客户端浏览器再次访问时只需要从该Session中查找该客户的状态就可以了。<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/l199616j/p/11195667.html">session与cookie传送门</a></p>
+<p>或者我们也可以用burp suite来做题<br>先抓登录的包<br><img src="/images/K.png" srcset="/img/loading.gif" lazyload><br>此时我们可以看到密码是123456，但提交了这个密码又是错误的，这里我们把cookie的内容删除了，密码123456也删除掉<br><img src="/images/xx.png" srcset="/img/loading.gif" lazyload><br>大功告成！</p>
+<h2 id="web12"><a href="#web12" class="headerlink" title="web12"></a>web12</h2><p>打开网站发现没有可用的注入点，应该不是注入了，ctrl+u查看源码，发现提示<code>?cmd=</code><br><img src="/images/0102.png" srcset="/img/loading.gif" lazyload></p>
+<p>在网站上输入<code>?cmd=phpinfo();</code> (phpinfo函数可以显示出PHP 所有相关信息。是排查配置php是是否出错或漏配置模块的主要方式之一！)发现有回显<br><img src="/images/nt.png" srcset="/img/loading.gif" lazyload></p>
+<p>这里会用到一个php函数glob();<br>glob()函数返回匹配指定模式的文件名或目录。<br>例：<br>glob(“*”)匹配任意文件<br>glob(“.txt”)匹配以txt为后缀的文件</p>
+<p>有了这个方法我们可以先把当前目录下所有的文件找出来看看有没有可用的，<br>输入<code>?cmd=print_r(glob(&quot;*&quot;));</code><br>此时页面显示了如下内容<br><img src="/images/MC.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们试一下第一个php文件<br>这是我们使用highlight_file()函数显示php文件<br><img src="/images/BM.png" srcset="/img/loading.gif" lazyload><br>获得flag</p>
 
                 
               </div>
@@ -451,7 +470,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>ctf_web</div>
-      <div>http://example.com/2023/05/11/ctfweb/</div>
+      <div>http://example.com/2023/05/12/ctfweb/</div>
     </div>
     <div class="license-meta">
       
@@ -463,7 +482,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年5月11日</div>
+          <div>2023年5月12日</div>
         </div>
       
       
@@ -499,8 +518,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/07/php/" title="常见PHP语法">
-                        <span class="hidden-mobile">常见PHP语法</span>
+                      <a href="/2023/05/10/phptexin/" title="php特性">
+                        <span class="hidden-mobile">php特性</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
