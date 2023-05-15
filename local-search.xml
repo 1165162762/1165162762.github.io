@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>litctf_2023</title>
+    <link href="/2023/05/15/litctf_2023/"/>
+    <url>/2023/05/15/litctf_2023/</url>
+    
+    <content type="html"><![CDATA[<h2 id="导弹迷踪"><a href="#导弹迷踪" class="headerlink" title="导弹迷踪"></a>导弹迷踪</h2><p>签到题<br>题目描述已经告诉了答案，只要通过第六关就能拿到flag，也有一种方法，<br>ctrl+u查看源代码<br>拉到最下面，看到了一堆js文件，挨个访问，最后我们再game.js文件发现了很多leval关键词，ctrl+f全局搜索level<br>发现了flag<br><img src="/images/A9.png"></p><h2 id="1zjs"><a href="#1zjs" class="headerlink" title="1zjs"></a>1zjs</h2><p>打开题目是一个可操作的魔方，它并没有告诉获得flag的方式，而且魔方是没有打乱的，所以好像和魔方并没有什么关系，我们打开源码<br>突然想到作者在题目描述里提到了js<br><img src="/images/GJ.png"><br>果然源码中有一个js文件可以点击<br><img src="/images/VG.png"><br>点进去，emmm。。。好多代码，不要慌!尝试从js或注释或php里入手，ctrl+f全局搜索一下，js没有有用的信息。搜索注释，太多了，最后实在没办法再考虑。搜索php，我们发现有一个被注释的php文件<br><img src="/images/QI.png"><br>在url中输入刚刚的php文件试试<br><img src="/images/KC.png"><br>虽然看起来像乱码，但php应该不会乱来，搜索查阅一下，发现这是jsfuck加密<br><a href="http://www.hiencode.com/jsfuck.html">jsfuck</a><br>密码搞里头<br><img src="/images/EE.png"><br>得到flag，记得要把flag中的[]手动删除再提交才能成功通过</p><h2 id="PHP是世界上最好的语言"><a href="#PHP是世界上最好的语言" class="headerlink" title="PHP是世界上最好的语言"></a>PHP是世界上最好的语言</h2><p>题目描述里作者给我们透漏flag位于根目录<br>给了一个注入点，尝试一下能不能命令执行，输入system(“ls”)<br><img src="/images/RR.png"><br>发现并没有flag，这时候想到了作者的提示，直接system(“ls &#x2F;“)<br><img src="/images/5K.png"><br>成功发现flag文件，cat它，system(“cat &#x2F;flag”);<br><img src="/images/2U.png"><br>成功获取flag</p><h2 id="Ping"><a href="#Ping" class="headerlink" title="Ping"></a>Ping</h2><p>直接system(“ls”)不行<br>输入一个正常ip：127.0.0.1<br><img src="/images/F.png"><br>有显示点，用burpsuite抓包试试，发现ip是command显示的，修改一下command的内容<br><img src="/images/P.png"><br>没有发现flag，返回上一级看看<br><img src="/images/T5.png"><br>成功找到</p><p>找到直接抓就可以了<br><img src="/images/U.png"><br>成功获取flag</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>web入门:文件上传</title>
     <link href="/2023/05/14/wenjianshangchuan/"/>
     <url>/2023/05/14/wenjianshangchuan/</url>
