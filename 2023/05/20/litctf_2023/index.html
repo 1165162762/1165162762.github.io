@@ -16,12 +16,12 @@
   <meta name="author" content="奇怪的奇怪">
   <meta name="keywords" content="">
   
-    <meta name="description" content="导弹迷踪签到题题目描述已经告诉了答案，只要通过第六关就能拿到flag，也有一种方法，ctrl+u查看源代码拉到最下面，看到了一堆js文件，挨个访问，最后我们再game.js文件发现了很多leval关键词，ctrl+f全局搜索level发现了flag 1zjs打开题目是一个可操作的魔方，它并没有告诉获得flag的方式，而且魔方是没有打乱的，所以好像和魔方并没有什么关系，我们打开源码突然想到作者在题目">
+    <meta name="description" content="导弹迷踪题目描述已经告诉了答案，只要通过第六关就能拿到flag，也有一种方法，ctrl+u查看源代码拉到最下面，看到了一堆js文件，挨个访问，最后我们再game.js文件发现了很多leval关键词，ctrl+f全局搜索level发现了flag 1zjs打开题目是一个可操作的魔方，它并没有告诉获得flag的方式，而且魔方是没有打乱的，所以好像和魔方并没有什么关系，我们打开源码突然想到作者在题目描述里">
 <meta property="og:type" content="article">
 <meta property="og:title" content="litctf_2023">
-<meta property="og:url" content="http://example.com/2023/05/15/litctf_2023/index.html">
+<meta property="og:url" content="http://example.com/2023/05/20/litctf_2023/index.html">
 <meta property="og:site_name" content="奇怪的亚索">
-<meta property="og:description" content="导弹迷踪签到题题目描述已经告诉了答案，只要通过第六关就能拿到flag，也有一种方法，ctrl+u查看源代码拉到最下面，看到了一堆js文件，挨个访问，最后我们再game.js文件发现了很多leval关键词，ctrl+f全局搜索level发现了flag 1zjs打开题目是一个可操作的魔方，它并没有告诉获得flag的方式，而且魔方是没有打乱的，所以好像和魔方并没有什么关系，我们打开源码突然想到作者在题目">
+<meta property="og:description" content="导弹迷踪题目描述已经告诉了答案，只要通过第六关就能拿到flag，也有一种方法，ctrl+u查看源代码拉到最下面，看到了一堆js文件，挨个访问，最后我们再game.js文件发现了很多leval关键词，ctrl+f全局搜索level发现了flag 1zjs打开题目是一个可操作的魔方，它并没有告诉获得flag的方式，而且魔方是没有打乱的，所以好像和魔方并没有什么关系，我们打开源码突然想到作者在题目描述里">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/A9.png">
 <meta property="og:image" content="http://example.com/images/GJ.png">
@@ -36,8 +36,20 @@
 <meta property="og:image" content="http://example.com/images/P.png">
 <meta property="og:image" content="http://example.com/images/T5.png">
 <meta property="og:image" content="http://example.com/images/U.png">
-<meta property="article:published_time" content="2023-05-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-15T14:37:04.896Z">
+<meta property="og:image" content="http://example.com/images/T2O.png">
+<meta property="og:image" content="http://example.com/images/LW.png">
+<meta property="og:image" content="http://example.com/images/N69.png">
+<meta property="og:image" content="http://example.com/images/SW.png">
+<meta property="og:image" content="http://example.com/images/HC.png">
+<meta property="og:image" content="http://example.com/images/H3S1.png">
+<meta property="og:image" content="http://example.com/images/POR.png">
+<meta property="og:image" content="http://example.com/images/G7.png">
+<meta property="og:image" content="http://example.com/images/9D.png">
+<meta property="og:image" content="http://example.com/images/S6.png">
+<meta property="og:image" content="http://example.com/images/shit.png">
+<meta property="og:image" content="http://example.com/images/dumu.png">
+<meta property="article:published_time" content="2023-05-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-20T14:00:03.115Z">
 <meta property="article:author" content="奇怪的奇怪">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/images/A9.png">
@@ -238,8 +250,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-15 00:00" pubdate>
-          2023年5月15日 凌晨
+        <time datetime="2023-05-20 00:00" pubdate>
+          2023年5月20日 凌晨
         </time>
       </span>
     
@@ -250,7 +262,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          705 字
+          1.9k 字
         
       </span>
     
@@ -261,7 +273,7 @@
         
         
         
-          6 分钟
+          16 分钟
         
       </span>
     
@@ -312,11 +324,18 @@
             
               <div class="markdown-body">
                 
-                <h2 id="导弹迷踪"><a href="#导弹迷踪" class="headerlink" title="导弹迷踪"></a>导弹迷踪</h2><p>签到题<br>题目描述已经告诉了答案，只要通过第六关就能拿到flag，也有一种方法，<br>ctrl+u查看源代码<br>拉到最下面，看到了一堆js文件，挨个访问，最后我们再game.js文件发现了很多leval关键词，ctrl+f全局搜索level<br>发现了flag<br><img src="/images/A9.png" srcset="/img/loading.gif" lazyload></p>
+                <h2 id="导弹迷踪"><a href="#导弹迷踪" class="headerlink" title="导弹迷踪"></a>导弹迷踪</h2><p>题目描述已经告诉了答案，只要通过第六关就能拿到flag，也有一种方法，<br>ctrl+u查看源代码<br>拉到最下面，看到了一堆js文件，挨个访问，最后我们再game.js文件发现了很多leval关键词，ctrl+f全局搜索level<br>发现了flag<br><img src="/images/A9.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="1zjs"><a href="#1zjs" class="headerlink" title="1zjs"></a>1zjs</h2><p>打开题目是一个可操作的魔方，它并没有告诉获得flag的方式，而且魔方是没有打乱的，所以好像和魔方并没有什么关系，我们打开源码<br>突然想到作者在题目描述里提到了js<br><img src="/images/GJ.png" srcset="/img/loading.gif" lazyload><br>果然源码中有一个js文件可以点击<br><img src="/images/VG.png" srcset="/img/loading.gif" lazyload><br>点进去，emmm。。。好多代码，不要慌!尝试从js或注释或php里入手，ctrl+f全局搜索一下，js没有有用的信息。搜索注释，太多了，最后实在没办法再考虑。搜索php，我们发现有一个被注释的php文件<br><img src="/images/QI.png" srcset="/img/loading.gif" lazyload><br>在url中输入刚刚的php文件试试<br><img src="/images/KC.png" srcset="/img/loading.gif" lazyload><br>虽然看起来像乱码，但php应该不会乱来，搜索查阅一下，发现这是jsfuck加密<br><a target="_blank" rel="noopener" href="http://www.hiencode.com/jsfuck.html">jsfuck</a><br>密码搞里头<br><img src="/images/EE.png" srcset="/img/loading.gif" lazyload><br>得到flag，记得要把flag中的[]手动删除再提交才能成功通过</p>
 <h2 id="PHP是世界上最好的语言"><a href="#PHP是世界上最好的语言" class="headerlink" title="PHP是世界上最好的语言"></a>PHP是世界上最好的语言</h2><p>题目描述里作者给我们透漏flag位于根目录<br>给了一个注入点，尝试一下能不能命令执行，输入system(“ls”)<br><img src="/images/RR.png" srcset="/img/loading.gif" lazyload><br>发现并没有flag，这时候想到了作者的提示，直接system(“ls &#x2F;“)<br><img src="/images/5K.png" srcset="/img/loading.gif" lazyload><br>成功发现flag文件，cat它，system(“cat &#x2F;flag”);<br><img src="/images/2U.png" srcset="/img/loading.gif" lazyload><br>成功获取flag</p>
 <h2 id="Ping"><a href="#Ping" class="headerlink" title="Ping"></a>Ping</h2><p>直接system(“ls”)不行<br>输入一个正常ip：127.0.0.1<br><img src="/images/F.png" srcset="/img/loading.gif" lazyload><br>有显示点，用burpsuite抓包试试，发现ip是command显示的，修改一下command的内容<br><img src="/images/P.png" srcset="/img/loading.gif" lazyload><br>没有发现flag，返回上一级看看<br><img src="/images/T5.png" srcset="/img/loading.gif" lazyload><br>成功找到</p>
 <p>找到直接抓就可以了<br><img src="/images/U.png" srcset="/img/loading.gif" lazyload><br>成功获取flag</p>
+<h2 id="我Flag呢？"><a href="#我Flag呢？" class="headerlink" title="我Flag呢？"></a>我Flag呢？</h2><p>题很简单，打开源码，最下面就是</p>
+<h2 id="Follow-me-and-hack-me"><a href="#Follow-me-and-hack-me" class="headerlink" title="Follow me and hack me"></a>Follow me and hack me</h2><p><img src="/images/T2O.png" srcset="/img/loading.gif" lazyload></p>
+<p>根据题意get：CTF&#x3D;Lit2023<br>POST：Challenge&#x3D;i’m_c0m1ng</p>
+<p><img src="/images/LW.png" srcset="/img/loading.gif" lazyload><br>在hackbar上操作，得到flag<br>输入 <a target="_blank" rel="noopener" href="http://www.zip/">www.zip</a> 可以查看源码，还有一个flag文件，但什么也没写</p>
+<h2 id="作业管理系统"><a href="#作业管理系统" class="headerlink" title="作业管理系统"></a>作业管理系统</h2><p>先进入源码查看，给了账户和密码<br>进入发现可以进行文件上传<br>那么我们上传一个带有木马的php文件试试<br>php文件内容为<?php eval($_POST['a']);?><br>上传成功后再url中输入你的php文件名以进入<br>打开中国蚁剑，复制刚才的url地址<br><img src="/images/N69.png" srcset="/img/loading.gif" lazyload><br>成功进入<br>接下来在文件中找flag就行了<br>还有一种方法是：<br>进入到你提交的文件后打开hackbar，用post提交分别输入<br>a&#x3D;system(“ls”);<br>a&#x3D;system(“ls &#x2F;“);<br>a&#x3D;system(“cat &#x2F;flag”);</p>
+<h2 id="vim-yyds"><a href="#vim-yyds" class="headerlink" title="vim yyds"></a>vim yyds</h2><p>vim编辑的index.php文件，在编辑状态强制退出终端，会在同目录下产生一个.index.php.swp文件，所以我们可以访问.index.php.swp，下载下来<br>当我们下载下来会发现都是一些乱码<br><img src="/images/SW.png" srcset="/img/loading.gif" lazyload><br>往下翻发现了我们需要的内容，但这些内容却不知道它们的次序与是否为完整内容<br>我们先提取关键字password与cmd都为post，password&#x3D;Give_Me_Your_Flag，但还有一个if ($_POST[‘password’] &#x3D;&#x3D;&#x3D; base64_encode($password)),把password内容编码为base64形式即可，接着我们再看eval(system($_POST[‘cmd’]));system在外面，意味着我们可以直接在cmd写命令，先让cmd&#x3D;ls试试<br><img src="/images/HC.png" srcset="/img/loading.gif" lazyload><br>可以看到，页面成功显示了命令执行的结果,接下来就到了熟悉的操作了，首先看看根目录，cmd&#x3D;ls &#x2F;<br><img src="/images/H3S1.png" srcset="/img/loading.gif" lazyload><br>发现flag，接下来cmd&#x3D;cat &#x2F;flag<br>即可得出flag的值</p>
+<h2 id="http-pro-max-plus"><a href="#http-pro-max-plus" class="headerlink" title="http pro max plus"></a>http pro max plus</h2><p>进入页面，只显示了一个**只允许本地访问，查看源码发现什么都没有，那么我们burpsuite抓包试试<br>只允许在本地使用的话我们先来个x-forwarded-for:127.0.0.1<br><img src="/images/POR.png" srcset="/img/loading.gif" lazyload><br>显示不行，那么我们换一种方式<br>client-ip: 127.0.0.1<br><img src="/images/G7.png" srcset="/img/loading.gif" lazyload><br>提示我们需要from pornhub.com<br>那我们再添加一个referer: pornhub.com<br><img src="/images/9D.png" srcset="/img/loading.gif" lazyload><br>接着页面再提示我们需要用chrome浏览器<br>所以我们把UA头改为Chrome<br><img src="/images/S6.png" srcset="/img/loading.gif" lazyload><br>这时有提示了需要开代理才行<br>那么我们再添加一个via:Clash.win<br><img src="/images/shit.png" srcset="/img/loading.gif" lazyload><br>获得了一个.php文件<br>访问它<br>进入了发现除了step2外并没有什么特别的东西<br>打开源码看看<br><img src="/images/dumu.png" srcset="/img/loading.gif" lazyload><br>emmm,又是一个线索<br>打开它，直接获得flag</p>
 
                 
               </div>
@@ -335,7 +354,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>litctf_2023</div>
-      <div>http://example.com/2023/05/15/litctf_2023/</div>
+      <div>http://example.com/2023/05/20/litctf_2023/</div>
     </div>
     <div class="license-meta">
       
@@ -347,7 +366,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年5月15日</div>
+          <div>2023年5月20日</div>
         </div>
       
       

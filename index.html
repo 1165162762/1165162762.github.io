@@ -243,15 +243,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/05/15/litctf_2023/" target="_self">
+        <a href="/2023/05/20/litctf_2023/" target="_self">
           litctf_2023
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/15/litctf_2023/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/20/litctf_2023/" target="_self">
         <div>
-          导弹迷踪签到题题目描述已经告诉了答案，只要通过第六关就能拿到flag，也有一种方法，ctrl+u查看源代码拉到最下面，看到了一堆js文件，挨个访问，最后我们再game.js文件发现了很多leval关键词，ctrl+f全局搜索level发现了flag 1zjs打开题目是一个可操作的魔方，它并没有告诉获得flag的方式，而且魔方是没有打乱的，所以好像和魔方并没有什么关系，我们打开源码突然想到作者在题目
+          导弹迷踪题目描述已经告诉了答案，只要通过第六关就能拿到flag，也有一种方法，ctrl+u查看源代码拉到最下面，看到了一堆js文件，挨个访问，最后我们再game.js文件发现了很多leval关键词，ctrl+f全局搜索level发现了flag 1zjs打开题目是一个可操作的魔方，它并没有告诉获得flag的方式，而且魔方是没有打乱的，所以好像和魔方并没有什么关系，我们打开源码突然想到作者在题目描述里
         </div>
       </a>
 
@@ -259,8 +259,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2023-05-15 00:00" pubdate>
-              2023-05-15
+            <time datetime="2023-05-20 00:00" pubdate>
+              2023-05-20
             </time>
           </div>
         
@@ -408,15 +408,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/04/27/phpweixieyi/" target="_self">
-          php伪协议🥰
+        <a href="/2023/04/27/wenjianbaohan/" target="_self">
+          web入门：文件包含🥰
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/27/phpweixieyi/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/27/wenjianbaohan/" target="_self">
         <div>
-          php伪协议是ctf中的一个考点，目前比较熟悉的伪协议有php:&#x2F;&#x2F;filter,php:&#x2F;&#x2F;input,data:&#x2F;&#x2F;text&#x2F;plain,file:&#x2F;&#x2F;。要成功应用伪协议需要php.ini文件的allow_url_fopen 默认开启       allow_url_include 默认关闭 file:&
+          web78123456if(isset($_GET[&#x27;file&#x27;]))&#123;    $file = $_GET[&#x27;file&#x27;];    include($file);&#125;else&#123;    highlight_file(__FILE__);&#125; include包含，尝试使用伪协议 1?file=php://filter/conv
         </div>
       </a>
 
@@ -441,15 +441,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/04/27/wenjianbaohan/" target="_self">
-          web入门：文件包含🥰
+        <a href="/2023/04/27/phpweixieyi/" target="_self">
+          php伪协议🥰
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/27/wenjianbaohan/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/27/phpweixieyi/" target="_self">
         <div>
-          web78123456if(isset($_GET[&#x27;file&#x27;]))&#123;    $file = $_GET[&#x27;file&#x27;];    include($file);&#125;else&#123;    highlight_file(__FILE__);&#125; include包含，尝试使用伪协议 1?file=php://filter/conv
+          php伪协议是ctf中的一个考点，目前比较熟悉的伪协议有php:&#x2F;&#x2F;filter,php:&#x2F;&#x2F;input,data:&#x2F;&#x2F;text&#x2F;plain,file:&#x2F;&#x2F;。要成功应用伪协议需要php.ini文件的allow_url_fopen 默认开启       allow_url_include 默认关闭 file:&
         </div>
       </a>
 
@@ -507,15 +507,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/04/19/minlinzhixinraoguo/" target="_self">
-          命令执行绕过小技巧
+        <a href="/2023/04/19/my-blogneirong/" target="_self">
+          每周报告
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/19/minlinzhixinraoguo/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/19/my-blogneirong/" target="_self">
         <div>
-          管道符windows 下：  | 直接执行后面的语句 || 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句 &amp; 前面和后面命令都要执行，无论前面真假 &amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令   Linux 下：  ; 前面和后面命令都要执行，无论前面真假 | 直接执行后面的语句 || 如果前面命令是错的那么就执行后面的语句，否则只执
+          时间盲注在通关sqllabs第9关与第10关时我们知道了时间盲注这一概念，用时间盲注来判断注入点是否正确，使用sleep延迟函数。if()函数				条件判断函数if(a,b,c)	   if判断句，a为条件，b、c为执行语句；如果a为真就执行b，a为假就执行c;sleep()函数			网页延迟n秒后，输出结果left（）函数             从左边数，取几个数例如：left（abcdef
         </div>
       </a>
 
@@ -540,15 +540,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/04/19/my-blogneirong/" target="_self">
-          每周报告
+        <a href="/2023/04/19/minlinzhixinraoguo/" target="_self">
+          命令执行绕过小技巧
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/19/my-blogneirong/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/19/minlinzhixinraoguo/" target="_self">
         <div>
-          时间盲注在通关sqllabs第9关与第10关时我们知道了时间盲注这一概念，用时间盲注来判断注入点是否正确，使用sleep延迟函数。if()函数				条件判断函数if(a,b,c)	   if判断句，a为条件，b、c为执行语句；如果a为真就执行b，a为假就执行c;sleep()函数			网页延迟n秒后，输出结果left（）函数             从左边数，取几个数例如：left（abcdef
+          管道符windows 下：  | 直接执行后面的语句 || 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句 &amp; 前面和后面命令都要执行，无论前面真假 &amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令   Linux 下：  ; 前面和后面命令都要执行，无论前面真假 | 直接执行后面的语句 || 如果前面命令是错的那么就执行后面的语句，否则只执
         </div>
       </a>
 
