@@ -243,6 +243,39 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/06/02/buuctf_web/" target="_self">
+          buuctf_web
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/06/02/buuctf_web/" target="_self">
+        <div>
+          [护网杯 2018]easy_tornado 1进入答题页面，发现三个超链接分别点击进去再点击进去后url中传输了两个参数，一个是filename，另一个是filehash，在第一个flag.txt中把filename改为提示的&#x2F;fllllllllllllag试试提交后页面显示error看来拿到flag的关键就在于解出filehash是什么，根据第三个超链接的提示，应该是filehash
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-06-02 00:00" pubdate>
+              2023-06-02
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/05/25/wenjianshangchuan/" target="_self">
           web入门:文件上传
         </a>
@@ -408,15 +441,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/04/27/wenjianbaohan/" target="_self">
-          web入门：文件包含🥰
+        <a href="/2023/04/27/phpweixieyi/" target="_self">
+          php伪协议🥰
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/27/wenjianbaohan/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/27/phpweixieyi/" target="_self">
         <div>
-          web78123456if(isset($_GET[&#x27;file&#x27;]))&#123;    $file = $_GET[&#x27;file&#x27;];    include($file);&#125;else&#123;    highlight_file(__FILE__);&#125; include包含，尝试使用伪协议 1?file=php://filter/conv
+          php伪协议是ctf中的一个考点，目前比较熟悉的伪协议有php:&#x2F;&#x2F;filter,php:&#x2F;&#x2F;input,data:&#x2F;&#x2F;text&#x2F;plain,file:&#x2F;&#x2F;。要成功应用伪协议需要php.ini文件的allow_url_fopen 默认开启       allow_url_include 默认关闭 file:&
         </div>
       </a>
 
@@ -441,15 +474,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/04/27/phpweixieyi/" target="_self">
-          php伪协议🥰
+        <a href="/2023/04/27/wenjianbaohan/" target="_self">
+          web入门：文件包含🥰
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/27/phpweixieyi/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/27/wenjianbaohan/" target="_self">
         <div>
-          php伪协议是ctf中的一个考点，目前比较熟悉的伪协议有php:&#x2F;&#x2F;filter,php:&#x2F;&#x2F;input,data:&#x2F;&#x2F;text&#x2F;plain,file:&#x2F;&#x2F;。要成功应用伪协议需要php.ini文件的allow_url_fopen 默认开启       allow_url_include 默认关闭 file:&
+          web78123456if(isset($_GET[&#x27;file&#x27;]))&#123;    $file = $_GET[&#x27;file&#x27;];    include($file);&#125;else&#123;    highlight_file(__FILE__);&#125; include包含，尝试使用伪协议 1?file=php://filter/conv
         </div>
       </a>
 
@@ -534,40 +567,13 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/04/19/my-blogneirong/" target="_self">
-          每周报告
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/19/my-blogneirong/" target="_self">
-        <div>
-          时间盲注在通关sqllabs第9关与第10关时我们知道了时间盲注这一概念，用时间盲注来判断注入点是否正确，使用sleep延迟函数。if()函数				条件判断函数if(a,b,c)	   if判断句，a为条件，b、c为执行语句；如果a为真就执行b，a为假就执行c;sleep()函数			网页延迟n秒后，输出结果left（）函数             从左边数，取几个数例如：left（abcdef
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-04-19 00:00" pubdate>
-              2023-04-19
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
 
 
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
 
 
 
