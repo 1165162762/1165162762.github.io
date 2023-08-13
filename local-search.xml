@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>buuctf_misc</title>
+    <link href="/2023/08/13/buuctf_misc/"/>
+    <url>/2023/08/13/buuctf_misc/</url>
+    
+    <content type="html"><![CDATA[<h2 id="金三胖"><a href="#金三胖" class="headerlink" title="金三胖"></a>金三胖</h2><p>下载给的zip文件，是个gif动图<br>使用stegsolve打开</p><ul><li><p>File Format: 文件格式，这个主要是查看图片的具体信息，类似与winhex的用法</p></li><li><p>Data Extract: 数据抽取，图片中隐藏数据的抽取</p></li><li><p>Frame Browser: 逐帧浏览，主要是对GIF之类的动图进行分解，动图变成一张张图片，便于查看</p></li><li><p>Image Combiner: 拼图，图片拼接</p></li></ul><p>用Frame browser功能，逐帧浏览<br><img src="/images/P28ZQ.png"></p><p><img src="/images/MOYOHGU.png"></p><p><img src="/images/ML6X.png"><br>拼接flag{he11ohongke}</p><h2 id="你竟然赶我走"><a href="#你竟然赶我走" class="headerlink" title="你竟然赶我走"></a>你竟然赶我走</h2><p>下载后为一个jpg图片<br>同样使用stegsolve打开<br>使用file format功能<br>在ascii区域找到flag<br>flag{stego_is_s0_bo r1ing}</p><h2 id="二维码"><a href="#二维码" class="headerlink" title="二维码"></a>二维码</h2><p>解压zip文件得到一个png的二维码图片<br>利用QR Research工具，扫描得到了一个不是flag的信息。<br>用notepad++打开<br><img src="/images/8V8.png"><br>发现有个txt文件<br>把后缀改为zip<br>用winrar打开<br><img src="/images/J3AC7X.png"><br>虽然找到了，但这个txt文件需要密码<br>使用zip密码破解软件ziperello破解，使用暴力破解<br><img src="/images/HXIM8O.png"><br>得到密码7639，打开txt，得到flag CTF{vjpw_wnoei}<br>把ctf改为flag即可</p><h2 id="大白"><a href="#大白" class="headerlink" title="大白"></a>大白</h2><p>解压zip文件得到一个png文件<br>图片分辨率为679*256</p><p>用notepad++打开<br><img src="/images/GVVG5EN5.png"><br>修改一下256部分的内容，把它修改为679<br>16进制为02 a7，保存重新进入图片<br>发现flag<br><img src="/images/DOQES57IFB.png"></p><h2 id="N种方法解决"><a href="#N种方法解决" class="headerlink" title="N种方法解决"></a>N种方法解决</h2><p>解压zip文件得到一个exe文件，但是打不开<br>使用notepad++打开<br>很长的一串字符<br><img src="/images/J962OCAJ.png"><br>发现与base64字符串转换图片格式相同<br><img src="/images/JS8SMNKA5ZBU5DH9VIB.png"><br>转换出一个二维码<br>扫描二维码即可得到flag</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>php特性</title>
     <link href="/2023/08/12/phptexin/"/>
     <url>/2023/08/12/phptexin/</url>
