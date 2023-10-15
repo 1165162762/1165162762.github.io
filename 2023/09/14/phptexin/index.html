@@ -34,7 +34,7 @@
 <meta property="og:image" content="http://example.com/images/I63.png">
 <meta property="og:image" content="http://example.com/images/TONNBV45XFX45LF.png">
 <meta property="article:published_time" content="2023-09-13T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-17T13:45:33.223Z">
+<meta property="article:modified_time" content="2023-10-15T08:29:58.250Z">
 <meta property="article:author" content="奇怪的奇怪">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/images/00.png">
@@ -567,14 +567,11 @@
 <p>paylaod:</p>
 <figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs clean">f1=<span class="hljs-keyword">system</span>&amp;f2=<span class="hljs-keyword">system</span><br></code></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><figcaption><span>system( string $command[, int &$return_var] )``` :成功则返回命令输出的最后一行，失败则返回 FALSE 。system()必须包含参数，失败返回FLASE；system(‘FLASE’)，空指令，失败返回FLASE。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs string"><br>## web142<br><br></code></pre></td></tr></table></figure>
-<p>error_reporting(0);<br>highlight_file(<strong>FILE</strong>);<br>if(isset($_GET[‘v1’])){<br>    $v1 &#x3D; (String)$_GET[‘v1’];<br>    if(is_numeric($v1)){<br>        $d &#x3D; (int)($v1 * 0x36d * 0x36d * 0x36d * 0x36d * 0x36d);<br>        sleep($d);<br>        echo file_get_contents(“flag.php”);<br>    }<br>}</p>
-<pre><code class="hljs">
-关键函数sleep(),sleep() 函数延迟代码执行若干秒
-输入v1为数字，若v1为1都要延迟很多很多秒，那不如直接让v1=0
-payload:
-```?v1=0```
-</code></pre>
+<p><code>string system( string $command[, int &amp;$return_var] )</code><br>成功则返回命令输出的最后一行，失败则返回 FALSE 。system()必须包含参数，失败返回FLASE；system(‘FLASE’)，空指令，失败返回FLASE。</p>
+<h2 id="web142"><a href="#web142" class="headerlink" title="web142"></a>web142</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-title function_ invoke__">error_reporting</span>(<span class="hljs-number">0</span>);<br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;v1&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$v1</span> = (String)<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;v1&#x27;</span>];<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">is_numeric</span>(<span class="hljs-variable">$v1</span>))&#123;<br>        <span class="hljs-variable">$d</span> = (<span class="hljs-keyword">int</span>)(<span class="hljs-variable">$v1</span> * <span class="hljs-number">0x36d</span> * <span class="hljs-number">0x36d</span> * <span class="hljs-number">0x36d</span> * <span class="hljs-number">0x36d</span> * <span class="hljs-number">0x36d</span>);<br>        <span class="hljs-title function_ invoke__">sleep</span>(<span class="hljs-variable">$d</span>);<br>        <span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">file_get_contents</span>(<span class="hljs-string">&quot;flag.php&quot;</span>);<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>关键函数sleep(),sleep() 函数延迟代码执行若干秒<br>输入v1为数字，若v1为1都要延迟很多很多秒，那不如直接让v1&#x3D;0<br>payload:</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">?<span class="hljs-attribute">v1</span>=0<br></code></pre></td></tr></table></figure>
 
                 
               </div>
