@@ -243,6 +243,105 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/11/26/buuctf_web/" target="_self">
+          buuctf_web
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/11/26/buuctf_web/" target="_self">
+        <div>
+          [护网杯 2018]easy_tornado 1进入答题页面，发现三个超链接分别点击进去再点击进去后url中传输了两个参数，一个是filename，另一个是filehash，在第一个flag.txt中把filename改为提示的&#x2F;fllllllllllllag试试提交后页面显示error看来拿到flag的关键就在于解出filehash是什么，根据第三个超链接的提示，应该是filehash
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-11-26 00:00" pubdate>
+              2023-11-26
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/11/14/GeekChallenge_2023/" target="_self">
+          GeekChallenge_2023
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/11/14/GeekChallenge_2023/" target="_self">
+        <div>
+          EzHttp请post传参username和password进行登录那么我们随便post显示密码错误查看源码发现密码被藏在页面中查找没有结果用dirsearch搜一下搜到了robots.txt 123User-agent: *Disallow: /o2takuXX&#x27;s_username_and_password.txt 进入获得账户密码，返回第一个界面输入 12username:admi
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-11-14 00:00" pubdate>
+              2023-11-14
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/10/26/shctf/" target="_self">
+          shctf
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/10/26/shctf/" target="_self">
+        <div>
+          [WEEK1]babyRCE12345678910111213&lt;?php$rce = $_GET[&#x27;rce&#x27;];if (isset($rce)) &#123;    if (!preg_match(&quot;/cat|more|less|head|tac|tail|nl|od|vi|vim|sort|flag| |\;|[0-9]|\*|\`|\%|\&gt;|\&lt
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-10-26 00:00" pubdate>
+              2023-10-26
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/10/22/ssti/" target="_self">
           ssti
         </a>
@@ -459,105 +558,6 @@
             <i class="iconfont icon-date"></i>
             <time datetime="2023-09-26 00:00" pubdate>
               2023-09-26
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/09/15/sql%E6%B3%A8%E5%85%A5/" target="_self">
-          sql注入
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/15/sql%E6%B3%A8%E5%85%A5/" target="_self">
-        <div>
-          web171常规sql注入payload: 123456-1&#x27; union select 1,2,group_concat(table_name) from information_schema.tables where table_schema=database() --+-1&#x27; union select 1,2,group_concat(column_name) from
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-09-15 00:00" pubdate>
-              2023-09-15
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/09/14/phptexin/" target="_self">
-          php特性
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/14/phptexin/" target="_self">
-        <div>
-          web89123456789101112include(&quot;flag.php&quot;);highlight_file(__FILE__);if(isset($_GET[&#x27;num&#x27;]))&#123;    $num = $_GET[&#x27;num&#x27;];    if(preg_match(&quot;/[0-9]/&quot;, $num))&#123;
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-09-14 00:00" pubdate>
-              2023-09-14
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/09/06/buuctf_misc/" target="_self">
-          buuctf_misc
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/06/buuctf_misc/" target="_self">
-        <div>
-          金三胖下载给的zip文件，是个gif动图使用stegsolve打开  File Format: 文件格式，这个主要是查看图片的具体信息，类似与winhex的用法  Data Extract: 数据抽取，图片中隐藏数据的抽取  Frame Browser: 逐帧浏览，主要是对GIF之类的动图进行分解，动图变成一张张图片，便于查看  Image Combiner: 拼图，图片拼接   用Frame b
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-09-06 00:00" pubdate>
-              2023-09-06
             </time>
           </div>
         
