@@ -381,7 +381,7 @@
 <figure class="highlight plaintext"><figcaption><span>[ \f\n\r\t\v]。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs \s：```匹配任何空白字符，包括空格、制表符、换页符等等。等价于">```+?：```对于字符串 &quot;oooo&quot;，&#x27;o+?&#x27; 将匹配单个 &quot;o&quot;，而 &#x27;o+&#x27; 将匹配所有 &#x27;o&#x27;<br>```(?R)?：```(?R)代表当前表达式，就是```/[^\s\(\)]+?\((?R)?\)/```，所以会一直递归,?表示递归当前表达式0次或1次（若是(?R)*则表示递归当前表达式0次或多次，例如它可以匹配a(b(c()d())))<br>而(?R)?能匹配的只有a(b()); a(b(c()));这种类型的，比如传入a(b(c()));,第一次匹配后，就剩a(b()),第二次匹配后,a();,第三次匹配后就剩下;了，最后a(b(c()))就会被eval执行。<br><br>思路明确了，这题应该使用无参RCE<br>下面是无参RCE的常用函数<br></code></pre></td></tr></table></figure>
 <p>getchwd()：函数返回当前工作目录。<br>scandir()：函数返回指定目录中的文件和目录的数组。<br>dirname()：函数返回路径中的目录部分。<br>chdir()：函数改变当前的目录。<br>readfile()：输出一个文件。<br>current()：返回数组中的当前单元, 默认取第一个值。<br>pos()：current() 的别名。<br>next()：函数将内部指针指向数组中的下一个元素，并输出。<br>end()：将内部指针指向数组中的最后一个元素，并输出。<br>array_rand()：函数返回数组中的随机键名，或者如果您规定函数返回不只一个键名，则返回包含随机键名的数组。<br>array_flip()：array_flip() 函数用于反转&#x2F;交换数组中所有的键名以及它们关联的键值。<br>array_slice()：函数在数组中根据条件取出一段值，并返回。<br>array_reverse()：函数返回翻转顺序的数组。<br>chr() 函数从指定的：ASCII 值返回字符。<br>hex2bin()：— 转换十六进制字符串为二进制字符串。<br>getenv()：获取一个环境变量的值(在7.1之后可以不给予参数)。<br>localeconv()：函数返回一包含本地数字及货币格式信息的数组。</p>
 <figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><br><span class="hljs-symbol">payload:</span><br></code></pre></td></tr></table></figure>
-<p>?var&#x3D;print_r(scandir(pos(localeconv())));<br>&#x2F;&#x2F;Array ( [0] &#x3D;&gt; . [1] &#x3D;&gt; .. [2] &#x3D;&gt; error.log [3] &#x3D;&gt; <a href="mailto:&#102;&#108;&#64;&#x67;&#46;&#112;&#104;&#112;">&#102;&#108;&#64;&#x67;&#46;&#112;&#104;&#112;</a> [4] &#x3D;&gt; genshin01.txt [5] &#x3D;&gt; index.php [6] &#x3D;&gt; tiangou01.txt [7] &#x3D;&gt; tiangou02.txt )</p>
+<p>?var&#x3D;print_r(scandir(pos(localeconv())));<br>&#x2F;&#x2F;Array ( [0] &#x3D;&gt; . [1] &#x3D;&gt; .. [2] &#x3D;&gt; error.log [3] &#x3D;&gt; <a href="mailto:&#x66;&#108;&#x40;&#x67;&#46;&#x70;&#x68;&#x70;">&#x66;&#108;&#x40;&#x67;&#46;&#x70;&#x68;&#x70;</a> [4] &#x3D;&gt; genshin01.txt [5] &#x3D;&gt; index.php [6] &#x3D;&gt; tiangou01.txt [7] &#x3D;&gt; tiangou02.txt )</p>
 <figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>可以看出flag在一个特殊的位置上，无法通过next或end直接读取，那么我们使用随机函数<br>可以用```array_rand()```和```array_flip()```<br>(```array_rand()```返回的是键名所以必须搭配```array_flip()```来交换键名、键值来获得键值，随机刷新显示的内容)<br><br><span class="hljs-title">payload:</span><br></code></pre></td></tr></table></figure>
 <p>?var&#x3D;show_source(array_rand(array_flip(scandir(pos(localeconv())))));</p>
 <pre><code class="hljs">多刷新几遍就出来了
@@ -449,9 +449,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/11/27/buuctf_web/" title="buuctf_web">
+                      <a href="/2023/12/01/ISCTF2023/" title="ISCTF2023">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">buuctf_web</span>
+                        <span class="hidden-mobile">ISCTF2023</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
