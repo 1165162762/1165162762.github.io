@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://example.com/images/YUHH2KYYY0T1NMKK4Q.png">
 <meta property="og:image" content="http://example.com/images/ECFP2LKJ1JB7QPI9LO8.png">
 <meta property="article:published_time" content="2023-01-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-02-15T16:09:15.055Z">
+<meta property="article:modified_time" content="2024-02-15T16:13:59.416Z">
 <meta property="article:author" content="奇怪的奇怪">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/images/874963-20180709124807031-664967381.png">
@@ -340,7 +340,7 @@
 <p><strong>Sinature</strong></p>
 <p>为了得到签名部分，你必须有编码过的header、编码过的payload、一个密钥，签名算法是header中指定的那个，然后对它们签名即可。<br>例如</p>
 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-constructor">HMACSHA256(<span class="hljs-params">base64UrlEncode</span>(<span class="hljs-params">header</span>)</span> + <span class="hljs-string">&quot;.&quot;</span> + base64<span class="hljs-constructor">UrlEncode(<span class="hljs-params">payload</span>)</span>, secret)<br></code></pre></td></tr></table></figure>
-<p>签名是用于验证消息在传递过程中有没有被更改，并且，由于使用私钥签名的token，它还可以验证JWT的发送方是否为它所称的发送方。<br>官网解码图<br><img src="/images/874963-20180707150229764-2037235703.png" srcset="/img/loading.gif" lazyload><br>官网地址<a target="_blank" rel="noopener" href="https://jwt.io/">https://jwt.io/</a><br>密钥的取得方法我们由一个题来引入<br><strong>[CISCN2019 华北赛区 Day1 Web2]ikun</strong><br><img src="/images/JBFBSKZY4FWH5KWZ7KC.png" srcset="/img/loading.gif" lazyload><br>从cookies中抓出JWT数据<br>放到官网里分析<br><img src="/images/YUHH2KYYY0T1NMKK4Q.png" srcset="/img/loading.gif" lazyload><br>是我们注册的数据没错<br>现在要做的就是破解密钥<br>这里有个脚本<a target="_blank" rel="noopener" href="https://gitcode.com/mirrors/brendan-rius/c-jwt-cracker/overview">c-jwt-cracker</a><br>我使用的是kali，攻击jwt<br><img src="/images/ECFP2LKJ1JB7QPI9LO8.png" srcset="/img/loading.gif" lazyload><br>这样我们就获得了我们的密钥，然后将密钥填入密匙位置在官网生成一个新的JWT<br><a target="_blank" rel="noopener" href="https://zijie.love/2023/12/20/buuctf_web/#ciscn2019-%E5%8D%8E%E5%8C%97%E8%B5%9B%E5%8C%BA-day1-web2-ikun">原题链接</a></p>
+<p>签名是用于验证消息在传递过程中有没有被更改，并且，由于使用私钥签名的token，它还可以验证JWT的发送方是否为它所称的发送方。<br>官网解码图<br><img src="/images/874963-20180707150229764-2037235703.png" srcset="/img/loading.gif" lazyload><br>官网地址<a target="_blank" rel="noopener" href="https://jwt.io/">https://jwt.io/</a><br>密钥的取得方法我们由一个题来引入<br><strong>[CISCN2019 华北赛区 Day1 Web2]ikun</strong><br><img src="/images/JBFBSKZY4FWH5KWZ7KC.png" srcset="/img/loading.gif" lazyload><br>从cookies中抓出JWT数据<br>放到官网里分析<br><img src="/images/YUHH2KYYY0T1NMKK4Q.png" srcset="/img/loading.gif" lazyload><br>是我们注册的数据没错<br>现在要做的就是破解密钥<br>这里有个脚本<a target="_blank" rel="noopener" href="https://gitcode.com/mirrors/brendan-rius/c-jwt-cracker/overview">c-jwt-cracker</a><br>我使用的是kali，攻击jwt<br><img src="/images/ECFP2LKJ1JB7QPI9LO8.png" srcset="/img/loading.gif" lazyload><br>这样我们就获得了我们的密钥，然后将密钥填入密匙位置在官网生成一个新的JWT<br><a target="_blank" rel="noopener" href="https://zijie.love/2023/12/20/buuctf_web/#ciscn2019-%E5%8D%8E%E5%8C%97%E8%B5%9B%E5%8C%BA-day1-web2-ikun">原题链接</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/cjsblog/p/9277677.html">认识JWT</a></p>
 
                 
               </div>
