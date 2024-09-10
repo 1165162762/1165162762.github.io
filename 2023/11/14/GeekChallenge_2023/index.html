@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://example.com/images/DTD1TGD123GY4R4ACLDL0.png">
 <meta property="og:image" content="http://example.com/images/LLXNXV4N453.png">
 <meta property="article:published_time" content="2023-11-13T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-11-14T11:11:23.178Z">
+<meta property="article:modified_time" content="2024-09-04T13:04:12.313Z">
 <meta property="article:author" content="奇怪的奇怪">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/images/ZGK3XJNLBAXUZGWP.png">
@@ -242,7 +242,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.3k 字
+          6.1k 字
         
       </span>
     
@@ -253,7 +253,7 @@
         
         
         
-          53 分钟
+          52 分钟
         
       </span>
     
@@ -378,15 +378,17 @@
 
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">if</span> (<span class="hljs-string">&#x27;;&#x27;</span> === preg_replace(<span class="hljs-string">&#x27;/[^\s\(\)]+?\((?R)?\)/&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-variable">$var</span>))<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><figcaption><span>[ \f\n\r\t\v]。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs \s：```匹配任何空白字符，包括空格、制表符、换页符等等。等价于">```+?：```对于字符串 &quot;oooo&quot;，&#x27;o+?&#x27; 将匹配单个 &quot;o&quot;，而 &#x27;o+&#x27; 将匹配所有 &#x27;o&#x27;<br>```(?R)?：```(?R)代表当前表达式，就是```/[^\s\(\)]+?\((?R)?\)/```，所以会一直递归,?表示递归当前表达式0次或1次（若是(?R)*则表示递归当前表达式0次或多次，例如它可以匹配a(b(c()d())))<br>而(?R)?能匹配的只有a(b()); a(b(c()));这种类型的，比如传入a(b(c()));,第一次匹配后，就剩a(b()),第二次匹配后,a();,第三次匹配后就剩下;了，最后a(b(c()))就会被eval执行。<br><br>思路明确了，这题应该使用无参RCE<br>下面是无参RCE的常用函数<br></code></pre></td></tr></table></figure>
-<p>getchwd()：函数返回当前工作目录。<br>scandir()：函数返回指定目录中的文件和目录的数组。<br>dirname()：函数返回路径中的目录部分。<br>chdir()：函数改变当前的目录。<br>readfile()：输出一个文件。<br>current()：返回数组中的当前单元, 默认取第一个值。<br>pos()：current() 的别名。<br>next()：函数将内部指针指向数组中的下一个元素，并输出。<br>end()：将内部指针指向数组中的最后一个元素，并输出。<br>array_rand()：函数返回数组中的随机键名，或者如果您规定函数返回不只一个键名，则返回包含随机键名的数组。<br>array_flip()：array_flip() 函数用于反转&#x2F;交换数组中所有的键名以及它们关联的键值。<br>array_slice()：函数在数组中根据条件取出一段值，并返回。<br>array_reverse()：函数返回翻转顺序的数组。<br>chr() 函数从指定的：ASCII 值返回字符。<br>hex2bin()：— 转换十六进制字符串为二进制字符串。<br>getenv()：获取一个环境变量的值(在7.1之后可以不给予参数)。<br>localeconv()：函数返回一包含本地数字及货币格式信息的数组。</p>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><br><span class="hljs-symbol">payload:</span><br></code></pre></td></tr></table></figure>
-<p>?var&#x3D;print_r(scandir(pos(localeconv())));<br>&#x2F;&#x2F;Array ( [0] &#x3D;&gt; . [1] &#x3D;&gt; .. [2] &#x3D;&gt; error.log [3] &#x3D;&gt; <a href="mailto:&#x66;&#108;&#x40;&#x67;&#46;&#x70;&#x68;&#x70;">&#x66;&#108;&#x40;&#x67;&#46;&#x70;&#x68;&#x70;</a> [4] &#x3D;&gt; genshin01.txt [5] &#x3D;&gt; index.php [6] &#x3D;&gt; tiangou01.txt [7] &#x3D;&gt; tiangou02.txt )</p>
-<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>可以看出flag在一个特殊的位置上，无法通过next或end直接读取，那么我们使用随机函数<br>可以用```array_rand()```和```array_flip()```<br>(```array_rand()```返回的是键名所以必须搭配```array_flip()```来交换键名、键值来获得键值，随机刷新显示的内容)<br><br><span class="hljs-title">payload:</span><br></code></pre></td></tr></table></figure>
-<p>?var&#x3D;show_source(array_rand(array_flip(scandir(pos(localeconv())))));</p>
-<pre><code class="hljs">多刷新几遍就出来了
+<p>\s：匹配任何空白字符，包括空格、制表符、换页符等等。等价于 [ \f\n\r\t\v]。<br>+?：对于字符串 “oooo”，’o+?’ 将匹配单个 “o”，而 ‘o+’ 将匹配所有 ‘o’<br>(?R)?：(?R)代表当前表达式，就是<code>/[^\s\(\)]+?\((?R)?\)/</code>，所以会一直递归,?表示递归当前表达式0次或1次（若是(?R)*则表示递归当前表达式0次或多次，例如它可以匹配a(b(c()d())))<br>而(?R)?能匹配的只有a(b()); a(b(c()));这种类型的，比如传入a(b(c()));,第一次匹配后，就剩a(b()),第二次匹配后,a();,第三次匹配后就剩下;了，最后a(b(c()))就会被eval执行。</p>
+<p>思路明确了，这题应该使用无参RCE<br>下面是无参RCE的常用函数</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">getchwd</span><span class="hljs-params">()</span></span>：函数返回当前工作目录。<br><span class="hljs-function"><span class="hljs-title">scandir</span><span class="hljs-params">()</span></span>：函数返回指定目录中的文件和目录的数组。<br><span class="hljs-function"><span class="hljs-title">dirname</span><span class="hljs-params">()</span></span>：函数返回路径中的目录部分。<br><span class="hljs-function"><span class="hljs-title">chdir</span><span class="hljs-params">()</span></span>：函数改变当前的目录。<br><span class="hljs-function"><span class="hljs-title">readfile</span><span class="hljs-params">()</span></span>：输出一个文件。<br><span class="hljs-function"><span class="hljs-title">current</span><span class="hljs-params">()</span></span>：返回数组中的当前单元, 默认取第一个值。<br><span class="hljs-function"><span class="hljs-title">pos</span><span class="hljs-params">()</span></span>：<span class="hljs-built_in">current</span>() 的别名。<br><span class="hljs-function"><span class="hljs-title">next</span><span class="hljs-params">()</span></span>：函数将内部指针指向数组中的下一个元素，并输出。<br><span class="hljs-function"><span class="hljs-title">end</span><span class="hljs-params">()</span></span>：将内部指针指向数组中的最后一个元素，并输出。<br><span class="hljs-function"><span class="hljs-title">array_rand</span><span class="hljs-params">()</span></span>：函数返回数组中的随机键名，或者如果您规定函数返回不只一个键名，则返回包含随机键名的数组。<br><span class="hljs-function"><span class="hljs-title">array_flip</span><span class="hljs-params">()</span></span>：<span class="hljs-built_in">array_flip</span>() 函数用于反转/交换数组中所有的键名以及它们关联的键值。<br><span class="hljs-function"><span class="hljs-title">array_slice</span><span class="hljs-params">()</span></span>：函数在数组中根据条件取出一段值，并返回。<br><span class="hljs-function"><span class="hljs-title">array_reverse</span><span class="hljs-params">()</span></span>：函数返回翻转顺序的数组。<br><span class="hljs-function"><span class="hljs-title">chr</span><span class="hljs-params">()</span></span> 函数从指定的：ASCII 值返回字符。<br><span class="hljs-function"><span class="hljs-title">hex2bin</span><span class="hljs-params">()</span></span>：— 转换十六进制字符串为二进制字符串。<br><span class="hljs-function"><span class="hljs-title">getenv</span><span class="hljs-params">()</span></span>：获取一个环境变量的值(在<span class="hljs-number">7.1</span>之后可以不给予参数)。<br><span class="hljs-function"><span class="hljs-title">localeconv</span><span class="hljs-params">()</span></span>：函数返回一包含本地数字及货币格式信息的数组。<br></code></pre></td></tr></table></figure>
 
-</code></pre>
+<p>payload:</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs coq">?var=print_r(scandir(pos(localeconv())));<br>//Array ( [<span class="hljs-number">0</span>] =&gt; . [<span class="hljs-number">1</span>] =&gt; .. [<span class="hljs-number">2</span>] =&gt; error.log [<span class="hljs-number">3</span>] =&gt; fl@g.php [<span class="hljs-number">4</span>] =&gt; genshin01.txt [<span class="hljs-number">5</span>] =&gt; index.php [<span class="hljs-number">6</span>] =&gt; tiangou01.txt [<span class="hljs-number">7</span>] =&gt; tiangou02.txt )<br></code></pre></td></tr></table></figure>
+
+<p>可以看出flag在一个特殊的位置上，无法通过next或end直接读取，那么我们使用随机函数<br>可以用<code>array_rand()</code>和<code>array_flip()</code><br>(<code>array_rand()</code>返回的是键名所以必须搭配<code>array_flip()</code>来交换键名、键值来获得键值，随机刷新显示的内容)</p>
+<p>payload:</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">?var=show<span class="hljs-constructor">_source(<span class="hljs-params">array_rand</span>(<span class="hljs-params">array_flip</span>(<span class="hljs-params">scandir</span>(<span class="hljs-params">pos</span>(<span class="hljs-params">localeconv</span>()</span>)))));<br></code></pre></td></tr></table></figure>
+<p>多刷新几遍就出来了</p>
 
                 
               </div>
