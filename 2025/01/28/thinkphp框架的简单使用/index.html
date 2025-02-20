@@ -1,0 +1,852 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="奇怪的奇怪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="为了加深对thinkphp框架的理解，以及锻炼自己的代码审计能力，对网络安全thinkphp框架漏洞原因更深入理解，故开此章 thinkphp3.2.5 简单登录功能的实现+apache+MySQLhttps:&#x2F;&#x2F;github.com&#x2F;top-think&#x2F;thinkphp github下载thinkphp框架 thinkphp的目录结构如下 1234567891011121314151617181">
+<meta property="og:type" content="article">
+<meta property="og:title" content="thinkphp框架的简单使用">
+<meta property="og:url" content="http://example.com/2025/01/28/thinkphp%E6%A1%86%E6%9E%B6%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="奇怪的亚索">
+<meta property="og:description" content="为了加深对thinkphp框架的理解，以及锻炼自己的代码审计能力，对网络安全thinkphp框架漏洞原因更深入理解，故开此章 thinkphp3.2.5 简单登录功能的实现+apache+MySQLhttps:&#x2F;&#x2F;github.com&#x2F;top-think&#x2F;thinkphp github下载thinkphp框架 thinkphp的目录结构如下 1234567891011121314151617181">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/715F63147E674bb6927735A01B5F6B22.png">
+<meta property="og:image" content="http://example.com/images/14CE116CC01C4e499A34F3EE21ABC4D0.png">
+<meta property="og:image" content="http://example.com/images/FE35B06290AE45ddA1D8B6CEB56F4937.png">
+<meta property="og:image" content="http://example.com/images/F0A47B05497F41aa82857C6E9A952B1A.png">
+<meta property="og:image" content="http://example.com/images/7ED5B0FDF4744fccBA440FDC2B05D54E.png">
+<meta property="og:image" content="http://example.com/images/063A67C7B45C4a159C6A55F8A0854702.png">
+<meta property="og:image" content="http://example.com/images/41F0B6364544496c9E3F904E2C3EE7E6.png">
+<meta property="og:image" content="http://example.com/images/07790410F18543269F522BE40F2C7BCD.png">
+<meta property="og:image" content="http://example.com/images/506212D30233477dB0BA845174E158C5.png">
+<meta property="og:image" content="http://example.com/images/02CEABF7C24A4677856B433A8342B1D5.png">
+<meta property="og:image" content="http://example.com/images/131940C420C84764BCB628551FA92385.png">
+<meta property="og:image" content="http://example.com/images/4BD484624F404dbf9F54B87BAD32ED93.png">
+<meta property="og:image" content="http://example.com/images/5011CE91A3D6471eAEF72658F8102A76.png">
+<meta property="og:image" content="http://example.com/images/5F69CDC469ED4c79BF208232847D2FA4.png">
+<meta property="og:image" content="http://example.com/images/E2A4B8293F01427c9A67FB22088FE176.png">
+<meta property="og:image" content="http://example.com/images/8C4044DA40344b95A14AF6A86BC6A15C.png">
+<meta property="article:published_time" content="2025-01-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-01-31T08:40:44.267Z">
+<meta property="article:author" content="奇怪的奇怪">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/715F63147E674bb6927735A01B5F6B22.png">
+  
+  
+  
+  <title>thinkphp框架的简单使用 - 奇怪的亚索</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","app_key":"2jVxSBuNhzKC1JEOZN2aZTgr","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>奇怪的亚索</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="thinkphp框架的简单使用"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-01-28 00:00" pubdate>
+          2025年1月28日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          15k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          127 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">thinkphp框架的简单使用</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>为了加深对thinkphp框架的理解，以及锻炼自己的代码审计能力，对网络安全thinkphp框架漏洞原因更深入理解，故开此章</p>
+<h1 id="thinkphp3-2-5-简单登录功能的实现-apache-MySQL"><a href="#thinkphp3-2-5-简单登录功能的实现-apache-MySQL" class="headerlink" title="thinkphp3.2.5 简单登录功能的实现+apache+MySQL"></a>thinkphp3.2.5 简单登录功能的实现+apache+MySQL</h1><p><a target="_blank" rel="noopener" href="https://github.com/top-think/thinkphp">https://github.com/top-think/thinkphp</a></p>
+<p>github下载thinkphp框架</p>
+<p>thinkphp的目录结构如下</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">myproject/<br>│<br>├── Application/          <span class="hljs-string">//</span> 应用目录（核心代码）<br>│   ├── Common/           <span class="hljs-string">//</span> 公共函数、配置<br>│   ├── Home/             <span class="hljs-string">//</span> 默认模块（例如首页、用户管理）<br>│   │   ├── Controller/   <span class="hljs-string">//</span> 控制器<br>│   │   ├── Model/        <span class="hljs-string">//</span> 模型<br>│   │   └── View/         <span class="hljs-string">//</span> 视图<br>│   ├── Runtime/          <span class="hljs-string">//</span> 运行时缓存文件<br>│   └── <span class="hljs-string">...</span> <br>│<br>├── Public/               <span class="hljs-string">//</span> 静态资源（CSS、JS、图片）<br>│   ├── css/<br>│   ├── js/<br>│   └── images/<br>│<br>├── ThinkPHP/             <span class="hljs-string">//</span> ThinkPHP 框架核心<br>│<br>├── <span class="hljs-string">.htaccess</span>             <span class="hljs-string">//</span> Apache URL 重写规则<br>├── index.php             <span class="hljs-string">//</span> 入口文件<br>└── <span class="hljs-string">...</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>ThinkPHP 3.2.5默认使用PATHINFO模式</strong>，正确URL格式为</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>localhost<span class="hljs-regexp">/thinkphp/i</span>ndex.php<span class="hljs-regexp">/控制器/</span>方法<br></code></pre></td></tr></table></figure>
+<h2 id="htaccess配置"><a href="#htaccess配置" class="headerlink" title="htaccess配置"></a>htaccess配置</h2><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-section">&lt;IfModule mod_rewrite.c&gt;</span><br>  <span class="hljs-attribute">RewriteEngine</span> <span class="hljs-literal">On</span><br>  <span class="hljs-attribute">RewriteCond</span> <span class="hljs-variable">%&#123;REQUEST_FILENAME&#125;</span> !-d<br>  <span class="hljs-attribute">RewriteCond</span> <span class="hljs-variable">%&#123;REQUEST_FILENAME&#125;</span> !-f<br>  <span class="hljs-attribute">RewriteRule</span> ^(.*)$ index.php/$<span class="hljs-number">1</span><span class="hljs-meta"> [QSA,PT,L]</span><br><span class="hljs-section">&lt;/IfModule&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>代码分析</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-section">&lt;IfModule mod_rewrite.c&gt;</span><br></code></pre></td></tr></table></figure>
+<p>这是一个条件判断标签，用于检查 Apache 服务器是否已经加载了 mod_rewrite 模块。mod_rewrite 是 Apache 的一个强大模块，用于实现 URL 重写功能。如果服务器已经加载了该模块，则执行 <IfModule> 和 </IfModule> 之间的代码；否则，忽略这些代码。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">RewriteEngine</span> <span class="hljs-literal">On</span><br></code></pre></td></tr></table></figure>
+<p>这行代码用于开启 mod_rewrite 模块的重写引擎。只有当重写引擎开启后，后续的重写规则才会生效。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">RewriteCond</span> <span class="hljs-variable">%&#123;REQUEST_FILENAME&#125;</span> !-d<br></code></pre></td></tr></table></figure>
+<p>RewriteCond 是一个重写条件指令，用于设置重写规则的匹配条件。这里的 %{REQUEST_FILENAME} 是一个 Apache 服务器的环境变量，表示当前请求的文件或目录的完整物理路径。!-d 是一个测试条件，表示如果 %{REQUEST_FILENAME} 所指向的路径不是一个有效的目录，则满足该条件。也就是说，只有当请求的路径不是一个实际存在的目录时，才会继续执行后续的重写规则。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">RewriteCond</span> <span class="hljs-variable">%&#123;REQUEST_FILENAME&#125;</span> !-f<br></code></pre></td></tr></table></figure>
+<p>这也是一个 RewriteCond 指令，!-f 表示如果 %{REQUEST_FILENAME} 所指向的路径不是一个有效的文件，则满足该条件。结合上一个条件，这两个条件共同确保了只有当请求的路径既不是一个实际存在的目录，也不是一个实际存在的文件时，才会继续执行后续的重写规则。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">RewriteRule</span> ^(.*)$ index.php/$<span class="hljs-number">1</span><span class="hljs-meta"> [QSA,PT,L]</span><br></code></pre></td></tr></table></figure>
+<p>RewriteRule 是一个重写规则指令，用于定义具体的重写规则。下面是对该规则各部分的详细解释：</p>
+<ul>
+<li>^(.<em>)$：这是一个正则表达式，用于匹配请求的 URL 路径。^ 表示字符串的开始，(.</em>) 表示匹配任意数量的任意字符，并将匹配的内容捕获到一个组中，$ 表示字符串的结束。因此，这个正则表达式可以匹配任意的 URL 路径。</li>
+<li>index.php&#x2F;$1：这是重写后的目标 URL。$1 表示前面正则表达式中捕获的组的内容，即原始请求的 URL 路径。因此，重写后的 URL 是将原始请求的路径附加到 index.php 后面。</li>
+<li>[QSA,PT,L]：这是重写规则的标志，用于控制重写的行为：</li>
+<li>QSA（Query String Append）：表示将原始请求的查询字符串（URL 中 ? 后面的部分）附加到重写后的 URL 中。</li>
+<li>PT（Pass Through）：表示将重写后的 URL 传递给后续的处理程序，而不是直接返回给客户端。</li>
+<li>L（Last）：表示这是最后一条重写规则，如果匹配成功，则不再执行后续的重写规则。</li>
+</ul>
+<h2 id="数据库配置"><a href="#数据库配置" class="headerlink" title="数据库配置"></a>数据库配置</h2><p>mysql创建一个test_db库<br>创建用户表语句</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">CREATE</span> TABLE <span class="hljs-symbol">`tp_user`</span> (<br>  <span class="hljs-symbol">`id`</span> int(<span class="hljs-number">11</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> AUTO_INCREMENT,<br>  <span class="hljs-symbol">`username`</span> varchar(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-symbol">`password`</span> varchar(<span class="hljs-number">32</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-symbol">`status`</span> tinyint(<span class="hljs-number">1</span>) DEFAULT <span class="hljs-string">&#x27;1&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY</span> <span class="hljs-keyword">KEY</span> (<span class="hljs-symbol">`id`</span>)<br>) ENGINE=InnoDB DEFAULT CHARSET=utf8;<br><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-symbol">`tp_user`</span> <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;admin&#x27;</span>, MD5(<span class="hljs-string">&#x27;123456&#x27;</span>), <span class="hljs-number">1</span>);<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/715F63147E674bb6927735A01B5F6B22.png" srcset="/img/loading.gif" lazyload></p>
+<p>修改配置文件默认为Application&#x2F;Common&#x2F;Conf&#x2F;config.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">return</span> <span class="hljs-keyword">array</span>(<br>    <span class="hljs-string">&#x27;DEFAULT_MODULE&#x27;</span> =&gt; <span class="hljs-string">&#x27;Home&#x27;</span>,<br>    <span class="hljs-string">&#x27;DB_TYPE&#x27;</span>   =&gt; <span class="hljs-string">&#x27;mysql&#x27;</span>,       <span class="hljs-comment">// 数据库类型</span><br>    <span class="hljs-string">&#x27;DB_HOST&#x27;</span>   =&gt; <span class="hljs-string">&#x27;localhost&#x27;</span>,   <span class="hljs-comment">// 服务器地址</span><br>    <span class="hljs-string">&#x27;DB_NAME&#x27;</span>   =&gt; <span class="hljs-string">&#x27;test_db&#x27;</span>,        <span class="hljs-comment">// 数据库名</span><br>    <span class="hljs-string">&#x27;DB_USER&#x27;</span>   =&gt; <span class="hljs-string">&#x27;root&#x27;</span>,        <span class="hljs-comment">// 用户名</span><br>    <span class="hljs-string">&#x27;DB_PWD&#x27;</span>    =&gt; <span class="hljs-string">&#x27;123&#x27;</span>,          <span class="hljs-comment">// 密码</span><br>    <span class="hljs-string">&#x27;DB_PREFIX&#x27;</span> =&gt; <span class="hljs-string">&#x27;tp_&#x27;</span>,         <span class="hljs-comment">// 数据表前缀</span><br>);<br></code></pre></td></tr></table></figure>
+
+<h2 id="创建登录功能"><a href="#创建登录功能" class="headerlink" title="创建登录功能"></a>创建登录功能</h2><p>创建控制器 Application&#x2F;Home&#x2F;Controller&#x2F;LoginController.class.php</p>
+<p>一定要为.class.php<br>因为<br>这是 ThinkPHP 3.x 版本的 标准类文件命名规则，明确表示这是一个类文件。<br>框架的自动加载机制会优先识别 .class.php 后缀的文件，并尝试加载其中的类。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">namespace</span> <span class="hljs-title class_">Home</span>\<span class="hljs-title class_">Controller</span>;<span class="hljs-comment">// 声明控制器位于 Home模块的Controller目录下</span><br><span class="hljs-keyword">use</span> <span class="hljs-title">Think</span>\<span class="hljs-title">Controller</span>;<span class="hljs-comment">// 引入ThinkPHP的基础控制器类</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LoginController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Controller</span> </span>&#123;<br>    <span class="hljs-comment">// 登录页面</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">display</span>();<br>    &#125;<br><br>    <span class="hljs-comment">// 登录验证</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">checkLogin</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-variable">$username</span> = <span class="hljs-title function_ invoke__">I</span>(<span class="hljs-string">&#x27;post.username&#x27;</span>);<br>        <span class="hljs-variable">$password</span> = <span class="hljs-title function_ invoke__">md5</span>(<span class="hljs-title function_ invoke__">I</span>(<span class="hljs-string">&#x27;post.password&#x27;</span>)); <span class="hljs-comment">// 实际项目建议使用更安全的加密方式</span><br><br>        <span class="hljs-variable">$user</span> = <span class="hljs-title function_ invoke__">D</span>(<span class="hljs-string">&#x27;User&#x27;</span>)-&gt;<span class="hljs-title function_ invoke__">where</span>(<span class="hljs-keyword">array</span>(<br>            <span class="hljs-string">&#x27;username&#x27;</span> =&gt; <span class="hljs-variable">$username</span>,<br>            <span class="hljs-string">&#x27;password&#x27;</span> =&gt; <span class="hljs-variable">$password</span><br>        ))-&gt;<span class="hljs-title function_ invoke__">find</span>();<br><br>        <span class="hljs-keyword">if</span>(<span class="hljs-variable">$user</span>)&#123;<br>            <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">success</span>(<span class="hljs-string">&#x27;登录成功&#x27;</span>, <span class="hljs-title function_ invoke__">U</span>(<span class="hljs-string">&#x27;Index/index&#x27;</span>));<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">error</span>(<span class="hljs-string">&#x27;登录失败&#x27;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>namespace Home\Controller<br>表示该控制器属于Home模块下的Controller目录，符合Thinkphp的模块化规范。</li>
+<li>use Think\Controller<br>导入基类控制器，使当前类可以继承Think\Controller的功能(如页面渲染、跳转等)。</li>
+</ul>
+<p>默认首页方法index()</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-keyword">public</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">index</span><span class="hljs-params">()</span> &#123;<br>    $<span class="hljs-keyword">this</span>-&gt;display(); <span class="hljs-comment">// 渲染视图</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>功能：渲染默认的视图模板</li>
+<li>对应视图路径：Application&#x2F;Home&#x2F;View&#x2F;Login&#x2F;index.html(如display中间为空，那么默认为index，也可以在display加上Index目录下的其他html文件被渲染)(规则：View&#x2F;控制器名&#x2F;方法名.html)</li>
+<li>访问URL：<a target="_blank" rel="noopener" href="http://localhost/Home/Login/index">http://localhost/Home/Login/index</a></li>
+</ul>
+<p>checkLogin()方法：登录验证逻辑</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs awk">public <span class="hljs-keyword">function</span> checkLogin() &#123;<br>    <span class="hljs-regexp">//</span> 获取表单数据<br>    <span class="hljs-variable">$username</span> = I(<span class="hljs-string">&#x27;post.username&#x27;</span>);                  <span class="hljs-regexp">//</span> 安全获取POST参数<br>    <span class="hljs-variable">$password</span> = md5(I(<span class="hljs-string">&#x27;post.password&#x27;</span>));             <span class="hljs-regexp">//</span> MD5加密（⚠️安全性警告）<br><br>    <span class="hljs-regexp">//</span> 数据库查询<br>    <span class="hljs-variable">$user</span> = D(<span class="hljs-string">&#x27;User&#x27;</span>)-&gt;where(array(                  <span class="hljs-regexp">//</span> 实例化User模型<br>        <span class="hljs-string">&#x27;username&#x27;</span> =&gt; <span class="hljs-variable">$username</span>,                     <span class="hljs-regexp">//</span> 查询条件<span class="hljs-number">1</span><br>        <span class="hljs-string">&#x27;password&#x27;</span> =&gt; <span class="hljs-variable">$password</span>                      <span class="hljs-regexp">//</span> 查询条件<span class="hljs-number">2</span>（加密后）<br>    ))-&gt;find();                                      <span class="hljs-regexp">//</span> 查询单条数据<br><br>    <span class="hljs-regexp">//</span> 结果处理<br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable">$user</span>) &#123;<br>        <span class="hljs-variable">$this</span>-&gt;success(<span class="hljs-string">&#x27;登录成功&#x27;</span>, U(<span class="hljs-string">&#x27;Index/index&#x27;</span>)); <span class="hljs-regexp">//</span> 跳转到首页<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-variable">$this</span>-&gt;error(<span class="hljs-string">&#x27;登录失败&#x27;</span>);                     <span class="hljs-regexp">//</span> 显示错误提示<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>数据获取与加密</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-variable">$username</span> = I(<span class="hljs-string">&#x27;post.username&#x27;</span>);         <span class="hljs-regexp">//</span> 安全获取POST参数（自动过滤危险字符）<br><span class="hljs-variable">$password</span> = md5(I(<span class="hljs-string">&#x27;post.password&#x27;</span>));    <span class="hljs-regexp">//</span> 使用MD5加密<br></code></pre></td></tr></table></figure>
+<ul>
+<li>I(‘post.username’):Thinkphp的输入过滤函数，等效于$_POST[&#39;username&#39;]但更安全<br>第二个就是多了个MD5加密</li>
+</ul>
+<p>数据库查询</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs livescript">$user = D<span class="hljs-function"><span class="hljs-params">(<span class="hljs-string">&#x27;User&#x27;</span>)</span>-&gt;</span>where(array(<br>            <span class="hljs-string">&#x27;username&#x27;</span> =&gt; $username,<br>            <span class="hljs-string">&#x27;password&#x27;</span> =&gt; $password<br>        ))-&gt;find();<br></code></pre></td></tr></table></figure>
+<ul>
+<li>D(‘User’)：实例化UserModel模型类(对应Application&#x2F;Home&#x2F;Model&#x2F;UserModel.class.php)，若模型不存在，则框架会按表名动态创建模型。</li>
+<li>where()条件：生成SQL的WHRER子句(默认使用参数绑定，已防止SQL注入)，此处等价于<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> tp_user <br><span class="hljs-keyword">WHERE</span> username = <span class="hljs-string">&#x27;admin&#x27;</span> <span class="hljs-keyword">AND</span> <span class="hljs-keyword">password</span> = <span class="hljs-string">&#x27;e10adc3949ba59abbe56e057f20f883e&#x27;</span> <br><span class="hljs-keyword">LIMIT</span> <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure></li>
+<li>find()：返回符合条件的第一条记录(关联数组)，若无数据返回null。</li>
+</ul>
+<p>结果跳转</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">$<span class="hljs-keyword">this</span>-&gt;success(<span class="hljs-string">&#x27;登录成功&#x27;</span>, U(<span class="hljs-string">&#x27;Index/index&#x27;</span>));<br>$<span class="hljs-keyword">this</span>-&gt;error(<span class="hljs-string">&#x27;登录失败&#x27;</span>);<br></code></pre></td></tr></table></figure>
+<ul>
+<li>success()和error()：框架内置的快捷跳转方法，自动显示提示信息并跳转。</li>
+<li>U(‘Index&#x2F;index’)：生成URL，指向Home模块下IndexController的index方法。</li>
+</ul>
+<h3 id="完整登录流程图示"><a href="#完整登录流程图示" class="headerlink" title="完整登录流程图示"></a>完整登录流程图示</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs awk">用户访问 <span class="hljs-regexp">/Home/</span>Login        -&gt; 显示登录表单（index.html）<br>↓<br>提交表单到 <span class="hljs-regexp">/Home/</span>Login/checkLogin<br>↓<br>控制器验证用户名密码        -&gt; 查询数据库<br>↓<br>验证成功                   -&gt; 跳转到首页<br>↓<br>验证失败                   -&gt; 返回错误提示<br></code></pre></td></tr></table></figure>
+<p>Login&#x2F;index.html</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>用户登录<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;__CONTROLLER__/checkLogin&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;post&quot;</span>&gt;</span><br>    用户名：<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;username&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>    密码：<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;password&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span>&gt;</span>登录<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>Model&#x2F;UserModel.class.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">namespace</span> <span class="hljs-title class_">Home</span>\<span class="hljs-title class_">Model</span>;<br><span class="hljs-keyword">use</span> <span class="hljs-title">Think</span>\<span class="hljs-title">Model</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserModel</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Model</span> </span>&#123;<br>    <span class="hljs-keyword">protected</span> <span class="hljs-variable">$tableName</span> = <span class="hljs-string">&#x27;user&#x27;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>起到了指定数据表的作用<br><img src="/images/14CE116CC01C4e499A34F3EE21ABC4D0.png" srcset="/img/loading.gif" lazyload><br>&#x2F;Login&#x2F;index<br><img src="/images/FE35B06290AE45ddA1D8B6CEB56F4937.png" srcset="/img/loading.gif" lazyload><br>登录验证<br><img src="/images/F0A47B05497F41aa82857C6E9A952B1A.png" srcset="/img/loading.gif" lazyload><br>登录验证URL解读</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>localhost<span class="hljs-regexp">/thinkphp1/i</span>ndex.php<span class="hljs-regexp">/Home/</span>Login/checkLogin<br></code></pre></td></tr></table></figure>
+<p>thinkphp尝试解析</p>
+<ul>
+<li>模块（Module）：Home（对应 Application&#x2F;Home&#x2F; 目录）</li>
+<li>控制器（Controller）：Login（对应 LoginController.class.php）</li>
+<li>方法（Action）：checkLogin</li>
+</ul>
+<h1 id="thinkphp5-0-24-简单登录功能的实现-apache-Mysql"><a href="#thinkphp5-0-24-简单登录功能的实现-apache-Mysql" class="headerlink" title="thinkphp5.0.24 简单登录功能的实现+apache+Mysql"></a>thinkphp5.0.24 简单登录功能的实现+apache+Mysql</h1><p>数据库准备我们直接用上一章的库<br>thinkphp的网页端根目录为public，用户是从public进入项目，我们在写代码时就在application进行操作<br>因为github下载thinkphp框架缺少thinkphp目录，我们使用composer部署项目</p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dsconfig"><span class="hljs-string">composer</span> <span class="hljs-built_in">create-project</span> <span class="hljs-string">topthink</span>/<span class="hljs-string">think</span>=<span class="hljs-string">5</span>.<span class="hljs-string">0</span>.<span class="hljs-string">22</span> <span class="hljs-string">think5</span><br></code></pre></td></tr></table></figure>
+<p>实际上下载的是5.0.24<br>thinkphp5.0.24核心目录结构</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs axapta">项目根目录/<br>├─ application/          <span class="hljs-meta"># 应用目录（核心开发目录）</span><br>│   ├─ <span class="hljs-keyword">index</span>/            <span class="hljs-meta"># 模块目录（默认模块）</span><br>│   │   ├─ controller/   <span class="hljs-meta"># 控制器目录（C）</span><br>│   │   ├─ model/        <span class="hljs-meta"># 模型目录（M）</span><br>│   │   └─ view/         <span class="hljs-meta"># 视图目录（V）</span><br>│   │       └─ <span class="hljs-keyword">index</span>/    <span class="hljs-meta"># 控制器对应的视图子目录</span><br>│   ├─ config/           <span class="hljs-meta"># 应用配置目录</span><br>│   │   ├─ config.php    <span class="hljs-meta"># 应用配置文件</span><br>│   │   └─ database.php  <span class="hljs-meta"># 数据库配置文件</span><br>│   ├─ route/            <span class="hljs-meta"># 路由配置目录（可选）</span><br>│   │   └─ route.php     <span class="hljs-meta"># 路由配置文件</span><br>│   └─ ...              <span class="hljs-meta"># 其他自定义模块（如 admin、api）</span><br>│<br>├─ <span class="hljs-keyword">public</span>/               <span class="hljs-meta"># 网站对外访问根目录</span><br>│   ├─ <span class="hljs-keyword">index</span>.php         <span class="hljs-meta"># 入口文件</span><br>│   ├─ <span class="hljs-keyword">static</span>/           <span class="hljs-meta"># 静态资源（CSS/JS/Images）</span><br>│   └─ .htaccess         <span class="hljs-meta"># Apache URL重写规则</span><br>│<br>├─ thinkphp/             <span class="hljs-meta"># 框架核心目录（不可修改）</span><br>│   ├─ library/          <span class="hljs-meta"># 核心类库</span><br>│   │   └─ think/        <span class="hljs-meta"># ThinkPHP核心类</span><br>│   ├─ lang/             <span class="hljs-meta"># 语言包</span><br>│   └─ tpl/              <span class="hljs-meta"># 系统默认错误模板</span><br>│<br>├─ extend/               <span class="hljs-meta"># 扩展类库目录（自定义）</span><br>├─ vendor/               <span class="hljs-meta"># Composer依赖目录</span><br>├─ runtime/              <span class="hljs-meta"># 运行时目录（缓存/日志）</span><br>│   ├─ cache/            <span class="hljs-meta"># 缓存文件</span><br>│   └─ log/              <span class="hljs-meta"># 日志文件</span><br>│<br>└─ composer.json         <span class="hljs-meta"># Composer配置文件（依赖管理）</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/7ED5B0FDF4744fccBA440FDC2B05D54E.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="配置连接数据库"><a href="#配置连接数据库" class="headerlink" title="配置连接数据库"></a>配置连接数据库</h2><p>application&#x2F;database.php</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">return</span> [<br>    <span class="hljs-string">&#x27;type&#x27;</span>        =&gt; <span class="hljs-string">&#x27;mysql&#x27;</span>,<br>    <span class="hljs-string">&#x27;hostname&#x27;</span>    =&gt; <span class="hljs-string">&#x27;127.0.0.1&#x27;</span>,<br>    <span class="hljs-string">&#x27;database&#x27;</span>    =&gt; <span class="hljs-string">&#x27;test_db&#x27;</span>,<br>    <span class="hljs-string">&#x27;username&#x27;</span>    =&gt; <span class="hljs-string">&#x27;root&#x27;</span>,<br>    <span class="hljs-string">&#x27;password&#x27;</span>    =&gt; <span class="hljs-string">&#x27;your_password&#x27;</span>,<br>    <span class="hljs-comment">// 其他保持默认配置</span><br>];<br></code></pre></td></tr></table></figure>
+
+<h2 id="创建控制器"><a href="#创建控制器" class="headerlink" title="创建控制器"></a>创建控制器</h2><p>application&#x2F;index&#x2F;controller&#x2F;Login.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">namespace</span> <span class="hljs-title class_">app</span>\<span class="hljs-title class_">index</span>\<span class="hljs-title class_">controller</span>;<br><span class="hljs-keyword">use</span> <span class="hljs-title">think</span>\<span class="hljs-title">Controller</span>;<br><span class="hljs-keyword">use</span> <span class="hljs-title">app</span>\<span class="hljs-title">index</span>\<span class="hljs-title">model</span>\<span class="hljs-title">User</span>;<br><span class="hljs-keyword">use</span> <span class="hljs-title">think</span>\<span class="hljs-title">Session</span>;<br><span class="hljs-keyword">use</span> <span class="hljs-title">think</span>\<span class="hljs-title">Db</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Login</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Controller</span></span><br><span class="hljs-class"></span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span>(<span class="hljs-params"></span>)</span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">fetch</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">doLogin</span>(<span class="hljs-params"></span>)</span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-variable">$username</span> = <span class="hljs-title function_ invoke__">input</span>(<span class="hljs-string">&#x27;post.username&#x27;</span>);<br>        <span class="hljs-variable">$password</span> = <span class="hljs-title function_ invoke__">input</span>(<span class="hljs-string">&#x27;post.password&#x27;</span>);<br><br>        <span class="hljs-comment">// 空值检查</span><br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>(<span class="hljs-variable">$username</span>) || <span class="hljs-keyword">empty</span>(<span class="hljs-variable">$password</span>)) &#123;<br>            <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">error</span>(<span class="hljs-string">&#x27;用户名和密码不能为空&#x27;</span>);<br>        &#125;<br><br>        <span class="hljs-variable">$user</span> = <span class="hljs-title class_">User</span>::<span class="hljs-title function_ invoke__">where</span>(<span class="hljs-string">&#x27;username&#x27;</span>, <span class="hljs-variable">$username</span>)-&gt;<span class="hljs-title function_ invoke__">find</span>();<br><br>        <span class="hljs-comment">// 直接比对明文</span><br>        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$user</span> &amp;&amp; <span class="hljs-variable">$password</span> == <span class="hljs-variable">$user</span>[<span class="hljs-string">&#x27;password&#x27;</span>]) &#123;<br>            <span class="hljs-title class_">Session</span>::<span class="hljs-title function_ invoke__">set</span>(<span class="hljs-string">&#x27;user_id&#x27;</span>, <span class="hljs-variable">$user</span>[<span class="hljs-string">&#x27;id&#x27;</span>]);<br>            <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">success</span>(<span class="hljs-string">&#x27;登录成功&#x27;</span>, <span class="hljs-string">&#x27;/index/login/welcome&#x27;</span>);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">error</span>(<span class="hljs-string">&#x27;用户名或密码错误&#x27;</span>);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">welcome</span>(<span class="hljs-params"></span>)</span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">fetch</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">logout</span>(<span class="hljs-params"></span>)</span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-title class_">Session</span>::<span class="hljs-title function_ invoke__">delete</span>(<span class="hljs-string">&#x27;user_id&#x27;</span>);<br>        <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">redirect</span>(<span class="hljs-string">&#x27;/index/login&#x27;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="创建视图-控制器所作用的"><a href="#创建视图-控制器所作用的" class="headerlink" title="创建视图(控制器所作用的)"></a>创建视图(控制器所作用的)</h2><p>application&#x2F;index&#x2F;view&#x2F;login&#x2F;index.html</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="language-xml"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;zh-CN&quot;</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>用户登录<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/static/css/style.css&quot;</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;login-container&quot;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>用户登录<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;</span></span></span><span class="hljs-template-variable">&#123;:url(&#x27;doLogin&#x27;)&#125;</span><span class="language-xml"><span class="hljs-tag"><span class="hljs-string">&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;post&quot;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-group&quot;</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">&quot;username&quot;</span>&gt;</span>用户名：<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;username&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;username&quot;</span> <span class="hljs-attr">required</span></span></span><br><span class="hljs-tag"><span class="language-xml">                   <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-control&quot;</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&quot;请输入用户名&quot;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-group&quot;</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">&quot;password&quot;</span>&gt;</span>密码：<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">required</span></span></span><br><span class="hljs-tag"><span class="language-xml">                   <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-control&quot;</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&quot;请输入密码&quot;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn-login&quot;</span>&gt;</span>立即登录<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span><br><span class="language-xml">    </span><span class="hljs-template-variable">&#123;notempty name=&quot;error&quot;&#125;</span><span class="language-xml"></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;error-message&quot;</span>&gt;</span></span><span class="hljs-template-variable">&#123;$error&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    </span><span class="hljs-template-tag">&#123;/<span class="hljs-name">notempty</span>&#125;</span><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+<p>application&#x2F;index&#x2F;view&#x2F;login&#x2F;welcome.html</p>
+<figure class="highlight php-template"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs php-template"><span class="language-xml"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>欢迎页<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/static/css/style.css&quot;</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;welcome-container&quot;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>欢迎回来，</span><span class="language-php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">session</span>(<span class="hljs-string">&#x27;user_id&#x27;</span>) ? <span class="hljs-string">&#x27;用户&#x27;</span> : <span class="hljs-string">&#x27;游客&#x27;</span>; <span class="hljs-meta">?&gt;</span></span><span class="language-xml">!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;&#123;:url(&#x27;logout&#x27;)&#125;&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn-logout&quot;</span>&gt;</span>退出登录<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<h2 id="路由配置"><a href="#路由配置" class="headerlink" title="路由配置"></a>路由配置</h2><p>application&#x2F;route.php</p>
+<figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs zephir"><span class="hljs-keyword">use</span> <span class="hljs-title">think</span>\<span class="hljs-title">Route</span>;<br><br><span class="hljs-comment">// 通用路由模式（保留原__pattern__配置）</span><br>Route::pattern([<br>    <span class="hljs-string">&#x27;name&#x27;</span> =&gt; <span class="hljs-string">&#x27;\w+&#x27;</span>,<br>    <span class="hljs-string">&#x27;id&#x27;</span>   =&gt; <span class="hljs-string">&#x27;\d+&#x27;</span><br>]);<br><br><span class="hljs-comment">// hello分组路由（TP5.0风格分组写法）</span><br>Route::group(<span class="hljs-string">&#x27;hello&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>&#123;<br>    Route::get(<span class="hljs-string">&#x27;:id&#x27;</span>, <span class="hljs-string">&#x27;index/hello&#x27;</span>);    <span class="hljs-comment">// 自动应用id参数规则</span><br>    Route::post(<span class="hljs-string">&#x27;:name&#x27;</span>, <span class="hljs-string">&#x27;index/hello&#x27;</span>); <span class="hljs-comment">// 自动应用name参数规则</span><br>&#125;);<br><br><span class="hljs-comment">// 登录相关路由</span><br>Route::get(<span class="hljs-string">&#x27;login&#x27;</span>, <span class="hljs-string">&#x27;index/login/index&#x27;</span>);          <span class="hljs-comment">// 登录页面</span><br>Route::post(<span class="hljs-string">&#x27;login/doLogin&#x27;</span>, <span class="hljs-string">&#x27;login/doLogin&#x27;</span>); <span class="hljs-comment">// 登录处理</span><br>Route::get(<span class="hljs-string">&#x27;logout&#x27;</span>, <span class="hljs-string">&#x27;login/logout&#x27;</span>);        <span class="hljs-comment">// 退出登录</span><br><br><span class="hljs-keyword">return</span> [];<br></code></pre></td></tr></table></figure>
+
+<h2 id="创建公共CSS文件"><a href="#创建公共CSS文件" class="headerlink" title="创建公共CSS文件"></a>创建公共CSS文件</h2><p>public&#x2F;static&#x2F;css&#x2F;style.css</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">body</span> &#123;<br>    <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;<br>    <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-built_in">linear-gradient</span>(<span class="hljs-number">120deg</span>, <span class="hljs-number">#2980b9</span>, <span class="hljs-number">#8e44ad</span>);<br>    <span class="hljs-attribute">height</span>: <span class="hljs-number">100vh</span>;<br>    <span class="hljs-attribute">font-family</span>: <span class="hljs-string">&#x27;Segoe UI&#x27;</span>, Tahoma, Geneva, Verdana, sans-serif;<br>    <span class="hljs-attribute">display</span>: flex;<br>    <span class="hljs-attribute">justify-content</span>: center;<br>    <span class="hljs-attribute">align-items</span>: center;<br>&#125;<br><br><span class="hljs-selector-class">.login-container</span>, <span class="hljs-selector-class">.welcome-container</span> &#123;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-built_in">rgba</span>(<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">0.95</span>);<br>    <span class="hljs-attribute">padding</span>: <span class="hljs-number">40px</span>;<br>    <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">10px</span>;<br>    <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">20px</span> <span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0.1</span>);<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">350px</span>;<br>&#125;<br><br><span class="hljs-selector-tag">h2</span>, <span class="hljs-selector-tag">h1</span> &#123;<br>    <span class="hljs-attribute">text-align</span>: center;<br>    <span class="hljs-attribute">color</span>: <span class="hljs-number">#333</span>;<br>    <span class="hljs-attribute">margin-bottom</span>: <span class="hljs-number">30px</span>;<br>&#125;<br><br><span class="hljs-selector-class">.form-group</span> &#123;<br>    <span class="hljs-attribute">margin-bottom</span>: <span class="hljs-number">20px</span>;<br>&#125;<br><br><span class="hljs-selector-class">.form-control</span> &#123;<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;<br>    <span class="hljs-attribute">padding</span>: <span class="hljs-number">12px</span>;<br>    <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#ddd</span>;<br>    <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">5px</span>;<br>    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">16px</span>;<br>    <span class="hljs-attribute">transition</span>: border-color <span class="hljs-number">0.3s</span>;<br>&#125;<br><br><span class="hljs-selector-class">.form-control</span><span class="hljs-selector-pseudo">:focus</span> &#123;<br>    <span class="hljs-attribute">border-color</span>: <span class="hljs-number">#3498db</span>;<br>    <span class="hljs-attribute">outline</span>: none;<br>&#125;<br><br><span class="hljs-selector-class">.btn-login</span> &#123;<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;<br>    <span class="hljs-attribute">padding</span>: <span class="hljs-number">12px</span>;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#3498db</span>;<br>    <span class="hljs-attribute">color</span>: white;<br>    <span class="hljs-attribute">border</span>: none;<br>    <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">5px</span>;<br>    <span class="hljs-attribute">cursor</span>: pointer;<br>    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">16px</span>;<br>    <span class="hljs-attribute">transition</span>: background <span class="hljs-number">0.3s</span>;<br>&#125;<br><br><span class="hljs-selector-class">.btn-login</span><span class="hljs-selector-pseudo">:hover</span> &#123;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#2980b9</span>;<br>&#125;<br><br><span class="hljs-selector-class">.error-message</span> &#123;<br>    <span class="hljs-attribute">color</span>: <span class="hljs-number">#e74c3c</span>;<br>    <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">15px</span>;<br>    <span class="hljs-attribute">text-align</span>: center;<br>&#125;<br><br><span class="hljs-selector-class">.btn-logout</span> &#123;<br>    <span class="hljs-attribute">display</span>: block;<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">120px</span>;<br>    <span class="hljs-attribute">margin</span>: <span class="hljs-number">20px</span> auto <span class="hljs-number">0</span>;<br>    <span class="hljs-attribute">padding</span>: <span class="hljs-number">10px</span>;<br>    <span class="hljs-attribute">text-align</span>: center;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#e74c3c</span>;<br>    <span class="hljs-attribute">color</span>: white;<br>    <span class="hljs-attribute">text-decoration</span>: none;<br>    <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">5px</span>;<br>    <span class="hljs-attribute">transition</span>: background <span class="hljs-number">0.3s</span>;<br>&#125;<br><br><span class="hljs-selector-class">.btn-logout</span><span class="hljs-selector-pseudo">:hover</span> &#123;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#c0392b</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="创建模型类"><a href="#创建模型类" class="headerlink" title="创建模型类"></a>创建模型类</h2><p>application&#x2F;index&#x2F;model&#x2F;User.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-keyword">namespace</span> <span class="hljs-title class_">app</span>\<span class="hljs-title class_">index</span>\<span class="hljs-title class_">model</span>;<br><br><span class="hljs-keyword">use</span> <span class="hljs-title">think</span>\<span class="hljs-title">Model</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Model</span></span><br><span class="hljs-class"></span>&#123;<br>    <span class="hljs-keyword">protected</span> <span class="hljs-variable">$table</span> = <span class="hljs-string">&#x27;tp_user&#x27;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="配置apcahe-htaccess"><a href="#配置apcahe-htaccess" class="headerlink" title="配置apcahe .htaccess"></a>配置apcahe .htaccess</h2><p>在项目根目录下public配置</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-section">&lt;IfModule mod_rewrite.c&gt;</span><br>  <span class="hljs-attribute">Options</span> +FollowSymlinks -Multiviews<br>  <span class="hljs-attribute">RewriteEngine</span> <span class="hljs-literal">On</span><br><br>  <span class="hljs-attribute">RewriteCond</span> <span class="hljs-variable">%&#123;REQUEST_FILENAME&#125;</span> !-d<br>  <span class="hljs-attribute">RewriteCond</span> <span class="hljs-variable">%&#123;REQUEST_FILENAME&#125;</span> !-f<br>  <span class="hljs-attribute">RewriteRule</span> ^(.*)$ index.php?s=/$<span class="hljs-number">1</span><span class="hljs-meta"> [QSA,PT,L]</span><br><span class="hljs-section">&lt;/IfModule&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="登录流程"><a href="#登录流程" class="headerlink" title="登录流程"></a>登录流程</h2><p>首页<br><img src="/images/063A67C7B45C4a159C6A55F8A0854702.png" srcset="/img/loading.gif" lazyload><br>url输入login进入登录页面<br><img src="/images/41F0B6364544496c9E3F904E2C3EE7E6.png" srcset="/img/loading.gif" lazyload><br>登录成功<br><img src="/images/07790410F18543269F522BE40F2C7BCD.png" srcset="/img/loading.gif" lazyload><br>记住用户的session，保持登录状态，跳转到welcome<br><img src="/images/506212D30233477dB0BA845174E158C5.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>在thinkphp5x版本是有一个RCE漏洞的，漏洞原因是：<br>由于框架错误地处理了控制器名称，如果网站没有启用强制路由（这是默认路由），它可以执行任何方法，从而导致 RCE 漏洞。<br>我们来复现这个漏洞，首先关闭强制路由<br><img src="/images/02CEABF7C24A4677856B433A8342B1D5.png" srcset="/img/loading.gif" lazyload><br>查看漏洞利用的地方thinkphp&#x2F;library&#x2F;think&#x2F;App.php<br><img src="/images/131940C420C84764BCB628551FA92385.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs awk">        <span class="hljs-regexp">//</span> 获取控制器名<br>        <span class="hljs-variable">$controller</span> = strip_tags(<span class="hljs-variable">$result</span>[<span class="hljs-number">1</span>] ?: <span class="hljs-variable">$config</span>[<span class="hljs-string">&#x27;default_controller&#x27;</span>]);<br><br><span class="hljs-regexp">//</span>        <span class="hljs-keyword">if</span> (!preg_match(<span class="hljs-string">&#x27;/^[A-Za-z](\w|\.)*$/&#x27;</span>, <span class="hljs-variable">$controller</span>)) &#123;<br><span class="hljs-regexp">//</span>            throw new HttpException(<span class="hljs-number">404</span>, <span class="hljs-string">&#x27;controller not exists:&#x27;</span> . <span class="hljs-variable">$controller</span>);<br><span class="hljs-regexp">//</span>        &#125;<br><br>        <span class="hljs-variable">$controller</span> = <span class="hljs-variable">$convert</span> ? strtolower(<span class="hljs-variable">$controller</span>) : <span class="hljs-variable">$controller</span>;<br></code></pre></td></tr></table></figure>
+<p>这两行代码的主要作用就是从路由解析结果中获取控制器名，并对其进行一些处理(大致是是它可以被处理成可被接收的形式)。<br>可以看到，官方在此版本已经自动添加了补丁，使用正则过滤控制器名称<br>我们把它注释掉<br>payload</p>
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sas"><span class="hljs-keyword">index</span>.php?s=/<span class="hljs-keyword">Index</span>/\think\app/invokefunction<span class="hljs-variable">&amp;function</span>=call_user_func_array<span class="hljs-variable">&amp;vars</span>[0]=phpinfo<span class="hljs-variable">&amp;vars</span>[1][]=-1<br></code></pre></td></tr></table></figure>
+<p>url参数解析</p>
+<ul>
+<li>URL 结构：s&#x3D;&#x2F;Index&#x2F;\think\app&#x2F;invokefunction</li>
+<li>模块($result[0])：Index</li>
+<li>控制器($result[1])：\think\app</li>
+<li>操作($result[2])：invokefunction</li>
+</ul>
+<p><strong>也就是，框架此时会加载命名空间为\think下的app类</strong><br>在 ThinkPHP 5 中，\think\App 是框架核心类，用于处理应用调度。<br>此时强制指定控制器为 \think\App，调用其 invokefunction 方法。<br><img src="/images/4BD484624F404dbf9F54B87BAD32ED93.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">public</span> <span class="hljs-built_in">static</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">invokeFunction</span>(<span class="hljs-params"><span class="hljs-variable">$function</span>, <span class="hljs-variable">$vars</span> = []</span>)</span><br><span class="hljs-function">   </span>&#123;<br>       <span class="hljs-variable">$reflect</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">\ReflectionFunction</span>(<span class="hljs-variable">$function</span>);<br>       <span class="hljs-variable">$args</span>    = <span class="hljs-built_in">self</span>::<span class="hljs-title function_ invoke__">bindParams</span>(<span class="hljs-variable">$reflect</span>, <span class="hljs-variable">$vars</span>);<br><br>       <span class="hljs-comment">// 记录执行信息</span><br>       <span class="hljs-built_in">self</span>::<span class="hljs-variable">$debug</span> &amp;&amp; <span class="hljs-title class_">Log</span>::<span class="hljs-title function_ invoke__">record</span>(<span class="hljs-string">&#x27;[ RUN ] &#x27;</span> . <span class="hljs-variable">$reflect</span>-&gt;<span class="hljs-title function_ invoke__">__toString</span>(), <span class="hljs-string">&#x27;info&#x27;</span>);<br><br>       <span class="hljs-keyword">return</span> <span class="hljs-variable">$reflect</span>-&gt;<span class="hljs-title function_ invoke__">invokeArgs</span>(<span class="hljs-variable">$args</span>);<br>   &#125;<br></code></pre></td></tr></table></figure>
+<p>invokefunction 是框架内部方法，用于动态调用函数。<br>参数注入</p>
+<ul>
+<li><p>function&#x3D;call_user_func_array：指定调用的函数为 call_user_func_array。</p>
+</li>
+<li><p>vars[0]&#x3D;phpinfo：设置 call_user_func_array 的第一个参数为 phpinfo 函数。</p>
+</li>
+<li><p>vars[1][]&#x3D;-1：设置第二个参数为 [-1]，触发 phpinfo() 执行。</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">private</span> <span class="hljs-built_in">static</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bindParams</span>(<span class="hljs-params"><span class="hljs-variable">$reflect</span>, <span class="hljs-variable">$vars</span> = []</span>)</span><br><span class="hljs-function">   </span>&#123;<br>       <span class="hljs-comment">// 自动获取请求变量</span><br>       <span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>(<span class="hljs-variable">$vars</span>)) &#123;<br>           <span class="hljs-variable">$vars</span> = <span class="hljs-title class_">Config</span>::<span class="hljs-title function_ invoke__">get</span>(<span class="hljs-string">&#x27;url_param_type&#x27;</span>) ?<br>           <span class="hljs-title class_">Request</span>::<span class="hljs-title function_ invoke__">instance</span>()-&gt;<span class="hljs-title function_ invoke__">route</span>() :<br>           <span class="hljs-title class_">Request</span>::<span class="hljs-title function_ invoke__">instance</span>()-&gt;<span class="hljs-title function_ invoke__">param</span>();<br>       &#125;<br><br>       <span class="hljs-variable">$args</span> = [];<br>       <span class="hljs-keyword">if</span> (<span class="hljs-variable">$reflect</span>-&gt;<span class="hljs-title function_ invoke__">getNumberOfParameters</span>() &gt; <span class="hljs-number">0</span>) &#123;<br>           <span class="hljs-comment">// 判断数组类型 数字数组时按顺序绑定参数</span><br>           <span class="hljs-title function_ invoke__">reset</span>(<span class="hljs-variable">$vars</span>);<br>           <span class="hljs-variable">$type</span> = <span class="hljs-title function_ invoke__">key</span>(<span class="hljs-variable">$vars</span>) === <span class="hljs-number">0</span> ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;<br><br>           <span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$reflect</span>-&gt;<span class="hljs-title function_ invoke__">getParameters</span>() <span class="hljs-keyword">as</span> <span class="hljs-variable">$param</span>) &#123;<br>               <span class="hljs-variable">$args</span>[] = <span class="hljs-built_in">self</span>::<span class="hljs-title function_ invoke__">getParamValue</span>(<span class="hljs-variable">$param</span>, <span class="hljs-variable">$vars</span>, <span class="hljs-variable">$type</span>);<br>           &#125;<br>       &#125;<br><br>       <span class="hljs-keyword">return</span> <span class="hljs-variable">$args</span>;<br>   &#125;<br></code></pre></td></tr></table></figure>
+<p>bindParams 从请求参数 vars 中提取 [phpinfo, [-1]]<br>invokeFunction 接收 $function&#x3D;call_user_func_array。<br>反射创建 call_user_func_array 的 ReflectionFunction 对象。<br>最终调用</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lisp">call_user_func_array(&#x27;phpinfo&#x27;, [<span class="hljs-number">-1</span>])<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="漏洞小结"><a href="#漏洞小结" class="headerlink" title="漏洞小结"></a>漏洞小结</h2><p>本漏洞的发生条件是网站配置没有启用强制路由，导致用户可以调用任意控制器，并利用框架内的执行方法，以达到恶意攻击，修复的话，开启强制路由，限制用户访问think框架，以及对url正则过滤，限制对控制器的访问。</p>
+<h2 id="漏扫工具扫描"><a href="#漏扫工具扫描" class="headerlink" title="漏扫工具扫描"></a>漏扫工具扫描</h2><p>用蓝鲸扫描发现有三个漏洞<br><img src="/images/5011CE91A3D6471eAEF72658F8102A76.png" srcset="/img/loading.gif" lazyload><br>这个漏洞就是运行本地的文件，可执行<br><img src="/images/5F69CDC469ED4c79BF208232847D2FA4.png" srcset="/img/loading.gif" lazyload><br>还有一个漏洞就是猜测本机数据库配置，可爆出账号密码<br><img src="/images/E2A4B8293F01427c9A67FB22088FE176.png" srcset="/img/loading.gif" lazyload><br>盲猜把强制路由打开就利用不了这些漏洞了<br><img src="/images/8C4044DA40344b95A14AF6A86BC6A15C.png" srcset="/img/loading.gif" lazyload><br>果然，直接全解决了</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>thinkphp框架的简单使用</div>
+      <div>http://example.com/2025/01/28/thinkphp框架的简单使用/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>奇怪的奇怪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年1月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/12/16/fenshengtai/" title="封神台靶场复现">
+                        <span class="hidden-mobile">封神台靶场复现</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","appKey":"2jVxSBuNhzKC1JEOZN2aZTgr","path":"window.location.pathname","placeholder":"说点什么","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客量 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
