@@ -243,6 +243,72 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/09/26/ssrf/" target="_self">
+          ssrf
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/26/ssrf/" target="_self">
+        <div>
+          知识点：SSRF攻击点 123456789&lt;?php$url=$_POST[&#x27;url&#x27;];$ch=curl_init($url);curl_setopt($ch, CURLOPT_HEADER, 0);curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);$result=curl_exec($ch);curl_close($ch);?&g
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-09-26 00:00" pubdate>
+              2023-09-26
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/09/15/sql%E6%B3%A8%E5%85%A5/" target="_self">
+          sql注入
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/15/sql%E6%B3%A8%E5%85%A5/" target="_self">
+        <div>
+          web171常规sql注入payload: 123456-1&#x27; union select 1,2,group_concat(table_name) from information_schema.tables where table_schema=database() --+-1&#x27; union select 1,2,group_concat(column_name) from
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-09-15 00:00" pubdate>
+              2023-09-15
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/09/14/phptexin/" target="_self">
           php特性
         </a>
@@ -492,72 +558,6 @@
             <i class="iconfont icon-date"></i>
             <time datetime="2023-04-27 00:00" pubdate>
               2023-04-27
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/04/27/wenjianbaohan/" target="_self">
-          web入门：文件包含🥰
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/27/wenjianbaohan/" target="_self">
-        <div>
-          web78123456if(isset($_GET[&#x27;file&#x27;]))&#123;    $file = $_GET[&#x27;file&#x27;];    include($file);&#125;else&#123;    highlight_file(__FILE__);&#125; include包含，尝试使用伪协议 1?file=php://filter/conv
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-04-27 00:00" pubdate>
-              2023-04-27
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/04/24/minlinzhixin/" target="_self">
-          web入门:命令执行🫠
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/24/minlinzhixin/" target="_self">
-        <div>
-          web291234567891011error_reporting(0);  if(isset($_GET[&#x27;c&#x27;]))&#123;  $c = $_GET[&#x27;c&#x27;];  if(!preg_match(&quot;/flag/i&quot;, $c))&#123;      eval($c);  &#125;    &#125;else&#123;  hig
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-04-24 00:00" pubdate>
-              2023-04-24
             </time>
           </div>
         
