@@ -1,0 +1,764 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="奇怪的奇怪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Windows木马应急响应排查复现此次复现环境为windows11 虚拟机模拟复现，源于1个月前的某企业应急响应演练，但是当时项目经理没带我去玩，把我派到另一个项目了，要来木马，尝试一下排查,如果后面学到了很多思路，还会补充。 下载木马下载压缩包解压后点击exe触发还是要把windows安全工具关掉，不然解压后会把exe文件删了，一共测试两次，第一次全程没报警，第二次解压后就删除了exe文件或者安">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows木马应急响应排查复现">
+<meta property="og:url" content="http://example.com/2025/11/11/Windows%E6%9C%A8%E9%A9%AC%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E6%8E%92%E6%9F%A5%E5%A4%8D%E7%8E%B0/index.html">
+<meta property="og:site_name" content="奇怪的亚索">
+<meta property="og:description" content="Windows木马应急响应排查复现此次复现环境为windows11 虚拟机模拟复现，源于1个月前的某企业应急响应演练，但是当时项目经理没带我去玩，把我派到另一个项目了，要来木马，尝试一下排查,如果后面学到了很多思路，还会补充。 下载木马下载压缩包解压后点击exe触发还是要把windows安全工具关掉，不然解压后会把exe文件删了，一共测试两次，第一次全程没报警，第二次解压后就删除了exe文件或者安">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/1c703c79-ba70-4dc4-9d1b-b4a6a7b3a99e.png">
+<meta property="og:image" content="http://example.com/images/d7bfd08b-99b8-4155-84b6-10c7999ccbad.png">
+<meta property="og:image" content="http://example.com/images/2c602202-d0e7-4701-b2b5-6cc711968d6f.png">
+<meta property="og:image" content="http://example.com/images/62abd1d0-3035-4d70-a9f6-0c2144ceb6ef.png">
+<meta property="og:image" content="http://example.com/images/5cbb6129-0de3-4700-9a64-f75ac0a2bbba.png">
+<meta property="og:image" content="http://example.com/images/045ef8d2-d6ab-492f-935e-a5e3fe9b7968.png">
+<meta property="og:image" content="http://example.com/images/3e735d54-c009-44ca-b2d6-7e2708ad45f1.png">
+<meta property="og:image" content="http://example.com/images/826b94fc-7fce-4509-a8ea-4c1062443289.png">
+<meta property="og:image" content="http://example.com/images/f2f13cdf-45bc-465f-a670-6df06ea19e6a.png">
+<meta property="og:image" content="http://example.com/images/1c6f7329-9ec5-429f-8806-8f6b3ee30f4b.png">
+<meta property="og:image" content="http://example.com/images/a6ce2b69-4327-43bf-a027-e3cfcbb019f7.png">
+<meta property="og:image" content="http://example.com/images/17a3e2fa-ba0c-4cc6-87f3-4514a90f0f61.png">
+<meta property="og:image" content="http://example.com/images/dddba8ee-286e-4453-add0-8cc06272051a.png">
+<meta property="og:image" content="http://example.com/images/f36268ca-3426-415c-ae11-8e9204b39d67.png">
+<meta property="og:image" content="http://example.com/images/e4978e6f-24b6-4bc0-930c-273b592d7b5b.png">
+<meta property="og:image" content="http://example.com/images/35d9776e-2abc-4c4c-94d2-ef794c34381c.png">
+<meta property="og:image" content="http://example.com/images/f98849df-b757-45c5-9b94-074e8399b167.png">
+<meta property="og:image" content="http://example.com/images/85437168-8b87-4331-917d-7aa64a486e7c.png">
+<meta property="og:image" content="http://example.com/images/4856b523-4d48-417f-996b-cb40fe438c3f.png">
+<meta property="og:image" content="http://example.com/images/5512ce24-b803-4712-b2d3-14ef3e12380d.png">
+<meta property="og:image" content="http://example.com/images/aa48e0bc-1781-4874-ad4e-635ebeda314e.png">
+<meta property="og:image" content="http://example.com/images/d893cf1e-ed1f-4ff0-b8b3-de07b2cc5432.png">
+<meta property="og:image" content="http://example.com/images/7db07df3-1fe1-4d6b-8cce-8d4d2b3274f1.png">
+<meta property="og:image" content="http://example.com/images/be1b08b1-d041-43b6-930c-914efa59be11.png">
+<meta property="og:image" content="http://example.com/images/b9a810bc-526c-4d09-b912-3b10bc59e628.png">
+<meta property="og:image" content="http://example.com/images/45185d42-e756-47b7-ac54-a4f30bc15014.png">
+<meta property="og:image" content="http://example.com/images/1daccc10-5813-4620-b7e3-aa2c3e298a43.png">
+<meta property="og:image" content="http://example.com/images/aa044a9b-abfe-491a-ac04-8f320d2f445a.png">
+<meta property="og:image" content="http://example.com/images/595425e7-64e4-4a19-ad98-132b7bd1931d.png">
+<meta property="og:image" content="http://example.com/images/dddba8ee-286e-4453-add0-8cc06272051a.png">
+<meta property="og:image" content="http://example.com/images/00b28e37-6723-4872-ae72-88f53ec18300.png">
+<meta property="article:published_time" content="2025-11-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-12T08:02:01.570Z">
+<meta property="article:author" content="奇怪的奇怪">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/1c703c79-ba70-4dc4-9d1b-b4a6a7b3a99e.png">
+  
+  
+  
+  <title>Windows木马应急响应排查复现 - 奇怪的亚索</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","app_key":"2jVxSBuNhzKC1JEOZN2aZTgr","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>奇怪的亚索</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Windows木马应急响应排查复现"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-11 00:00" pubdate>
+          2025年11月11日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Windows木马应急响应排查复现</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Windows木马应急响应排查复现"><a href="#Windows木马应急响应排查复现" class="headerlink" title="Windows木马应急响应排查复现"></a>Windows木马应急响应排查复现</h1><p>此次复现环境为windows11 虚拟机模拟复现，源于1个月前的某企业应急响应演练，但是当时项目经理没带我去玩，把我派到另一个项目了，要来木马，尝试一下排查,如果后面学到了很多思路，还会补充。</p>
+<h2 id="下载木马"><a href="#下载木马" class="headerlink" title="下载木马"></a>下载木马</h2><p><img src="/images/1c703c79-ba70-4dc4-9d1b-b4a6a7b3a99e.png" srcset="/img/loading.gif" lazyload><br>下载压缩包解压后点击exe触发<br>还是要把windows安全工具关掉，不然解压后会把exe文件删了，一共测试两次，第一次全程没报警，第二次解压后就删除了exe文件<br>或者安全中心内允许执行<br><img src="/images/d7bfd08b-99b8-4155-84b6-10c7999ccbad.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="开始测试"><a href="#开始测试" class="headerlink" title="开始测试"></a>开始测试</h2><h3 id="查找木马进程"><a href="#查找木马进程" class="headerlink" title="查找木马进程"></a>查找木马进程</h3><p>首先贴一张未启用木马时的任务管理器截图<br><img src="/images/2c602202-d0e7-4701-b2b5-6cc711968d6f.png" srcset="/img/loading.gif" lazyload></p>
+<p>点击运行<br><img src="/images/62abd1d0-3035-4d70-a9f6-0c2144ceb6ef.png" srcset="/img/loading.gif" lazyload><br>点击仍要运行<br><img src="/images/5cbb6129-0de3-4700-9a64-f75ac0a2bbba.png" srcset="/img/loading.gif" lazyload><br>木马已经启动了<br>首先我们要做的是找到木马并停止木马的运行<br>查看网络连接状态<br>使用命令</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span>netstat 网络状态统计<br><span class="hljs-regexp">//</span> -a: 显示 所有 网络连接和监听端口（包括 TCP、UDP 协议，以及正在监听的和已建立的连接）<br><span class="hljs-regexp">//</span> -n: 以 数字形式 显示地址和端口，而不进行域名解析<br><span class="hljs-regexp">//</span> -o: 显示与每个网络连接相关联的 进程 ID（PID）。<br>netstat -ano <br></code></pre></td></tr></table></figure>
+<p><img src="/images/045ef8d2-d6ab-492f-935e-a5e3fe9b7968.png" srcset="/img/loading.gif" lazyload><br>然后<br>使用如下命令来进一步定位进程信息:<br>笨办法就是一个一个试，着重注意外部ip的地方</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span>tasklist 查询系统中所有运行的进程列表。<br><span class="hljs-regexp">//</span>| 管道符，用于将前一个命令的输出结果作为后一个命令的输入。<br><span class="hljs-regexp">//</span>find 从输入内容中筛选包含 “” 的行。<br>tasklist | find <span class="hljs-string">&quot;5175（PID）&quot;</span><br></code></pre></td></tr></table></figure>
+<p>确定恶意进程pid为1672<br><img src="/images/3e735d54-c009-44ca-b2d6-7e2708ad45f1.png" srcset="/img/loading.gif" lazyload><br>杀死进程，直接在任务管理器找关于pid&#x3D;1672的<br>第一个一看就有问题<br><img src="/images/826b94fc-7fce-4509-a8ea-4c1062443289.png" srcset="/img/loading.gif" lazyload><br>右键点击<br><img src="/images/f2f13cdf-45bc-465f-a670-6df06ea19e6a.png" srcset="/img/loading.gif" lazyload><br>转到详细信息<br><img src="/images/1c6f7329-9ec5-429f-8806-8f6b3ee30f4b.png" srcset="/img/loading.gif" lazyload><br>1672对应<br>右键结束任务<br><img src="/images/a6ce2b69-4327-43bf-a027-e3cfcbb019f7.png" srcset="/img/loading.gif" lazyload><br>结束进程后CPU占用明显降低<br><img src="/images/17a3e2fa-ba0c-4cc6-87f3-4514a90f0f61.png" srcset="/img/loading.gif" lazyload><br>接下来我们看看排查影响</p>
+<h3 id="安装杀毒工具"><a href="#安装杀毒工具" class="headerlink" title="安装杀毒工具"></a>安装杀毒工具</h3><p>在测试前先安装一款杀毒工具，检测木马影响，因为使用的这个木马也不是特别难以检测，一般的杀毒工具都能检测出，可以以此前后对照<br><img src="/images/dddba8ee-286e-4453-add0-8cc06272051a.png" srcset="/img/loading.gif" lazyload><br><img src="/images/f36268ca-3426-415c-ae11-8e9204b39d67.png" srcset="/img/loading.gif" lazyload><br><img src="/images/e4978e6f-24b6-4bc0-930c-273b592d7b5b.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="排查自启动项"><a href="#排查自启动项" class="headerlink" title="排查自启动项"></a>排查自启动项</h3><p>自启动项是系统开机时在前台或者后台运行的程序，攻击者有可能通过自启动项使用病毒后门等实现持久化控制。<br>win+r 输入taskschd.msc，即可调出任务计划程序。<br>也可以开始菜单直接搜索<br><img src="/images/35d9776e-2abc-4c4c-94d2-ef794c34381c.png" srcset="/img/loading.gif" lazyload><br>这里怎么排查呢？我主要是看它的描述信息，重复状态，时间异常，还有启动用户权限<br>例如：<br>这个计划程序就比较可疑<br><img src="/images/f98849df-b757-45c5-9b94-074e8399b167.png" srcset="/img/loading.gif" lazyload><br>首先创建者为当前使用的用户，也是触发木马的用户<br>其次没有描述信息，且运行任务时使用的SYSTEM用户，不管用户是否登录都要运行<br><img src="/images/85437168-8b87-4331-917d-7aa64a486e7c.png" srcset="/img/loading.gif" lazyload><br>打开操作选项卡发现了恶意文件的路径<br><img src="/images/4856b523-4d48-417f-996b-cb40fe438c3f.png" srcset="/img/loading.gif" lazyload><br>禁用&#x3D;&gt;删除<br><img src="/images/5512ce24-b803-4712-b2d3-14ef3e12380d.png" srcset="/img/loading.gif" lazyload><br>powershell的命令Get-ScheduledTask也可以查看计划任务的路径，名称，状态。<br><img src="/images/aa48e0bc-1781-4874-ad4e-635ebeda314e.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="排查是否存在异常服务"><a href="#排查是否存在异常服务" class="headerlink" title="排查是否存在异常服务"></a>排查是否存在异常服务</h3><p>异常服务是攻击者维持权限的常用手段，我们要重点注意服务状态和启动类型，检查是否有异常服务。<br>win+r调用出运行栏输入services.msc<br><img src="/images/d893cf1e-ed1f-4ff0-b8b3-de07b2cc5432.png" srcset="/img/loading.gif" lazyload><br>重点检查自动启动类型<br>没找到异常服务</p>
+<h3 id="排查注册表"><a href="#排查注册表" class="headerlink" title="排查注册表"></a>排查注册表</h3><p>木马常通过修改注册表实现开机自启、劫持程序运行、隐藏自身等目的，排查时可重点关注启动项、文件关联、系统服务、浏览器相关等几类核心注册表路径</p>
+<ol>
+<li>开机启动相关项<br>这是木马最常篡改的区域，目的是实现开机自动运行，需重点核对陌生 EXE 程序路径。</li>
+</ol>
+<ul>
+<li>HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run：系统级核心启动项，几乎所有需要常驻的木马都会在此添加键值，比如部分木马会伪装成类似 “expiorer.exe” 的虚假系统文件。</li>
+<li>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run：当前用户专属启动项，针对性感染当前用户的木马常藏于此，不影响其他账户。</li>
+<li>同目录下的RunOnce、RunServices等子项也别遗漏，RunOnce 中程序会在系统下次启动时执行一次，部分木马借此规避常规检测；RunServices 则通过系统服务形式启动，隐蔽性更强。</li>
+</ul>
+<ol start="2">
+<li>文件关联相关项<br>木马会篡改文件打开方式，让用户打开常规文件（如 TXT、EXE）时自动触发自身运行，重点检查以下路径：</li>
+</ol>
+<ul>
+<li>HKEY_CLASSES_ROOT\exefile\shell\open\command：EXE 文件的默认启动配置，正常默认值应指向程序本身，若被修改为包含陌生程序路径，运行任何 EXE 都会激活木马。</li>
+<li>HKEY_CLASSES_ROOT\txtfile\shell\open\command：文本文件的打开关联，部分木马会篡改此处，让打开记事本文件时顺带运行恶意程序。</li>
+<li>此外，comfile（命令文件）、regfile（注册表文件）等类型对应的键值也可排查，防止木马阻止注册表修改等操作。</li>
+</ul>
+<ol start="3">
+<li>系统服务相关项<br>部分木马会伪装成系统服务实现持久化运行，对应的注册表路径需重点查看：HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services。这里每个子项对应一个系统服务，正常服务多为系统自带或正规软件安装，若发现名称奇怪（如随意字母组合）、描述空白或模糊的子项，且指向未知路径的可执行文件或 DLL 文件，大概率是木马伪装的服务，比如 PcShare 远控木马曾在此处创建虚假 “WeChat” 服务项。</li>
+<li>浏览器与网络相关项<br>劫持浏览器、窃取浏览信息的木马会篡改这类注册表项，常见路径有：<br>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\Main和HKEY_CURRENT_USER\SOFTWARE\Microsoft\Internet Explorer\Main：重点查看 “Local Page” 等键值，若主页、默认搜索页被改为陌生网址，可能是木马篡改以推送广告或窃取浏览数据。</li>
+<li>策略限制相关项<br>部分木马会修改注册表禁用系统功能，阻止用户排查和清理，关键路径为HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\System。比如键值 “DisableRegistryTools” 若被设为 1，会直接禁止用户打开注册表编辑器，若发现该异常键值，需优先删除以恢复注册表操作权限。</li>
+</ol>
+<p>win + r 输入regedit<br>这里只列出受影响的路径(其它路径均未发现)<br>在检查HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run 发现<br><img src="/images/7db07df3-1fe1-4d6b-8cce-8d4d2b3274f1.png" srcset="/img/loading.gif" lazyload><br>发现病毒文件<br>直接右键删除即可</p>
+<h3 id="日志排查"><a href="#日志排查" class="headerlink" title="日志排查"></a>日志排查</h3><p>Windows日志包含以下元素：日期&#x2F;时间、事件类型、用户、计算机、事件ID、来源、类别、描述、数据等信息。<br>包含三种日志类型：系统日志，应用程序日志，安全日志<br>这里看安全日志<br>win + r 输入eventvwr<br>这里看有无注册时间，也就是对应4720的事件id<br><img src="/images/be1b08b1-d041-43b6-930c-914efa59be11.png" srcset="/img/loading.gif" lazyload><br>这里的时间刚好对应打开木马文件的时间<br>看下木马创建用户是否属于管理组</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dos"><span class="hljs-built_in">net</span> localgroup Administrators<br></code></pre></td></tr></table></figure>
+<p><img src="/images/b9a810bc-526c-4d09-b912-3b10bc59e628.png" srcset="/img/loading.gif" lazyload><br>可见$hack用户<br><img src="/images/45185d42-e756-47b7-ac54-a4f30bc15014.png" srcset="/img/loading.gif" lazyload><br>不能正常删除<br>打开计算机管理 win+r 输入compmgmt.msc 进入本地用户和组-用户<br><img src="/images/1daccc10-5813-4620-b7e3-aa2c3e298a43.png" srcset="/img/loading.gif" lazyload><br>直接删除用户<br><img src="/images/aa044a9b-abfe-491a-ac04-8f320d2f445a.png" srcset="/img/loading.gif" lazyload><br>使用管理员打开cmd也可以删除<br><img src="/images/595425e7-64e4-4a19-ad98-132b7bd1931d.png" srcset="/img/loading.gif" lazyload><br>接下来删除病毒源文件即可</p>
+<h3 id="与杀毒软件前后对比"><a href="#与杀毒软件前后对比" class="headerlink" title="与杀毒软件前后对比"></a>与杀毒软件前后对比</h3><p>排查前<br><img src="/images/dddba8ee-286e-4453-add0-8cc06272051a.png" srcset="/img/loading.gif" lazyload><br>排查后<br><img src="/images/00b28e37-6723-4872-ae72-88f53ec18300.png" srcset="/img/loading.gif" lazyload><br>可见病毒文件和造成的影响已经被排查掉了，重启也无问题</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Windows木马应急响应排查复现</div>
+      <div>http://example.com/2025/11/11/Windows木马应急响应排查复现/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>奇怪的奇怪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年11月11日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/10/21/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8gophish%E5%BC%80%E5%B1%95%E7%9A%84%E9%92%93%E9%B1%BC%E6%BC%94%E7%BB%83/" title="记一次使用gophish开展的钓鱼演练">
+                        <span class="hidden-mobile">记一次使用gophish开展的钓鱼演练</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"s4tVoJPA4mLOJlnbTS9bKQCz-MdYXbMMI","appKey":"2jVxSBuNhzKC1JEOZN2aZTgr","path":"window.location.pathname","placeholder":"说点什么","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客量 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
